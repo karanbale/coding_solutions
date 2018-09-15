@@ -11,7 +11,7 @@ from helpers.helper_methods import *
 
 
 def problem_5():
-	return
+	return True
 
 
 if __name__ == "__main__":
