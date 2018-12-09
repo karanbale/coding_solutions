@@ -39,7 +39,7 @@ def output_parser(data=None):
 	dictionary format. The dictionary can then be used to feed as input
 	options to the user to select from.
 	:param data: output for various open-stack commands to be parsed
-	The data is expected to be in a list format.
+	The data is expected to be in a string format.
 	:return: parse output in a dictionary format and return dictionary
 	"""
 	if not data:
@@ -63,7 +63,7 @@ def output_parser(data=None):
 			# split output and strip it
 			output = item.split('|')
 			output = [item.strip() for item in output if item not in ('', '\n', '\r')]
-			# first data obtained is actual dictionary
+			# first valid data obtained in the output is actual dictionary keys
 			if i == 1 :
 				for index,key in enumerate(output):
 					ret_dict[key] = [index]
@@ -78,7 +78,6 @@ def output_parser(data=None):
 	logger.debug('Dictionary is: {}'.format(ret_dict))
 	logger.debug('Dictionary keys: {}'.format(ret_dict.keys()))
 	
-
 	# for item in data.split('\n'):
 	# 	# skip items which are not relevant
 	# 	if item.startswith('+'):
@@ -110,7 +109,7 @@ def run_command(command=None):
 	logger.debug('Command to be run: {}'.format(command))
 	process = Popen(command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
 	output, error = process.communicate()
-	logger.debug('returncode: {}'.format(process.returncode))
+	logger.debug('return-code: {}'.format(process.returncode))
 	logger.debug('output: {}'.format(output))
 	logger.debug('error: {}'.format(error))
 	
