@@ -1,4 +1,6 @@
 # coding=utf-8
+from __future__ import print_function
+
 """
 This file will contain all different types of sorting methods
 """
@@ -127,31 +129,84 @@ def insertion_sort(input_list, **kwargs):
 
 
 @input_decorator
-def merge_sort(input_list, left_index, right_index, charact='Error', **kwargs):
+def merge_sort(input_list, **kwargs):
 	"""
 	#TODO: To complete
 	:param input_list: list to be sorted
 	:param kwargs: keyword arguments, if any
-	:return:
+	:return: sorted list
+	
+	Logic:
+	This is a divide and conquer methodology.
+	Split input list into two halves and sort each halves.
+	Once both halves are sorted, merge them together.
+	
+	sorting logic:
+		Ensure length of input_list is > 1, else list is sorted, return the list
+		Find middle index of input list.
+		Take left_list = input_list[:mid_index]
+		Take right_list = input_list[mid_index:]
+		keep splitting both left and right lists until there is just 1 element in both lists
+		once only 1 element is left per list, start merging them in sorted manner.
+	merging logic:
+		Take three variables: left_list_index=right_list_index=merge_list_index=0
+		run following logic until the end of left_list or right_list, whichever is first reached.
+		Compare left_list_index variable and right_list_index variable.
+		Add smallest element of the two variable to merge_list_index of list.
+		Assume its from left_list.
+		Increment left_list_index and merge_list_index.
+		Compare left_list_index variable and right_list_index variable.
+		Add smallest element of the two variables to next index of merge_list.
+		Assume its from right_list.
+		Increment right_list_index and merge_list_index and continue until one of the two lists ends.
+		
+		Since one of the two lists have finished, now take whichever list is remaining, and add it final list as is.
+		
 	"""
-	print('******************')
-	print('Side: {}'.format(charact))
 	print('input list: {}'.format(input_list))
-	middle_index = ((left_index + right_index) / 2)
-	print('LI: {} RI: {} MI: {}'.format(left_index, right_index, middle_index))
+	# if input list has 1 or less elements, the list is already sorted so do nothing
+	if len(input_list) > 1:
+		# find middle index of the given list
+		middle_index = (len(input_list) / 2)
+		# split the input list into left and right list
+		left_list = input_list[:middle_index]
+		right_list = input_list[middle_index:]
+		print('left_list: {}'.format(left_list))
+		print ('right list: {}\n'.format(right_list))
+		# recursively sort the left and right lists
+		merge_sort(input_list=left_list)
+		merge_sort(input_list=right_list)
+		
+		# once both the lists are sorted completely, start merging them
+		val = merge(input_list=input_list, left_list=left_list, right_list=right_list)
+		print('func time: {}'.format(time.time() - kwargs.get('start_time')))
+		return val
+		
+	
+def merge(input_list, left_list, right_list):
+	left_index = right_index = merge_list_index = 0
+	
+	while (left_index < len(left_list) and right_index < len(right_list)):
+		if left_list[left_index] < right_list[right_index]:
+			input_list[merge_list_index] = left_list[left_index]
+			left_index += 1
+		else:
+			input_list[merge_list_index] = right_list[right_index]
+			right_index += 1
+		merge_list_index += 1
+	
+	while (left_index < len(left_list)):
+		input_list[merge_list_index] = left_list[left_index]
+		merge_list_index += 1
+		left_index += 1
+	
+	while (right_index < len(right_list)):
+		input_list[merge_list_index] = right_list[right_index]
+		merge_list_index += 1
+		right_index += 1
 
-	def merge(input_list, left_index, middle_index, right_index):
-		return
-
-	print('Left list: {}'.format(input_list[left_index:middle_index]))
-	print('Right list: {}'.format(input_list[middle_index:right_index]))
-	print('******************')
-
-	if left_index < right_index:
-		merge_sort(input_list=input_list, left_index=left_index, right_index=middle_index, charact='Left')
-		merge_sort(input_list=input_list, left_index=middle_index+1, right_index=right_index, charact='right')
-		# merge(input_list=input_list, left_index=left_index, middle_index=middle_index, right_index=right_index)
-
+	print('merged list: {}'.format(input_list))
+	return input_list
 
 @input_decorator
 def partition(input_list, low_index, high_index, **kwargs):
