@@ -39,6 +39,16 @@ The element in a that occurs in the array more than once and has the minimal ind
 //
 //
 
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+
+typedef struct {
+int size;
+int arr[];
+} arr_integer;
+
 int ret_length(int b[], int size){
     unsigned int i;
     unsigned int len = size;

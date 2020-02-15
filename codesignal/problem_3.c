@@ -50,6 +50,29 @@ Return true if grid represents a valid Sudoku puzzle, otherwise return false.
 
 */
 
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
+
+typedef struct {
+int size;
+char arr[];
+} arr_char;
+
+typedef struct {
+int size;
+arr_char *arr;
+} arr_arr_char;
+
+arr_arr_char alloc_arr_arr_integer(int len) {
+  arr_arr_char a = {len, len > 0 ? malloc(sizeof(arr_char) * len) : NULL};
+  return a;
+}
+
+/**********************************************************************************************************/
+/* Solution 1 */
+/**********************************************************************************************************/
 
 int isPresentInRow(arr_arr_char grid, const char currNum, int IpRowIndex, int IpColIndex){
     int colIndex=0;
@@ -138,6 +161,7 @@ int isPresentInCol(arr_arr_char grid, const char currNum, int IpRowIndex, int Ip
     return 0;
 }
 
+
 bool sudoku2(arr_arr_char grid) {
     int i=0, j=0;
     char currNum;
@@ -164,3 +188,74 @@ bool sudoku2(arr_arr_char grid) {
     return true;
 }
 
+/**********************************************************************************************************/
+/* Solution 2 */
+/**********************************************************************************************************/
+
+bool sudoku2(arr_arr_char grid) {
+    int rowIndex=0, colIndex=0, currIndex=0;
+    int numIndexInSubMatrix = 0;
+    char currNum;
+    /* Iterate over all the rows */
+    for(rowIndex=0; rowIndex<grid.size; rowIndex++){
+        /* Iterate over all the columns */
+        for(colIndex=0; colIndex<grid.size; colIndex++){
+            currNum = grid.arr[rowIndex].arr[colIndex];
+            /* Find location of current value in its own sub-matrix.
+             * A sub-matrix is of size 3x3.
+             * A sub-matrix starts with index 0, ends with index 8
+             * This location can be between 0-8 only. Label this as numIndexInSubMatrix             
+             */
+            numIndexInSubMatrix = (rowIndex%3*3+colIndex%3);
+            if(currNum >='0' && currNum <= '9'){
+                printf("num:%c, i=%d, j=%d\n", currNum, rowIndex, colIndex);
+                for(currIndex=0; currIndex<grid.size; currIndex++){
+                    
+                    /* Find if currNum exists in all the colums of its own row, except its own column */
+                    if((currNum == grid.arr[rowIndex].arr[currIndex]) &&
+                    currIndex != colIndex){
+                        return false;
+                    }
+
+                    /* Find if currNum exists in all the rows of its own column, except its own row */
+                    if((currNum == grid.arr[currIndex].arr[colIndex]) &&
+                    currIndex != rowIndex){
+                        return false;
+                    }
+
+                    /* Check if currNum exists in its own sub-matrix, 
+                     * except skipping on its own in that sub matrix
+                     * 
+                     * rowIndex/3*3 will always divide your total rows in 3 slices and 
+                     * reset you to beginning of that slice.
+                     * e.g. 0-2 is one slice, 3-5 is second slice and 6-8 is third slice
+                     * If rowIndex for currNum is 5 (we belong to 2nd slice), 
+                     * we will always reset back to 5/3*3=1*3=3 i.e. beginning of 2nd slice.
+                     *  
+                     * colIndex/3*3 will always divide your total cols in 3 slices and 
+                     * reset you to beginning of that slice.
+                     * e.g. 0-2 is one slice, 3-5 is second slice and 6-8 is third slice
+                     * If colIndex for currNum is 7 (we belong to 3rd slice), 
+                     * we will always reset back to 7/3*3=2*3=6 i.e. beginning of 3rd slice.
+                     * 
+                     * currIndex/3 will increment only once, per slice. 
+                     * e.g. for 1st slice 0-2, currIndex/3 will always be 0,0,0
+                     *      for 2nd slice 3-5, currIndex/3 will always be 1,1,1
+                     *      for 3rd slice 6-8, currIndex/3 will always be 2,2,2
+                     * 
+                     * currIndex%3 will increment per iteration in the slice and reset back to 0 for next slice. 
+                     * e.g. for 1st slice 0-2, currIndex%3 will always be 0,1,2
+                     *      for 2nd slice 3-5, currIndex%3 will always be 0,1,2
+                     *      for 3rd slice 6-8, currIndex%3 will always be 0,1,2
+                     */
+                    printf("index: %d, row:%d, col: %d, k: %d\n", numIndexInSubMatrix, rowIndex/3*3+currIndex/3, colIndex/3*3+currIndex%3, currIndex);
+                    if(currIndex != numIndexInSubMatrix &&
+                    currNum == grid.arr[rowIndex/3*3+currIndex/3].arr[colIndex/3*3+currIndex%3]){
+                        return false;
+                    }
+                }
+            }  
+        }
+    }
+    return true;
+}
