@@ -8,7 +8,7 @@ Find the largest palindrome made from the product of two 3-digit numbers
 Relevant Information:
 
 """
-from helpers.helper_methods import *
+from helpers.helper_methods import is_palindrome,find_biggest
 
 
 def problem_4():

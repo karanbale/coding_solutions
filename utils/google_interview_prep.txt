@@ -41,7 +41,9 @@ Things to prepare for:
 - Graphs
 - Tree
 - Hash tables
-- 
+- string manipulation
+- searching and sorting
+
 
 Are the inputs sorted?
 can inputs change?
