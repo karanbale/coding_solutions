@@ -1,0 +1,54 @@
+6-8 weeks typically
+
+start general and get specific later
+questions would be geared towards firwmare and embedded sw engineering 
+
+1. technical phone: could be two but mostly one
+45 min long, google eng with similar experience
+google docs, no compilers no IDE, asking clarifying questions to clarifying requirements
+DS and algo
+quality of code and coding efficiency
+general problem solving ability
+20-30 lines of code
+1-2 questions
+
+2. onsite
+onsite recruiter all the way through offer
+all day, break lunnch
+5 1:1 45 min interviews
+coding, system design, general domain knowledge, data structures and algorithms
+culter fit aspect
+
+hiring committee
+engg those review interview notes and resume annd any eng at google that you know of
+
+team matching
+before offer, learn about team, hiring managers, make decisionn to right team
+
+
+action items:
+
+
+###################################################################################################
+
+Things to prepare for:
+- algorithms
+- data structures
+- embedded systems
+- microcontroller programming
+- operating system concepts
+- UART/USART/SPI/I2C
+- Graphs
+- Tree
+- Hash tables
+- 
+
+Are the inputs sorted?
+can inputs change?
+can inputs data type change?
+can the inputs be floating point or integer or string or mix of them all?
+can the inputs be in a list / array / data structure?
+What is the data type for inputs?
+What is the data type for output or return type for the function?
+can I make x/y/z assumptions?
+
