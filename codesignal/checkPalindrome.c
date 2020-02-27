@@ -45,3 +45,13 @@ bool checkPalindrome(char * inputString) {
     return true;
 }
 
+int main(){
+    
+    char palindromStr[] = {};
+    printf("\nPlease enter a string: \n");
+    scanf("%s", palindromStr);
+    printf("\nuser input: %s\n", palindromStr);
+    printf("\nisPalindorme: %s\n", checkPalindrome(palindromStr) ? "true" : "false");
+
+    return 0;
+}
