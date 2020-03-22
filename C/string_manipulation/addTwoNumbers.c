@@ -262,7 +262,7 @@ struct ListNode* fromNumberToNodesWrapper(char* numArr){
         }
         tempNewNode->next = NULL;
         tempNewNode->val = atoi(numArr);
-        *numArr++;
+        //*numArr++;
     }
     return tempHeadNode;
 }
