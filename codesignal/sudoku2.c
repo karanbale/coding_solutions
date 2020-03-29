@@ -224,7 +224,8 @@ bool sudoku2(arr_arr_char grid) {
                     }
 
                     /* Check if currNum exists in its own sub-matrix, 
-                     * except skipping on its own in that sub matrix
+                     * except skipping on its own index in that sub matrix
+                     * A slice is an entire row of size 3 of a sub-matrix.
                      * 
                      * rowIndex/3*3 will always divide your total rows in 3 slices and 
                      * reset you to beginning of that slice.
@@ -259,3 +260,62 @@ bool sudoku2(arr_arr_char grid) {
     }
     return true;
 }
+
+/**********************************************************************************************************/
+/* Solution 3 */
+/**********************************************************************************************************/
+
+#define RST_START_OF_ROW_SLICE(row_num)             ((row_num/3)*3)     // 0 or 3 or 6
+
+#define INC_PER_ROW_SLICE(row_num, currIdx)         ((RST_START_OF_ROW_SLICE(row_num))\
+                                                    + ((currIdx)/3))
+
+#define RST_START_OF_COL_SLICE(col_num)            ((col_num/3)*3)
+
+#define INC_PER_COL_SLICE(col_num, currIdx)        ((RST_START_OF_COL_SLICE((col_num))\
+                                                    + ((currIdx)%3)))
+
+bool isValidSudoku(char** board, int boardSize, int* boardColSize){
+    
+    int count=0;
+    
+    // iterate over rows
+    for(int rowNum = 0; rowNum<9; rowNum++){
+        // iterate over columns
+        for(int colNum = 0; colNum<9; colNum++){
+            // get current num
+            char currNum = board[rowNum][colNum];                
+            // get current num's position in its own sub-matrix grid
+            int currPosInSubMatrix = (((rowNum%3)*3)+(colNum%3));
+            if(currNum >= '0' && currNum <= '9'){
+                //printf("num: %c, row: %d, col: %d\n", currNum, rowNum, colNum);
+                for(int currItr=0; currItr<9; currItr++){
+
+                    // check if currNum exists in any other row, except its own row
+                    if((currNum == board[currItr][colNum]) && (currItr != rowNum)){
+                        return false;
+                    }
+
+                    // check if currNum exists in any other col, except its own col
+                    if((currNum == board[rowNum][currItr]) && (currItr != colNum)){
+                        return false;
+                    }                
+
+                    // check if number exist in its own sub-matrix, except itself
+                    if((currItr != currPosInSubMatrix) && 
+                       (currNum == board[INC_PER_ROW_SLICE(rowNum, currItr)][INC_PER_COL_SLICE(colNum, currItr)])){                       
+                     return false;   
+                    }                    
+                }
+            }
+            else{
+                count++;
+            }
+        }
+    }    
+    
+    // if everything looks good, return true
+    return (count<=81 ? true : false);
+}
+
+/**********************************************************************************************************/

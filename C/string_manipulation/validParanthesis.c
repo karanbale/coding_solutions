@@ -38,13 +38,18 @@ Output: true
 #include <math.h>
 #include <stdarg.h>
 
-char lut[] = {
+// following array is of size 255
+// for opening brackets ASCII index, we assign correspondinng closing bracket value
+// accessing opening bracket will give us closing bracket, and 0 for others
+static const char lut[] = {
         0,
         ['{'] = '}',
         ['['] = ']',
         ['('] = ')',
         [255] = 0,
 };
+// for following array, max size is 255
+// we assign bool values to its specific opening bracket's ASCII index
 bool lut_pop_characters[] = {
         false,
         [']'] = true,
@@ -150,6 +155,38 @@ bool isValid2(char * s){
         }
         return true;
 }
+
+/***********************************************************************************************/
+/*************************************** SOLTUION 3 ********************************************/
+/***********************************************************************************************/
+
+
+bool isValid(char * s){
+    
+    // if s is odd length, return false
+    if((strlen(s) %2) != 0) return false;
+    
+    char stack[10000];
+    ssize_t stackPtr = 0;
+    
+    for(char* temp = s; *temp!='\0'; temp++){
+        // if opening bracket, add it to the stack, move stackPtr forward to point to next incoming item
+        if(lut[*temp]){
+            stack[stackPtr++] = lut[*temp];
+        }
+        // if closing bracket, pop item from stack, and compare it
+        // return false if it does not match current item's compliment
+        else{
+            // point stackPtr to valid last entry by decrementing it
+            stackPtr--;
+            if(stackPtr < 0) return false;
+            if(stack[stackPtr] != *temp) return false;
+        }
+    }
+    
+    return (stackPtr == 0);
+}
+
 /***********************************************************************************************/
 
 int main(void){
