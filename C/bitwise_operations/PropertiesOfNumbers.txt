@@ -1,0 +1,24 @@
+
+Property to remember: 
+    Number and its negative representation,
+    both will always have right most set bit of the number set, all other 
+    bits will be flipped.
+
+Property of numbers who are power of 2:
+    Only 1 bit will be set for numbers, who are power of 2.
+
+Theory of operation for negative numbers:
+    To save negative numbers, we flip all the bits of number,
+    then we add 1 to it. Hence right most bit of both, will always be same.
+
+Parity refers to the number of 1s in a given number.
+Odd parity (1) means there are odd number of 1s 
+Even parity (0) means there are even number of 1s
+
+So in practice "absolute value" means to remove any negative sign in front of a number, 
+and to think of all numbers as positive (or zero). NO NEGATIVES !
+The absolute value of −9 is 9
+The absolute value of 3 is 3
+The absolute value of 0 is 0
+The absolute value of −156 is 156
+

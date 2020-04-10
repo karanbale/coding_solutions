@@ -7,8 +7,7 @@ bool oppositeSigns(int x, int y)
     return ((x ^ y) < 0); 
 } 
   
-int main() 
-{ 
+int checkSignOfGivenNumber(void){ 
     int x = 100, y = -100; 
     if (oppositeSigns(x, y) == true) 
        printf ("Signs are opposite\n"); 
@@ -16,3 +15,10 @@ int main()
       printf ("Signs are not opposite\n"); 
     return 0; 
 } 
+
+int main(void){
+
+  checkSignOfGivenNumber();
+  return 0;
+
+}
