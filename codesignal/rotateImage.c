@@ -44,13 +44,7 @@ arr_integer arr[];
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
+#include "../C/standardHeaders.h"
 
 typedef struct {
 int size;
@@ -96,7 +90,7 @@ arr_arr_integer rotateImage1(arr_arr_integer a) {
 /* Solution 2 */
 /**********************************************************************************************************/
 
-arr_arr_integer rotateImage(arr_arr_integer a) {
+arr_arr_integer rotateImage2(arr_arr_integer a) {
 
     int max_size = a.size;
 
@@ -107,6 +101,35 @@ arr_arr_integer rotateImage(arr_arr_integer a) {
             a.arr[max_size-1-j].arr[i] = a.arr[max_size-1-i].arr[max_size-1-j];
             a.arr[max_size-1-i].arr[max_size-1-j] = a.arr[j].arr[max_size-1-i];
             a.arr[j].arr[max_size-1-i] = temp;
+        }
+    }
+
+    return a;
+}
+
+/**********************************************************************************************************/
+/* Solution 2 */
+/**********************************************************************************************************/
+
+arr_arr_integer rotateImage3(arr_arr_integer a) {
+
+    int max_size = a.size;
+    // transpose of a matrix is simply rotating it clockwise
+    // take matrix's transpose
+    for(int row=0; row<max_size; row++){
+        for(int col=row; col<max_size; col++){
+            int temp = a.arr[row].arr[col];
+            a.arr[row].arr[col] = a.arr[col].arr[row];
+            a.arr[col].arr[row] = temp;
+        }
+    }
+    
+    // reverse rows
+    for(int row=0; row<max_size; row++){
+        for(int col=0; col<max_size/2; col++){
+            int temp = a.arr[row].arr[col];
+            a.arr[row].arr[col] = a.arr[row].arr[max_size-1-col];
+            a.arr[row].arr[max_size-1-col] = temp;
         }
     }
 

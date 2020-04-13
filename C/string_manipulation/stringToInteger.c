@@ -47,14 +47,7 @@ Explanation: The number "-91283472332" is out of the range of a 32-bit signed in
              Thefore INT_MIN (−231) is returned.
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "../standardHeaders.h"
 
 #define ENABLE_PRINTS 1
 

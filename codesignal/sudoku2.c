@@ -50,10 +50,7 @@ Return true if grid represents a valid Sudoku puzzle, otherwise return false.
 
 */
 
-#include <stddef.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
+#include "../C/standardHeaders.h"
 
 typedef struct {
 int size;
@@ -162,7 +159,7 @@ int isPresentInCol(arr_arr_char grid, const char currNum, int IpRowIndex, int Ip
 }
 
 
-bool sudoku2(arr_arr_char grid) {
+bool sudoku1(arr_arr_char grid) {
     int i=0, j=0;
     char currNum;
     for(i=0; i<grid.size; i++){

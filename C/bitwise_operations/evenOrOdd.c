@@ -9,14 +9,7 @@ if LSB = 0, number is even.
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "utilities.h"
 
 #define EVEN_ODD_METHOD_1(x) ((x) & (1))
 #define ARR_LEN 5

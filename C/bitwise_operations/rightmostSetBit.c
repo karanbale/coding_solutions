@@ -15,6 +15,14 @@ Theory of operation for negative numbers:
     To save negative numbers, we flip all the bits of number,
     then we add 1 to it. Hence right most bit of both, will always be same.
 
+If you take AND of n and (n-1), we can unset right most set bit of n.
+For a given number 'n', (n-1) will always have all of its bits flipped,
+AFTER n's right most set bit.
+    e.g.
+    Number   = 0b00010100 (20)
+    Number-1 = 0b00010011 (19)
+    ANDing   = 0b00010000 ====> Right most bit of n was cleared.
+
 E.g.
 Number = 12
 +(Num) = 0b00001010 (12)
@@ -54,6 +62,16 @@ int findRightmostSetBitInNumber(void){
 
     return 0;
 }
+
+/*
+If you take AND of n and (n-1), we can unset right most set bit of n.
+For a given number 'n', (n-1) will always have all of its bits flipped,
+AFTER n's right most set bit.
+    e.g.
+    Number   = 0b00010100 (20)
+    Number-1 = 0b00010011 (19)
+    ANDing   = 0b00010000 ====> Right most bit of n was cleared.
+*/
 
 int findPositionOfOnlySetBitInNumber(void){
 

@@ -1,11 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "utilities.h"
 
 int binary_num[32] = {0};
 
@@ -29,21 +22,27 @@ int int_to_bin_array(uint64_t k) {
     return ((k == 0) ? 0 : int_to_bin_array(k/2));
 }
 
-uint64_t flipBits(uint64_t num){
+uint64_t toggleBits(uint64_t num){
     int lengthOfNum = (int) (log2(num)+1);
-    printf("num: %lld, len of num: %d\n", num, lengthOfNum);
     int bitmask = ((1<<lengthOfNum)-1);
+    printf("num: %lld, len of num: %d bitmask: %lld\n", num, lengthOfNum, int_to_bin(bitmask));
     return (bitmask ^ num);
 }
 
-int flipBitsForGivenNumber(void){ 
-    int x = 100, y = -100; 
+
+int toggleBitsOfGivenNumber(void){ 
+    int x = 100;
+    printf("Num: %d, Bits:%lld, Flipped Bits: %lld\n", x, int_to_bin(x), int_to_bin(toggleBits(x)));
+    x = 1024;
+    printf("Num: %d, Bits:%lld, Flipped Bits: %lld\n", x, int_to_bin(x), int_to_bin(toggleBits(x)));
     // Convert 0xFFFF
-    printf("Num: 65535, Bits:%lld, Flipped Bits: %lld\n", int_to_bin(65535), int_to_bin(flipBits(65535)));
-    // Convert 0xFFFFFF
-    printf("Num: 16777215, Bits:%lld, Flipped Bits: %lld\n", int_to_bin(16777215), int_to_bin(flipBits(16777215)));
-    // Cnvert 0xFFFFFFFF 
-    printf("Num: 4294967295, Bits:%lld, Flipped Bits: %lld\n", int_to_bin(4294967295), int_to_bin(flipBits(4294967295)));
+    printf("Num: 65535, Bits:%lld, Flipped Bits: %lld\n", int_to_bin(65535), int_to_bin(toggleBits(65535)));
+    // Convert 0xFFFFFF, following method fails for numbers larger than 65535
+    // hence logging it here to display how it fails miserably
+    printf("Num: 16777215, Bits:%lld, Flipped Bits: %lld\n", int_to_bin(16777215), int_to_bin(toggleBits(16777215)));
+    // Cnvert 0xFFFFFFFF, following method fails for numbers larger than 65535
+    // hence logging it here to display how it fails miserably
+    printf("Num: 4294967295, Bits:%lld, Flipped Bits: %lld\n", int_to_bin(4294967295), int_to_bin(toggleBits(4294967295)));
     
     int array_size = 3;
     uint64_t nums_array[3] = {65535,16777215, INT32_MAX};
@@ -62,7 +61,7 @@ int flipBitsForGivenNumber(void){
 
 int main(void){
 
-    flipBitsForGivenNumber();
+    toggleBitsOfGivenNumber();
     return 0;
 }
 

@@ -22,3 +22,34 @@ The absolute value of 3 is 3
 The absolute value of 0 is 0
 The absolute value of −156 is 156
 
+Property, for even numbers, LSB is always 0.
+Simply check LSB. 
+If LSB = 1, number is odd.
+if LSB = 0, number is even.
+
+
+We right shift or left shift the number as step 1.
+Then we compare given number with this right/left shifted number.
+If outout is 0, then there are no pair with adjacent 1's.
+If output is greater than 0, then there are pair with adjacent 1's.
+
+    Number WITH adjacent pair of 1's
+    Number    : 67
+    Binary    : 0b01000011
+    Number<<1 : 0b10000110
+    ANDing O/P: 0b00000010
+
+    Number WITHOUT adjacent pair of 1's
+    Number    : 64
+    Binary    : 0b01000000
+    Number<<1 : 0b10000000
+    ANDing O/P: 0b00000000
+
+If you take AND of n and (n-1), we can unset right most set bit of n.
+For a given number 'n', (n-1) will always have all of its bits flipped,
+AFTER n's right most set bit.
+    e.g.
+    Number   = 0b00010100 (20)
+    Number-1 = 0b00010011 (19)
+    ANDing   = 0b00010000 ====> Right most bit of n was cleared.
+

@@ -1,5 +1,4 @@
-#include<stdbool.h> 
-#include<stdio.h> 
+#include "utilities.h"
   
 bool oppositeSigns(int x, int y) 
 { 
@@ -8,7 +7,7 @@ bool oppositeSigns(int x, int y)
 } 
   
 int checkSignOfGivenNumber(void){ 
-    int x = 100, y = -100; 
+    int x = 100, y = -40; 
     if (oppositeSigns(x, y) == true) 
        printf ("Signs are opposite\n"); 
     else

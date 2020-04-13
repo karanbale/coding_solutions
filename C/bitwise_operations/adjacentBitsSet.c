@@ -25,14 +25,7 @@ Method 2:
     ANDing O/P: 0b00000000
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "utilities.h"
 
 bool checkBitsLefthift(int number){
     printf("Num: %d, (num<<1): %d\n", number, (number<<1));

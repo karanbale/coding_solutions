@@ -29,14 +29,8 @@ Input: "{[]}"
 Output: true
 
 */
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+
+#include "../standardHeaders.h"
 
 // following array is of size 255
 // for opening brackets ASCII index, we assign correspondinng closing bracket value
@@ -98,7 +92,7 @@ bool isValid1(char * s){
             firstCharPos++; 
             continue;
         }
-        printf("curr: %c next: %c compliment: %c \n",s[firstCharPos], s[nxtCharPos], prospectClosingChar);
+        //printf("curr: %c next: %c compliment: %c \n",s[firstCharPos], s[nxtCharPos], prospectClosingChar);
         while(nxtCharPos != strlen(s)){
             // check if next closing bracket matches with current bracket
             if(s[nxtCharPos] == lut[*(s+firstCharPos)]){

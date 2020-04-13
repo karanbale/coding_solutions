@@ -26,13 +26,8 @@ Guaranteed constraints:
 true if inputString is a palindrome, false otherwise.
 
 */
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
+
+#include "../C/standardHeaders.h"
 
 bool checkPalindrome(char * inputString) {
     int i = 0;

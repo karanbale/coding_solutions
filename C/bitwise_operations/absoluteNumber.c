@@ -16,20 +16,13 @@ Explanation:
     for positive integers, mask will be 0 and ((number + 0) ^ number) = number.
     for negative integers: mask will be -1 and ((numer + (-1)) ^ (-1)) = number.
         We know, we store negative of a number in 2's compliment form.
-        We flip all the bits from its positive counterpart and add 1 to it.
+        i.e. we flip all the bits from its positive counterpart and add 1 to it.
         Now to get positive counterpart of a negative number, we substract 1 from it and
         flip its bits.
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "utilities.h"
 
 #define MASK(x)     ((x) >> ((sizeof(int) * 8)-1))
 #define ABS_VAL(x)  (((x)+(MASK(x))) ^ (MASK(x)))
@@ -42,8 +35,8 @@ int findAbsoluteNumber(int number){
 
 int main(void){
 
-    int nums[5] = {1,5,-11,-22,INT32_MIN};
-    for(int i=0; i<5; i++){
+    int nums[6] = {1,5,-11,-22,INT32_MIN, INT32_MIN+2};
+    for(int i=0; i<6; i++){
         printf("Num: %d Absolute Val: %d\n", nums[i], findAbsoluteNumber(nums[i]));
     }
     return 0;

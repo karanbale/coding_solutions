@@ -28,29 +28,38 @@ Number = 8
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "utilities.h"
 
 #define EVEN_ODD_METHOD_1(x) ((x)&(-(x)))
+#define EVEN_ODD_METHOD_2(x) ((x)&((x)-1))
 #define ARR_LEN 5
+
+// following method wont work if you pass in INT32_MAX to it
+// because unsigned int can only accomodate upto 32 int
+int64_t int_to_bin(uint64_t k){
+//    printf("K: %llu\n",k);
+    return ((k == 0) ? 0 : ((k % 2) + 10 * int_to_bin(k / 2)));
+}
 
 int main(void){
 
     int num[ARR_LEN] = {5,4,1,0,8};
 
+    printf("max pow value: %f\n", log2(INT32_MAX));
+    printf("max value that is square of 2: %d\n",(int) pow(2, (int)log2(INT32_MAX)+1));
+
     for(int i=0; i<ARR_LEN; i++){
         // if ANDing of a number and its negative counterpart is equal to the number itself,
         // then given number is always power of 2
-        if(EVEN_ODD_METHOD_1(num[i]) == num[i])  printf("Num: %d is power of 2.\n", num[i]);
+        
+        // METHOD 1 & 2
+        if(((EVEN_ODD_METHOD_1(num[i])) == num[i]) && (EVEN_ODD_METHOD_2(num[i])) == 0)  printf("Num: %d is power of 2.\n", num[i]);
         else printf("Num: %d is NOT power of 2.\n", num[i]);
+
+        printf("num: %lld, negative num: %lld\n", int_to_bin(num[i]), int_to_bin(-num[i])); 
 
     }
 
     return 0;
 }
+

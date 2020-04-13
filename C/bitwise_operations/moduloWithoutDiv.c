@@ -5,9 +5,9 @@ E.g. divisor = 2,4,8,16,32,64....
 
 Explanation:
     Remember, divisor is always a power of 2.
-    And the property for power of 2 is, ONLY 1 bit is always set for number whose power of 2.
-    Expression (divisor - 1) will always have all the bits from 0 to (i-1)th bit, where i is
-    first and only set bit of the divisor.
+    And the property for power of 2 is, ONLY 1 bit is always set for number who is power of 2.
+    Expression (divisor - 1) will always have all the bits from 0 to (i-1)th bit set to 1, 
+    where i is first and only set bit (since its power of 2) of the divisor.
     E.g. Divide 9 by 8
     divisor   = 0b00001000 (8)
     divisor-1 = 0b00000111 (7)
@@ -16,14 +16,7 @@ Explanation:
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "utilities.h"
 
 #define MODULO(num, divisor) ((num) & ((divisor)-1))
 #define ARRAY_SIZE 10

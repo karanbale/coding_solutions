@@ -1,12 +1,6 @@
 
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
+#include "../standardHeaders.h"
 
 void swap_arr(char *str1, char *str2){
   char *temp = (char *)malloc((strlen(str1) + 1) * sizeof(char));

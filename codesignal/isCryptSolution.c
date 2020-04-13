@@ -44,13 +44,7 @@ Even though 054 + 091 = 145, 054 and 091 both contain leading zeroes, meaning th
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
+#include "../C/standardHeaders.h"
 
 typedef struct {
 int size;

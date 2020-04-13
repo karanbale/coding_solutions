@@ -16,14 +16,7 @@ call isBadVersion(4) -> true
 Then 4 is the first bad version. 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "../standardHeaders.h"
 
 // The API isBadVersion is defined for you.
 // bool isBadVersion(int version);
