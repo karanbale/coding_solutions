@@ -13,7 +13,7 @@ Property of numbers who are power of 2:
 
 Theory of operation for negative numbers:
     To save negative numbers, we flip all the bits of number,
-    then we add 1 to it. Hence right most bit of both, will always be same.
+    then we add 1 to it. Hence right most set bit of both, will always be same.
 
 If you take AND of n and (n-1), we can unset right most set bit of n.
 For a given number 'n', (n-1) will always have all of its bits flipped,
@@ -36,14 +36,7 @@ Number = 8
 
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "../standardHeaders.h"
 
 #define EVEN_ODD_METHOD_1(x) ((x)&(-(x)))
 #define POS_OF_ONLY_SET_BIT(x) (((x) & ((x)-1)))

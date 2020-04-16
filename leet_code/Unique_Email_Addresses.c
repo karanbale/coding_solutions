@@ -32,14 +32,8 @@ All local and domain names are non-empty.
 Local names do not start with a '+' character.
 
 */
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+
+#include "../C/standardHeaders.h"
 
 #define ENABLE_PRINTS 1
 

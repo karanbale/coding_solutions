@@ -1,7 +1,12 @@
 
-Property to remember: 
+property of number with alternating bits:
+    for alternating bits number, if you right shift it by 1 then AND it with number itself, answer must be 0
+    for alternating bits number, if you right shift it by 2 then AND it with number itself, it must remain same as that of when you right shift it by 2 bits.
+    return (((n & (n>>1)) == 0) && ((n & (n>>2)) == (n>>2)));
+
+Property of number and its negative representation: 
     Number and its negative representation,
-    both will always have right most set bit of the number set, all other 
+    both will always have right most set bit of the Number set, all other 
     bits will be flipped.
 
 Property of numbers who are power of 2:

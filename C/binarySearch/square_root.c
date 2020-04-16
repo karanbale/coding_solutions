@@ -12,19 +12,12 @@ Output: 2
 Example 2:
 
 Input: 8
-Output: 2
+Output: 2`
 Explanation: The square root of 8 is 2.82842..., and since 
              the decimal part is truncated, 2 is returned.
 */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <stddef.h>
-#include <string.h>
-#include <stdint.h>
-#include <math.h>
-#include <stdarg.h>
+#include "../standardHeaders.h"
 
 #define SQR(x) ((x)*(x))
 

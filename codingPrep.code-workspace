@@ -3,5 +3,11 @@
 		{
 			"path": "/Users/karansinghbale/Documents"
 		}
-	]
+	],
+	"settings": {
+		"files.associations": {
+			"stdbool.h": "c",
+			"standardheaders.h": "c"
+		}
+	}
 }
