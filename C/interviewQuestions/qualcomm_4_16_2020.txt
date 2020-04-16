@@ -85,6 +85,13 @@ Answer:
     interrupt latency is the time taken from firing of an interrupt to the invocation of ISR.
 
 Question 5:
+    How would you measure exact interrupt latency?
+Answer:
+    You can set a GPIO high whenever interrupt is fired, and when you enter ISR, the first thing 
+    you do is set same GPIO low and measure these rising and falling edges on an oscilloscope,
+    and take differencce of the two along X-axis to get exact interrupt latency in terms of time.
+
+Question 6:
     What is ISR? What is IVT? Can you pass any argument to ISR or return any argument from ISR?
 Answer:
     ISR stands for interrupt service routine.
