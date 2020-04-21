@@ -10,7 +10,7 @@ def sorting_ut():
 		print('**********************************')
 	# 	print('Input list before sorting:       {}'.format(test_list))
 	# 	print('Input list after selection sort: {}'.format(sorting_methods.selection_sort(input_list=test_list)))
-	 	print('Input list after bubble sort:    {}'.format(sorting_methods.bubble_sort(input_list=test_list)))
+		print('Input list after bubble sort:    {}'.format(sorting_methods.bubble_sort(input_list=test_list)))
 	# 	print('Input list after insertion sort: {}\n'.format(sorting_methods.insertion_sort(input_list=test_list)))
 	#	print('Input list after merge sort:     {}'.format(sorting_methods.merge_sort(input_list=test_list)))
 		print('**********************************\n\n')

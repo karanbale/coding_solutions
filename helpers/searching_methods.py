@@ -3,7 +3,8 @@
 This file will contain all different types of sorting methods
 """
 
-from sorting_methods import *
+from helpers.sorting_methods import quick_sort
+import time
 
 
 def input_decorator(func):

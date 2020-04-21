@@ -86,7 +86,7 @@ def bubble_sort(input_list, **kwargs):
 	"""
 
 	# run for loop until end of the list
-	for run_loop in range(0, len(input_list)):
+	for _ in range(0, len(input_list)):
 		# start iterating using current index
 		for current_index in range(0, len(input_list)):
 			# if not end of the list, update next index
@@ -266,4 +266,4 @@ def quick_sort(input_list, low, high, **kwargs):
 		quick_sort(input_list=input_list, low=low, high=partition_index-1)
 		quick_sort(input_list=input_list, low=partition_index+1, high=high)
 
-	print(input_list)
+	return input_list
