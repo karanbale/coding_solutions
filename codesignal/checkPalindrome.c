@@ -29,7 +29,7 @@ true if inputString is a palindrome, false otherwise.
 
 #include "../C/standardHeaders.h"
 
-bool checkPalindrome(char * inputString) {
+bool checkPalindrome_method1(char * inputString) {
     int i = 0;
     int j = strlen(inputString)-1;
     while(j > i) {
@@ -40,13 +40,31 @@ bool checkPalindrome(char * inputString) {
     return true;
 }
 
+bool checkPalindrome_method2(char * inputString) {
+
+    char * temp = inputString+strlen(inputString)-1;
+    size_t count = strlen(inputString);
+    while(count/2){
+        // printf("%c \t %c\n", *inputString, *temp);
+        if(*inputString != *temp) return false;
+        inputString++;
+        temp--;
+        count --;
+    }
+
+    return true;
+
+}
+
 int main(){
     
-    char palindromStr[] = {};
-    printf("\nPlease enter a string: \n");
-    scanf("%s", palindromStr);
-    printf("\nuser input: %s\n", palindromStr);
-    printf("\nisPalindorme: %s\n", checkPalindrome(palindromStr) ? "true" : "false");
+    char palindromes[][50] = {"aabaa", "abac", "a", "az", "abacaba", "aaabaaaa", "zzzazzazz", "hlbeeykoqqqqokyeeblh",
+    "hlbeeykoqqqokyeeblh"};
+    for(int i=0; i<10; i++){
+        printf("String: %s, isPalindrome: %d\n", palindromes[i], checkPalindrome_method1(palindromes[i]));
+        printf("String: %s, isPalindrome: %d\n", palindromes[i], checkPalindrome_method2(palindromes[i]));
+        printf("\n");
+    }
 
     return 0;
 }

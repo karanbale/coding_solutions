@@ -94,6 +94,7 @@ arr_arr_integer rotateImage2(arr_arr_integer a) {
 
     int max_size = a.size;
 
+    // In place replacement of the variables
     for(int i=0; i<max_size/2+max_size%2; i++){        
         for(int j=0; j<max_size/2; j++){
             int temp = a.arr[i].arr[j];
