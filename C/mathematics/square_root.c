@@ -17,11 +17,11 @@ Explanation: The square root of 8 is 2.82842..., and since
              the decimal part is truncated, 2 is returned.
 */
 
-#include "../standardHeaders.h"
+#include "mathematics_headers.h"
 
 #define SQR(x) ((x)*(x))
 
-int mySqrt(int x){
+uint32_t mySqrt(int x){
 
     return (int)(pow(2,(0.5*log2(x))));
     

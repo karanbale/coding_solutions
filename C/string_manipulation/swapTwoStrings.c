@@ -1,6 +1,6 @@
 
 
-#include "../standardHeaders.h"
+#include "string_manipulation_headers.h"
 
 void swap_arr(char *str1, char *str2){
   char *temp = (char *)malloc((strlen(str1) + 1) * sizeof(char));

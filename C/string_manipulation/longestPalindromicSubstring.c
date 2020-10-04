@@ -14,8 +14,7 @@ Output: "bb"
 
 */
 
-
-#include "../standardHeaders.h"
+#include "string_manipulation_headers.h"
 
 char palindromeSubStr[1000];
 
