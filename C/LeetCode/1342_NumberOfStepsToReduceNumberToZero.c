@@ -70,8 +70,8 @@ int numberOfSteps (int num){
 
 int main(void){
 
-    int nums[] = {0,7,22,86};
-    for(int i=0; i<4; i++){
+    int nums[] = {7,22,86};
+    for(int i=0; i<3; i++){
         printf("Num: %d Steps to reduce to zero: %d\n", nums[i], numberOfSteps(nums[i]));
     }
     return 0;
