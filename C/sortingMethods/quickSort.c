@@ -34,20 +34,15 @@ int partition(int input_arr[], int arr_size, int low, int high){
 
     for(int j = low; j < high; j++){
         if(pivot >= input_arr[j]){
+            printf("Swapping %d with %d & idx %d, with %d\n", input_arr[j], input_arr[i], j, i);
             swap(&input_arr[j],&input_arr[i]);
             i++;
         }
     }
-
-    printArray(input_arr, )
-
+    printArray(input_arr, arr_size);
+    printf("Swapping %d with %d & idx %d, with %d\n", input_arr[high], input_arr[i], high, i);
     swap(&input_arr[i], &input_arr[high]);
-
-    printf("2. [");
-    for(int i=0; i<5; i++){
-        printf("%d,", input_arr[i]);
-    }
-    printf("]\n");
+    printArray(input_arr, arr_size);
 
     return i;
 
@@ -57,7 +52,7 @@ void quick_sort(int input_arr[], int arr_size, int low, int high){
 
     if(low<high){
         int pivot_index = partition(input_arr, arr_size, low, high);
-        quick_sort(input_arr, arr_size, ow, pivot_index-1);
+        quick_sort(input_arr, arr_size, low, pivot_index-1);
         quick_sort(input_arr, arr_size, pivot_index+1, high);
     }
 
@@ -68,19 +63,13 @@ int main(void){
     int arr_size = 5;
     int input_arr[5] = {10,40,80,70,50};
 
-    printf("Before: [");
-    for(int i=0; i<5; i++){
-        printf("%d,", input_arr[i]);
-    }
-    printf("]\n");
+    printf("Before: ");
+    printArray(input_arr, arr_size);
 
     quick_sort(input_arr, arr_size, 0, 4);
 
-    printf("After: [");
-    for(int i=0; i<5; i++){
-        printf("%d,", input_arr[i]);
-    }
-    printf("]\n");
+    printf("After: ");
+    printArray(input_arr, arr_size);
 
     return 0;
 }
