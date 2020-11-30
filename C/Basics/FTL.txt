@@ -1,0 +1,40 @@
+F.T.L. (Flash Translation Layer):
+- FTL handles algorithmic sequence of read, write, erase operations of NAND.
+- FTL also handles logical to physical address mapping.
+- The number of program / erase operations are limited for flash, thus FTL needs to ensure that,
+we minimize program/erase operations to expand lifetime of NAND flash.
+
+NAND Structure:
+    - For a NAND media, there are 3 basic operations performed by FTL.
+        1. Program (i.e. write)
+        2. Read
+        3. Erase 
+    - Program and Read are performed at page level.
+    - Erase is performed at block level.
+    - Read operations to a NAND are relatively quite quicker than Program.
+    - If a Program operation is accompanied with an erase operation then latency is really high.
+
+FTL Concepts:
+    - FTL divides NAND media into 2 separate sections.
+        1. Metadata
+            a. Reserved blocks for Bad block : To replace initial / run-time bad-blocks
+            b. Map blocks a.k.a. page tables : Logical to physical address translation / mapping.
+            c. Write Buffer Blocks           : Temp buffer to store incoming writes.
+        2. User data
+    - Logical to physical mapping:
+        1. FTL can implement two types of logical to physical mappings:
+            - Page mapping
+            - Block mapping
+        2. For page mapping, the advantage is, we can allocate incoming data to next free page,
+        and simply update the page table so random write is not FTL intensive since it does not
+        involve, page-copy (to another location) and block-erase operation as frequently.
+            a. Although the performance is excellent with page mapping technique, we need to ensure
+        that we reclaim invalid pages, in order to maintain system performance.
+            b. To reclaim such pages in timely and efficient manner, FTL shall have a garbage collection 
+        technique in place.
+            c. One downside to using page table mapping is, FTL requires a lot of memory space to store
+        page tables in both RAM and NAND media. 
+        3. Thus, in order to work around requirement for having large RAM/NAND media for page table mapping,
+        we can use block mapping.
+            a. In block mapping, logical page address is divided into logical block number and page address.
+            b. 

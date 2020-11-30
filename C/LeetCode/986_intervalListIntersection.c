@@ -27,8 +27,8 @@ Note:
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 
-#define MAX(a,b)  ((a > b) ? a : b);
-#define MIN(a,b)  ((a < b) ? a : b);
+#define MAX(a,b)  ((a > b) ? a : b)
+#define MIN(a,b)  ((a < b) ? a : b)
 
 void printArr(int **A, int r, int c){
     for (int i = 0; i <  r; i++){
