@@ -1,0 +1,8 @@
+What is a const in C ?
+
+https://leetcode.com/problems/two-sum/
+https://leetcode.com/problems/valid-parentheses/
+
+Describe a technical problem that you recently faced?
+Describe a situation where you had to gain trust of other teams?
+Describe a situation where you had to dive deep into a problem and resolve it?
