@@ -7,7 +7,7 @@ bool oppositeSigns(int x, int y)
 } 
   
 int checkSignOfGivenNumber(void){ 
-    int x = 100, y = -40; 
+    int x = 0, y = 0; 
     if (oppositeSigns(x, y) == true) 
        printf ("Signs are opposite\n"); 
     else

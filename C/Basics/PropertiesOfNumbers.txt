@@ -1,13 +1,36 @@
 
 property of number with alternating bits:
     for alternating bits number, if you right shift it by 1 then AND it with number itself, answer must be 0
-    for alternating bits number, if you right shift it by 2 then AND it with number itself, it must remain same as that of when you right shift it by 2 bits.
+    for alternating bits number, if you right shift it by 2 then AND it with number itself, it must remain same,
+    as that of when you right shift it by 2 bits.
+
+    // e.g. take number 4 (0b 100), it will pass the condition ((n & (n-1)) == 0) 
+    // but without next condition ((n & (n>>2)) == (n>>2)) it will be false positive
     return (((n & (n>>1)) == 0) && ((n & (n>>2)) == (n>>2)));
 
 Property of number and its negative representation: 
     Number and its negative representation,
     both will always have right most set bit of the Number set, all other 
     bits will be flipped.
+    E.g.
+
+    Number = 8
+    +(Num)   = 0b00001000 (-8)
+    bit flip = 0b11110111
+    add 1    = 0b00000001
+    -(Num)   = 0b11111000 (-8)
+
+    Number = 10
+    (+Num)   = 00001010 (+10)
+    bit flip = 11110101
+    add 1    = 00000001
+    -(Num)   = 11110110 (-10)
+
+    Number = 8
+    +(Num)   = 0b00011100 (+16)
+    bit flip = 0b11100011
+    add 1    = 0b00000001
+    -(Num)   = 0b11100100 (-16)
 
 Property of numbers who are power of 2:
     Only 1 bit will be set for numbers, who are power of 2.
@@ -19,6 +42,20 @@ Theory of operation for negative numbers:
 Parity refers to the number of 1s in a given number.
 Odd parity (1) means there are odd number of 1s 
 Even parity (0) means there are even number of 1s
+
+    Number = 8
+    (Num)    = 0b00001000 (8)
+    (Num -1) = 0b00000111 (7)
+    AND      = 0b00000000
+
+    Number = 10
+    (Num)       = 0b00001010 (10)
+    (Num -1)    = 0b00001001 (9)
+    AND         = 0b00001000 (8)
+    now, AND it again with num-1 
+    i.e. 7 since num is changed to 8 after previous ANDing
+    AND (NUM-1) = 0b00000111 (7)
+    AND         = 0b00000000 (0)
 
 So in practice "absolute value" means to remove any negative sign in front of a number, 
 and to think of all numbers as positive (or zero). NO NEGATIVES !
@@ -32,11 +69,13 @@ Simply check LSB.
 If LSB = 1, number is odd.
 if LSB = 0, number is even.
 
+    return ((num & 1) == 0);
 
-We right shift or left shift the number as step 1.
-Then we compare given number with this right/left shifted number.
-If outout is 0, then there are no pair with adjacent 1's.
-If output is greater than 0, then there are pair with adjacent 1's.
+To find number with adjacent pair of 1's
+    We right shift or left shift the number as step 1.
+    Then we compare given number with this right/left shifted number.
+    If outout is 0, then there are no pair with adjacent 1's.
+    If output is greater than 0, then there are pair with adjacent 1's.
 
     Number WITH adjacent pair of 1's
     Number    : 67
@@ -50,9 +89,10 @@ If output is greater than 0, then there are pair with adjacent 1's.
     Number<<1 : 0b10000000
     ANDing O/P: 0b00000000
 
-If you take AND of n and (n-1), we can unset right most set bit of n.
-For a given number 'n', (n-1) will always have all of its bits flipped,
-AFTER n's right most set bit.
+To unset right most set bit of given number:
+    If you take AND of n and (n-1), we can unset right most set bit of n.
+    For a given number 'n', (n-1) will always have all of its bits flipped,
+    AFTER n's right most set bit.
     e.g.
     Number   = 0b00010100 (20)
     Number-1 = 0b00010011 (19)

@@ -12,6 +12,20 @@ Method 2:
     We can calculate parity by turning off the right most bit one by one and counting parity.
     The time taken is proportional to number of bits set, better than method 1.
 
+    Number = 8
+    (Num)    = 0b00001000 (8)
+    (Num -1) = 0b00000111 (7)
+    AND      = 0b00000000
+
+    Number = 10
+    (Num)       = 0b00001010 (10)
+    (Num -1)    = 0b00001001 (9)
+    AND         = 0b00001000 (8)
+    now, AND it again with num-1 
+    i.e. 7 since num is changed to 8 after previous ANDing
+    AND (NUM-1) = 0b00000111 (7)
+    AND         = 0b00000000 (0)
+
 */
 
 #include "utilities.h"

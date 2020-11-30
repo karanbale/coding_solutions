@@ -6,14 +6,34 @@ Method 1:
 Property to remember: 
     Number and its negative representation,
     both will always have right most set bit of the number set, all other 
-    bits will be flipped.
+    bits to the left of this right most set bit, will be flipped.
+E.g.
+Number = 8
++(Num)   = 0b00001000 (-8)
+bit flip = 0b11110111
+add 1    = 0b00000001
+-(Num)   = 0b11111000 (-8)
+
+Number = 10
+(+Num)   = 00001010 (+10)
+bit flip = 11110101
+add 1    = 00000001
+-(Num)   = 11110110 (-10)
+
+Number = 8
++(Num)   = 0b00011100 (+16)
+bit flip = 0b11100011
+add 1    = 0b00000001
+-(Num)   = 0b11100100 (-16)
 
 Property of numbers who are power of 2:
     Only 1 bit will be set for numbers, who are power of 2.
+    E.g. Num = 0b 0000 1000 (8)
+         Num = 0b 0001 0000 (16)
 
 Theory of operation for negative numbers:
     To save negative numbers, we flip all the bits of number,
-    then we add 1 to it. Hence right most set bit of both, will always be same.
+    then we add 1 to it. Hence right most set bit of both numbers, will always be same.
 
 If you take AND of n and (n-1), we can unset right most set bit of n.
 For a given number 'n', (n-1) will always have all of its bits flipped,
@@ -23,17 +43,15 @@ AFTER n's right most set bit.
     Number-1 = 0b00010011 (19)
     ANDing   = 0b00010000 ====> Right most bit of n was cleared.
 
-E.g.
+Num AND (&) with its own negative value
++(Num)   = 0b00001000 (+8)
+-(Num)   = 0b11111000 (-8)
+ (ANS)   = 0b00001000 (8)
+
 Number = 12
 +(Num) = 0b00001010 (12)
 -(Num) = 0b11110110 (-12)
  (ANS) = 0b00000010 (2)
-
-Number = 8
-+(Num) = 0b00001000 (8)
--(Num) = 0b11111000 (-8)
- (ANS) = 0b00001000 (8)
-
 */
 
 #include "../standardHeaders.h"

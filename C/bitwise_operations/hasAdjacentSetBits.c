@@ -39,8 +39,8 @@ bool checkBitsRightShift(int number){
 
 int main(void){
 
-    int nums[2] = {64,67};
-    for(int i=0; i<2; i++){
+    int nums[3] = {3,64,67};
+    for(int i=0; i<3; i++){
         if(checkBitsLefthift(nums[i]) && checkBitsRightShift(nums[i])) 
             printf("Num: %d has adjacent pair of 1s\n",nums[i]);
         else printf("Num: %d has NO adjacent pair of 1s\n",nums[i]);

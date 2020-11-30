@@ -25,7 +25,7 @@ Explanation:
 int moduloWithoutDivision(void){
 
     int num[ARRAY_SIZE] = {2,6,8,21,19,100,125,679,1000,1001};
-    int divisor[ARRAY_SIZE-OFFSET] = {2,4,8,16,32,};
+    int divisor[ARRAY_SIZE-OFFSET] = {2,4,8,16,32};
 
     for(int i=0; i<ARRAY_SIZE; i++){
         for(int j=0; j<ARRAY_SIZE-OFFSET; j++){

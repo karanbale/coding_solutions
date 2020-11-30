@@ -63,7 +63,7 @@ int numberOfSteps (int num){
     }
     // printf("totalOnes: %d, totalBits: %d\n", totalOnes, totalNumBits);
     
-    // it takes 2 steps to reduce even number and 1 step to reduce odd number
+    // it takes 2 steps to reduce odd number and 1 step to reduce even number
     // substract 1 from answer, since, for MSB 1 bit, we only need to reduce it once not twice
     return (((totalOnes * 2)+(totalNumBits - totalOnes))-1);
 }

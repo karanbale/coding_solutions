@@ -23,7 +23,7 @@ nums2.length == n
 
 #include "../standardHeaders.h"
 
-void merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n){
+int *merge(int* nums1, int nums1Size, int m, int* nums2, int nums2Size, int n){
     
     int nums1Len = m-1;
     int nums2Len = n-1;

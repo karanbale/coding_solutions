@@ -59,7 +59,7 @@ int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
     }
     
     // sort entire array so that start and end times are organized in correct sequence
-    qsort(events,intervalsSize*2,sizeof(int*),cmp);
+    qsort(events,intervalsSize*2,sizeof(int*), cmp);
     
     // printArr(events, intervalsSize*2, 2);
     // track running sum and max

@@ -10,8 +10,8 @@ Now the first const can be on either side of the type so:
 
 const int * == int const *
 const int * const == int const * const
-If you want to go really crazy you can do things like this:
 
+If you want to go really crazy you can do things like this:
 int ** - pointer to pointer to int
 int ** const - a const pointer to a pointer to an int
 int * const * - a pointer to a const pointer to an int
@@ -27,24 +27,21 @@ foo = &a;           // assignment to where foo points to.
 
 /* dummy statement*/
 *foo = 6;           // the value of a can´t get changed through the pointer.
-
 foo = &b;           // the pointer foo can be changed.
 
-
+foo is a variable pointer to a constant integer. 
+This lets you change what you point to but not the value that you point to.
+Most often this is seen with C-style strings where you have a pointer to a const char. 
+You may change which string you point to but you can't change the content of these strings. 
+This is important when the string itself is in the data segment of a program and shouldn't be changed.
 
 int *const bar = &c;  // constant pointer to int 
                       // note, you actually need to set the pointer 
                       // here because you can't change it later ;)
 
 *bar = 16;            // the value of c can be changed through the pointer.    
-
 /* dummy statement*/
-bar = &a;             // not possible because bar is a constant pointer.           
-foo is a variable pointer to a constant integer. 
-This lets you change what you point to but not the value that you point to.
-Most often this is seen with C-style strings where you have a pointer to a const char. 
-You may change which string you point to but you can't change the content of these strings. 
-This is important when the string itself is in the data segment of a program and shouldn't be changed.
+bar = &a;             // not possible because bar is a constant pointer.    
 
 bar is a constant or fixed pointer to a value that can be changed. 
 This is like a reference without the extra syntactic sugar. 

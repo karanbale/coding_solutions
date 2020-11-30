@@ -16,7 +16,8 @@ https://leetcode.com/problems/sum-of-two-integers/discuss/573229/c-0ms-one-line-
 #include "../standardHeaders.h"
 
 /*
-Here, &((char *)a)[b] is nothing but (a + b) since address-of and subscript operations when applied together, results in no-op and sizeof(char) == 1. 
+Here, &((char *)a)[b] is nothing but (a + b) since address-of and subscript operations when applied together,
+results in no-op and sizeof(char) == 1. 
 So, for anyone who might be wondering, there is no illegal memory dereference here.
 The only integer types that can correctly represent a generic pointer in C is uintptr_t and intptr_t. 
 Thus we need to type cast given integer to uintptr_t -> void * -> char * to access 1 byte of the address.
@@ -24,7 +25,8 @@ Rest of the casting in my below solution is for portability and correctness.
 */
 
 int getSum_Method1(int a, int b){
-    return (uintptr_t)&((char *)(void *)(uintptr_t)a)[b]; 
+    return (uintptr_t)&((char *)(void *)(uintptr_t)a)[b];
+    // return (uintptr_t)&((char *)(void *)(uintptr_t)a)[b]; 
 }
 
 /*
@@ -118,7 +120,8 @@ int main(void){
     {
         printf("Sum of a: %d, b: %d is:\n",nums[i],nums[i+1]);
         printf("Method 1: %d\n",getSum_Method1(nums[i], nums[i+1]));
-        printf("Method 2: %d\n",getSum_Method1(nums[i], nums[i+1]));
+        printf("Method 2: %d\n",getSum_Method2(nums[i], nums[i+1]));
+        printf("Method 3: %d\n",getSum_FullAdder_Method3(nums[i], nums[i+1]));
         printf("\n");
     }
     return 0;

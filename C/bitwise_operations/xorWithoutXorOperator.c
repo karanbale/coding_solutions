@@ -7,10 +7,10 @@ Method 1:
 
 Method 2:
     We know following table for XOR / AND / OR gates.
-    X   Y   XOR     AND     OR  ((X|Y) - (X&Y))
+    X   Y   XOR     OR     AND  ((X|Y) - (X&Y))
     0   0   0       0       0       0
-    0   1   1       0       1       1
-    1   0   1       0       1       1
+    0   1   1       1       0       1
+    1   0   1       1       0       1
     1   1   0       1       1       0
     
     As we can see, using expression ((x|y) - (x&y)) we obtain logical table same as of XOR.
