@@ -55,8 +55,6 @@ class NestedIterator(object):
         for item in nestedList:
             if not item.isInteger():
                 self.flattenList(item.getList())
-            else:
-                self.queue.append(item.getInteger())
     
     def next(self):
         """
