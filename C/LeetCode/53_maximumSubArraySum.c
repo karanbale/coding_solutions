@@ -1,7 +1,6 @@
-"""
+/*
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
 Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
-
 
 Example 1:
 Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
@@ -28,27 +27,30 @@ Constraints:
 
 1 <= nums.length <= 2 * 104
 -231 <= nums[i] <= 231 - 1
+*/
 
-"""
+#include "../standardHeaders.h"
 
-class Solution(object):
-    def maxSubArray(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        maxSum = nums[0]
-        currSum = nums[0]
-        
-        if len(nums) == 0:
-            return 0
-        
-        if len(nums) == 2:
-            currSum = max(nums[0], nums[0] + nums[1])
-            return max(currSum, nums[1])
-        
-        for index in range(1, len(nums)):
-            currSum = max(nums[index], currSum+nums[index])
-            maxSum = max(currSum, maxSum)
-        
-        return maxSum
+int maxSubArray(int* nums, int numsSize){
+    
+    if(numsSize == 1){
+        return nums[0];
+    }
+    
+    if(numsSize == 2){
+        int currSum = fmax(nums[0], nums[0]+nums[1]);
+        return fmax(currSum, nums[1]);
+    }
+    
+    int maxSoFar = nums[0];
+    int retNum = nums[0];
+    
+    
+    for(int i=1; i<numsSize; i++){
+        maxSoFar = fmax(nums[i], maxSoFar+nums[i]);
+        retNum = fmax(retNum, maxSoFar);
+    }
+    
+    return retNum;
+
+}

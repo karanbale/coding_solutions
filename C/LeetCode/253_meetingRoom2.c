@@ -1,6 +1,7 @@
 /*
 
-Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
+Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
+find the minimum number of conference rooms required.
 
 Example 1:
 
@@ -38,17 +39,12 @@ int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
     
     qsort((void *)intervals, intervalsSize, sizeof(int*), cmp);
     
-    int meetingRoomsRequired = intervalsSize;
-    int *overlapTime = NULL;
-    bool overlapfound = false;
-    overlapTime = intervals[0];
-    int i, max = 0;
-    int retArrIdx = 0;
+    int max = 0;
     
     // put all time in a array, mark 1 as start and mark -1 as end
     int **events=NULL;
     events = (int**)malloc(intervalsSize*2*sizeof(int*));
-    for(i=0;i<intervalsSize;i++)
+    for(int i=0;i<intervalsSize;i++)
     {   
         events[i*2] = (int*)malloc(2*sizeof(int));
         events[i*2][0] = intervals[i][0];
@@ -66,7 +62,7 @@ int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
     // acquiring and releasing rooms in orderly fashion
     // will keep the room count in check
     int runningSum = 0;
-    for(i=0;i<intervalsSize*2;i++)
+    for(int i=0;i<intervalsSize*2;i++)
     {
         // everytime we acquire a room
         if(events[i][1] > 0)

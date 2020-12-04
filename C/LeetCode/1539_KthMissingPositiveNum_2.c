@@ -58,10 +58,3 @@ int findKthPositive(int* arr, int arrSize, int k){
     }
     return k;
 }
-
-for (int arrCurrIndex = 0, counter = 1 ; 
-    (k && (arrCurrIndex < arrSize) ? 
-    ((arr[arrCurrIndex] != counter) ? k-- : ++arrCurrIndex) 
-    : k--)
-    || (k = counter-1, 0); counter++);
-    return k;

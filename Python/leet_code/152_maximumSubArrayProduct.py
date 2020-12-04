@@ -39,7 +39,7 @@ class Solution(object):
             However, if you encounter a zero while you are looking your another negative number to save your combo chain, 
             you lose the hope of saving that combo chain.
 
-            max_so_far is updated by taking the maximum value among:
+            max_so_far is updated by taking the maximum value among the following three numbers.
 
             Current number.
                 This value will be picked if the accumulated product has been really bad (even compared to the current number). 
