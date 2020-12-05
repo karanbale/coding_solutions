@@ -1,15 +1,14 @@
 #include "hashMap.h"
 
-/*
- * hashTableGet() - Traverse the list that is at the corresponding array location in
+/**
+ * @brief : Traverse the list that is at the corresponding array location in
  * the hashtable. If a node with the same key is found as that passed to this
  * function, then return the value of that node. Otherwise, return NULL,
  * indicating there is no node with the key passed. Before returning, free
  * the copy of the string `key_cp`.
- * @hashtable: The hashtable in which to search for the data.
- * @key: The key to search the hashtable for.
- *
- * Return: The value that corresponds to the key if it is found, and NULL
+ * @param hashtable     : The hashtable in which to search for the data.
+ * @param key           : The key to search the hashtable for.
+ * @return              : The value that corresponds to the key if it is found, and NULL
  * otherwise. If the hashtable is NULL, return NULL.
  */
 char *hashTableGet(HashTable *hashtable, const char *key)

@@ -1,15 +1,14 @@
 #include "hashMap.h"
 
-/*
- * hashTableFree() - Free the items in a hashtable. Iterate through the hashtable's
+/**
+ * @brief            : Free the items in a hashtable. Iterate through the hashtable's
  * array. If it is a linked list, then traverse the list and free all the
  * node's attributes and then the node itself. When the end of the list is
  * reached, free the array item itself (i.e., `hashtable->array[i]`). Finally,
  * when all the array items are freed, free the hashtable array pointer and
  * the hashtable itself.
- * @hashtable: The hashtable to free.
- *
- * Return: If the hashtable is NULL, return because there is nothing to free.
+ * @param hashtable  : The hashtable to free.
+ * @return           : If the hashtable is NULL, return because there is nothing to free.
  */
 void hashTableFree(HashTable *hashtable)
 {

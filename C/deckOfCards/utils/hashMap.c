@@ -1,10 +1,10 @@
 #include "hashMap.h"
 
-/*
- * hash() - Find the index of the key passed, or if it does not exist, return
+/**
+ * @brief       : Find the index of the key passed, or if it does not exist, return
  * an empty array index.
- * @key: The key to find in the hash table.
- * @size: The size of the hash table.
+ * @param key   : The key to find in the hash table.
+ * @param size  : The size of the hash table.
  *
  * Return: The index of the item.
  */

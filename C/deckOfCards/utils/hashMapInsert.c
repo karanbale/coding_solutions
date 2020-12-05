@@ -1,14 +1,13 @@
 #include "hashMap.h"
 
-/*
- * nodeHandler() - If the index item is a linked list, traverse it to ensure
+/**
+ * @brief : If the index item is a linked list, traverse it to ensure
  * that there is not already an item with the key passed. If there is,
  * reassign the value of the prexisting node to the current instead of adding
  * the new node.
- * @hashtable: The hashtable of Lists.
- * @node: The linked list to add a node to or update.
- *
- * Return: Void.
+ * @param hashtable     : The hashtable of Lists.
+ * @param node          : The linked list to add a node to or update.
+ * @return              : Void.
  */
 void nodeHandler(HashTable *hashtable, List *node)
 {
@@ -39,15 +38,14 @@ void nodeHandler(HashTable *hashtable, List *node)
         }
 }
 
-/*
- * hashTablePut() - Allocates memory for a new node and calls the nodeHandler
+/**
+ * @brief : Allocates memory for a new node and calls the node_handler
  * function to either insert the node if the key does not exist, or update
  * a prexisting node in the case that it has the same key as that passed
  * to this function.
- * @key: The key to add to the hash table.
- * @value: The corresponding value to add to the node.
- *
- * Return: 1 if memory allocation fails, and 0 if the function returns
+ * @param key: The key to add to the hash table.
+ * @param value: The corresponding value to add to the node.
+ * @return: 1 if memory allocation fails, and 0 if the function returns
  * successfully.
  */
 int hashTablePut(HashTable *hashtable, const char *key, const char *value)

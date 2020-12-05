@@ -29,5 +29,6 @@ Assumptions Made:
 
 Algorithm notes:
     - Shuffle cards to create a random order.
+    - While handing out cards for the first time, store card's position in the deck, in a hash-map, with position as key, and card number as value.
     - Store this random order to compare the cards against.
     - 

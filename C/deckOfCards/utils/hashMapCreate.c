@@ -1,12 +1,11 @@
 #include "hashMap.h"
 
-/*
- * hashTableCreate() - If the size is a positive integer, allocate the requisite
+/**
+ * @brief       : If the size is a positive integer, allocate the requisite
  * memory for a new hashtable and its indexed array. Assign the size of the
- * array in ht->size.
- * size: The size of the hashtable's array.
- *
- * Return: A pointer to the newly allocated Hashtable. If size is zero or a
+ * array in hashTable->size.
+ * @param size  : The size of the hashtable's array.
+ * @return      : A pointer to the newly allocated Hashtable. If size is zero or a
  * negative number, return NULL. If a memory allocation fails, return NULL.
  */
 HashTable *hashTableCreate(unsigned int size)
