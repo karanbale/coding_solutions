@@ -18,4 +18,13 @@ but you'll get an idea when you read through them.
         - not unless its done in constant time and constant space.
     8. If input is integers, What would be the range of input values ?
     9. What would be the return type of the output ? Boolean / some integers / a list / a custom structure ?
+    10.Standard inputs to be tested your code against:
+        - list = []               #empty list
+        - list = [0,0,0]          # all zeros
+        - list = [1,2,3]          # incremental elements
+        - list = [3,2,1]          # decremental elements
+        - list = [1,1,1]          # duplicates
+        - list = [1,4,2]          # low -> high -> low
+        - list = [4,1,5]          # high -> low -> high
+        - list = []
 

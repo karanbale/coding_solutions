@@ -1,97 +1,111 @@
 
-#include <stdio.h>
-#include <stdlib.h>
-#define TRUE 1
-#define FALSE 0
-int *initialArr = NULL, *deckArr = NULL, numOfCards = 0, *superInitialArr = NULL;
+#include "deckOfCards.h"
 
-int comparedecks(int *deckArrPassed)
-{
-	int i = 0;
-	for(i = 1; i <= numOfCards; i++)
-	{
-		if(superInitialArr[i] != deckArrPassed[i])
-			return FALSE;
-	}
-	return TRUE;
+
+void printDeck(uint32_t deckNum, cardDeck_t *deckRoot){
+    
+    if(deckRoot == NULL){
+        printf("Cannot print empty deck !\n");
+        return;
+    }
+
+    card_t *tempPtr = deckRoot->head;
+    while(tempPtr != NULL){
+        printf("%d -> ", tempPtr->cardNum);
+        tempPtr = tempPtr->next;
+    }
+    printf("NULL\n");
 }
 
-void display(int *display, char *name)
-{
-	int j = 0;
-	printf("\n%s : ", name);
-	for (j = 1; j <= numOfCards; j++)
-	{
-		printf("%d", deckArr[j]);
-	}
+void freeMem(cardDeck_t *deckRoot){
+    if(deckRoot == NULL){
+        printf("Nothing to free !\n");
+        return;
+    }
+    card_t *tempPtr = deckRoot->head;
+    while(tempPtr != NULL){
+        deckRoot->head = deckRoot->head->next;
+        free(tempPtr);
+        tempPtr = deckRoot->head;
+    }
+    free(deckRoot);
+}
 
+card_t *createCard(uint32_t cardNum, uint32_t deckNum){
+    
+    card_t *card = malloc(sizeof(card_t));
+    
+    // heap allocation success / not
+    if(!card){
+        return NULL;
+    }
+
+    card->cardNum = cardNum;
+    card->deckNumber = deckNum;
+    card->next = NULL;
+    
+    return card;
+}
+
+cardDeck_t *initializeDeck(uint32_t numberOfCards, bool incOrderOfCards){
+    
+    // Can't create a deck with 0 cards
+    if(numberOfCards == 0){
+        return NULL;
+    }
+
+    card_t *tempPtr = NULL;
+    cardDeck_t *root = malloc(sizeof(cardDeck_t));
+    
+    // heap allocation success / not
+    if(!root){
+        return NULL;
+    }
+
+    root->numberOfCards = numberOfCards;
+    root->next = NULL;
+    root->head = NULL;
+
+    for(int i = 0; i<numberOfCards; i++){
+        // create card and add it to the deck, assign it to default deck
+        card_t *newCard = createCard(i+1, DEFAULT_DECK);
+        if(!root->head){
+            root->head = newCard;
+            tempPtr = newCard;
+        }
+        else{
+            tempPtr->next = newCard;
+            tempPtr = tempPtr->next;
+        }
+    }
+
+    //TODO: reverse linked-list if incOrderOfCards is false
+
+    return root;
 }
 
 int main(int argc, char **argv)
 {
-	int count = 0, index = 0, start = 1, i = 0, j = 0, ret = 0;
+	int count = 0, index = 0, start = 1, i = 0, j = 0, ret = 0, numberOfCards = 0;
+    cardDeck_t *deckRoot = NULL;
 	if(argc >  1)
 	{
-		numOfCards = atoi(argv[1]);
+		numberOfCards = atoi(argv[1]);
 	}
 	else
 	{
 		printf("Enter the number of cards in a deck: Max to be 52!\n");
-		scanf("%d", &numOfCards);
 	}
-	if(numOfCards < 1 || numOfCards > 52)
-	{
-		printf("Please enter a valid number in range 1 - 52 \n");
-		exit(0);
-	}
-	initialArr = (int *) malloc ( (sizeof(int) * (numOfCards + 1)));
-	deckArr = (int *) malloc ( (sizeof(int) * (numOfCards + 1)));
-	superInitialArr = (int *) malloc ( (sizeof(int) * (numOfCards + 1)));
-	for(i = 0; i <= numOfCards; i++)
-	{
-		initialArr[i] = i;
-		superInitialArr[i] = i;
-	}
-	
 
-	while(TRUE)
-	{
-		i = 0;
-		index = 0;
-		start = 1;
-		/* Iterating over multiple of 2, 4, 8, 16 ... indexex of array */
-		while (index < numOfCards)
-		{
-			i = start;
-			while (i <= numOfCards)
-			{
-				deckArr[numOfCards - index] = initialArr[i];
-				i += start * 2;
-				index += 1;
-			}
-			start *= 2;
-		}
-		ret = comparedecks(deckArr);
-		if(ret)
-		{
-			count++;
-			break;
-		}
-//		display(initialArr, "Intial Array");
-//		display(deckArr, "Deck Array");
-		count += 1;
-		free(initialArr);
-		initialArr = (int *) malloc (sizeof(int) * (numOfCards + 1));
-		for (j = 0; j <= numOfCards; j++)
-		{
-			initialArr[j] = deckArr[j];
-		}
-		
-	}
-	free(initialArr);
-	free(superInitialArr);
-	free(deckArr);
+    // initialize deck
+    deckRoot = initializeDeck(numberOfCards, false);
+    printDeck(DEFAULT_DECK, deckRoot);
+    freeMem(deckRoot);
 
+	// while(1)
+	// {
+	// 		// some code here
+	// }
 //	display(superInitialArr, "Super Intial Array");
 //	display(deckArr, "Final Array");
 	fprintf(stdout, "%d\n", count);
