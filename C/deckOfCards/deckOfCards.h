@@ -4,23 +4,24 @@
 #include "utils/hashMap.h"
 
 #define DEFAULT_DECK    0UL
+#define MIN_NUM_CARD    0UL
 #define MAX_NUM_CARD    52UL
-#define MAX_NUM_PLAYERS 52UL
 #define INVALID_DATA    0xFFUL
 
-char const *suits_str[4] = {"Spades", "Hearts", "Diamonds", "Clubs"};
-char const *faces_str[13] = {"2", "3", "4", "5", "6", "7", "8", "9","10", "J", "Q", "K", "A"};
-
+/**
+ * @brief   : This structure holds information about how a card would look like. 
+*/
 typedef struct card{
-    int cardNum;
+    int cardNum;                // each card is unique, we'll just assign incremental numbers per card
     int deckNumber;             // 0 when in a deck, greater than 0, when held by person
-    // char *cardNameStr[1];   // since "Diamonds" is 8 char long, limit to 9 char
-    // char *suitNameStr[9];
     int currentHandIndexNumber; // update this index for every time this card is handed out
-    int firstDeckIndex;
+    int firstHandIndex;         // update this index only during first round and don't touch this again.
     struct card *next;
 } card_t;
 
+/**
+ * @brief   :   This structure holds information about how a card deck would look like. 
+*/
 typedef struct cardDeck{
     size_t numberOfCards;
     card_t *head;
@@ -28,21 +29,18 @@ typedef struct cardDeck{
 }cardDeck_t;
 
 /**
- * @brief   : This is a default player, who does not play, just tracks few things internally for us.
+ * @brief   : This structure holds information about how a player data would look like.
 */
 typedef struct playerHand{
-    size_t numberOfCards;
-    card_t *cardHead;
-    struct playerHand *next;
+    size_t numberOfCards;           // how many cards does this player hold
+    card_t *cardHead;               // Pointer to first card this player holds
+    struct playerHand *next;        // pointer to next player, daisy chain of players in sequential order
 }playerHand_t;
 
+/**
+ * @brief   : This is a default player, who does not play, just tracks few things internally for us.
+*/
 playerHand_t *dummyPlayer = NULL;
-
-typedef struct playerTracker{
-    struct playerHand *head;
-}playerTracker_t;
-
-playerTracker_t *rootPlayerTrackerPtr;
 
 /**
  * @brief           : Function to print values in given deck
@@ -54,8 +52,6 @@ void printDeck(uint32_t deckNum, cardDeck_t *const deckRoot);
 
 /**
  * @brief                       : Function to print values in given player's deck
- * @param playerNumber          : Deck number from which, we want to print cards
- * @param rootPlayerTrackerPtr  : pointer to the root of player's deck
  * @return                      : void
 */
 void printPlayerDeck(void);
@@ -92,7 +88,7 @@ void initializePlayers(const uint32_t numberOfPlayers);
 bool isDeckResetToOriginal(cardDeck_t *deckRoot, bool incOrderOfCards);
 
 /**
- * @brief                   : Function to distribute cards amongst given number of people
+ * @brief                   : Function to distribute cards amongst given number of players
  * @param deckRoot          : pointer to the head of cardDeck_t, being distribution from here
  * @param numberOfPlayers   : total number of players in the game
  * @return                  : void
@@ -100,27 +96,28 @@ bool isDeckResetToOriginal(cardDeck_t *deckRoot, bool incOrderOfCards);
 void distributeCards(cardDeck_t *deckRoot, uint32_t numberOfPlayers);
 
 /**
- * @brief           : Function to free up memory allocated on heap for deck
- * @param deckRoot  : Pointer to the root deck
+ * @brief           : Function to free up memory allocated on heap for deck of cards
+ * @param deckRoot  : Pointer to the root of deck of cards
 */
 void freeMemDeck(cardDeck_t *deckRoot);
 
 /**
  * @brief           : Function to free up memory allocated on heap for players
- * @param deckRoot  : Pointer to the root deck
+ * @param deckRoot  : Pointer to the root of deck of cards
 */
-void freeFirstPlayer(void);
+void freePlayers(void);
 
 /**
- * @brief                   : Function to hand out cards to players
+ * @brief                   : Function to hand out/deal cards to the players
  * @param deckRoot          : pointer to the head of cardDeck_t, being distribution from here
- * @param numberOfPlayers   : Number of players this hand needs to be dealt between
+ * @param numberOfPlayers   : Number of players this hand needs to be dealt in between
  * @return                  : void
 */
 void dealHand(cardDeck_t *deckRoot, uint32_t numberOfPlayers);
 
 /**
- * @brief                   : Function to re-initialize card deck by collecting cards from players
+ * @brief                   : Function to re-initialize card deck by collecting cards from players and piling them up on 
+ *                            top of each other in sequential manner i.e. P1<-P2<P3 (P1 is on top, P3 is at bottom)
  * @param deckRoot          : pointer to the head of cardDeck_t, being distribution from here
  * @param numberOfPlayers   : Number of players this hand needs to be dealt between
  * @return                  : Return pointer to head of the cardDeck

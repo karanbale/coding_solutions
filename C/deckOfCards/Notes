@@ -22,13 +22,50 @@ Assumptions Made:
     - Card shuffling is permitted only before or after the rounds are finished and deck is back to its original order.
     - All N cards are distributed among all the people i.e. no card is left behind on the table.
     - Since number of people can vary, not every person may get equal number of cards.
-        i.e. if we have 10 cards and 4 people, 2 people get 3 cards each, and 2 people get 2 cards each. (Distributing 1 card each in round robit fashion.)
-    - Cards being held by each person, are not swapped with other person holding cards / are not passed around. Everyone holds their cards and returns them,
-      in the order they were given to each person, to conclude the round.
-    - Cards are not shuffled by the person holding the cards. The person holding cards, maintains the order of cards in the way it was received.
+        i.e. if we have 10 cards and 4 people, 2 people get 3 cards each, and 2 people get 2 cards each. 
+        (Distributing 1 card each in round robit fashion.)
+    - Cards being held by each person, are not swapped with other person holding cards / are not passed around. 
+      Everyone holds their cards and returns them, in the order they were given to each person, to conclude the round.
+    - Cards are not shuffled by the person holding the cards. The person holding cards, 
+      maintains the order of cards in the way it was received.
+    - The final answer count only increments per round and is initialized to 0. It will not account for starting state of the deck.
+    - Since the Problem does not include upper bounds / lower bounds for number of cards i.e. N, I've set the upper bound at 52,
+    (because we have 52 cards in a deck, but I've tested it upto the value of 6000).
+    - I've set the lower bound for input to be 0, just to cover lowest input corner case.
 
-Algorithm notes:
-    - Shuffle cards to create a random order.
-    - While handing out cards for the first time, store card's position in the deck, in a hash-map, with position as key, and card number as value.
-    - Store this random order to compare the cards against.
-    - 
+Algorithm Notes:
+    - Since we cannot use arrays, I have presumed, I cannot use stack / queue either. 
+    - In my opinion, though arrays and stacks are two different data types, 
+    they both are index based operations, both require traversing for accessing/updating elements, 
+    so they are quite similar in more ways than few.
+    - Thus I decided to simply use linked-lists and shallow copy of these linked-lists,
+    while allocating/deallocating cards to players and to deck.
+    - Using shallow copy enables my algorithm to run in constant space / memory.
+    - I've ran this code with my brute-force algorithm, the output is quite in-consisten, and thus I cannot
+    use DP on it to enhance my algorithm. I've ran this algorithm with an input of N=19, I get the output as 154 but for 
+    N = 20, output is 10, N = 11 output 2 and thus there is no pattern.
+
+Key code structures to be aware of:
+    - card_t:
+        This structure holds information about how a card would look like. 
+    - cardDeck_t:
+        This structure holds information about how a card deck would look like.
+    - playerHand_t:
+        This structure holds information about how a player's data would look like.
+
+Worse case Time Complexity:
+    - There is a little gotcha with this algorithm, since number of shuffles can swing between N and 1 for any given number N.
+    - Thus even though each iteration is worse case O(N), we're still running say M iterations of shuffles.
+    - Below is an explanation of O(N) time complexity analysis
+    - Although this code has several nested for / while loops, the time complexity never exceeds N simply because of the outerloop limitation.
+    - We either iterate over N items, to add / remove them from linked list, and assign them to players (max number of player = 5).
+    - When we assign cards to the players cards are split between players, so O(N/(number of players)) is max iteration count per nested loop,
+    which sums up to O(N).
+    - When we reform the deck by collecting cards from players or vice versa, we're still running a loop of N cards.
+    - Now, the total number of shuffles in worse case are assumed to be M, thus our complexity would be O(N*M)
+    - Final Time Complexity: O(N*M), where N = number of inputs and M = number of shuffles requred
+
+Worse case Space Complexity:
+    - The space complexity here is O(N) since I'm using shallow copies to move data around and never allocate extra memory.
+    - The only memory needed is for allocating 1 linked-list per input, thus N linked lists for N inputs.
+    - Final Space Complexity: O(N)
