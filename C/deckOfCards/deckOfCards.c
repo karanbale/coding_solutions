@@ -57,21 +57,28 @@ void freeMemDeck(cardDeck_t *deckRoot){
     free(deckRoot);
 }
 
-void freeMemPlayers(void){
-    if(dummyPlayer->cardHead == NULL){
+void freeFirstPlayer(void){
+    if(dummyPlayer->next == NULL){
         printf("Nothing to free !\n");
         return;
     }
 
-    card_t *tempPtr = dummyPlayer->cardHead;
-    if(tempPtr != NULL){
-        while(tempPtr != NULL){
-            dummyPlayer->cardHead = dummyPlayer->cardHead->next;
-            free(tempPtr);
-            tempPtr = dummyPlayer->cardHead;;
+    playerHand_t *currPlayerPtr = dummyPlayer->next;
+    card_t *currCardPtr = currPlayerPtr->cardHead;
+    card_t *prevCardPtr = currCardPtr;
+    
+    dummyPlayer->next = currPlayerPtr->next;    // advance dummy before we free current player
+    currPlayerPtr->next = NULL;                 // break the link
+
+    if(currCardPtr != NULL){
+        while(currCardPtr != NULL){
+            currCardPtr = currCardPtr->next;    // advance to next card
+            free(prevCardPtr);
+            prevCardPtr = currCardPtr;
         }
     }
-    free(dummyPlayer);
+    free(currPlayerPtr);
+
 }
 
 card_t *createCard(uint32_t cardNum, uint32_t deckNum){
@@ -203,8 +210,6 @@ void dealHand(cardDeck_t *deckRoot, const uint32_t numberOfPlayers){
         }
         currCardPtr->currentHandIndexNumber = ++cardCounter;
 
-        // go to next card
-        // currCardPtr = deckRoot->head;
         // go to next player
         if(currPlayer->next == NULL){   // wrap around back to first player
             currPlayer = dummyPlayer->next;
@@ -218,38 +223,42 @@ void dealHand(cardDeck_t *deckRoot, const uint32_t numberOfPlayers){
 }
 
 cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers){
-    playerHand_t *currPlayer = dummyPlayer->next;
-    playerHand_t *nextPlayer = currPlayer->next;
-    cardDeck_t *nextCard = NULL;
     cardDeck_t *deckRoot = malloc(sizeof(cardDeck_t));
-    cardDeck_t *deckRootPtr = NULL;
+    // heap allocation success / not
+    if(!deckRoot){
+        return NULL;
+    }
+    deckRoot->next = NULL;
+    deckRoot->head = NULL;
+
+    card_t *tempPtr = deckRoot->head;
 
     for(int i=0; i<numberOfPlayers; i++){
+        playerHand_t *currPlayer = dummyPlayer->next;
         card_t *currCard = currPlayer->cardHead;
+        card_t *prevCard = currCard;
         while(currCard != NULL){
-            deckRoot->head = currCard;
-            currCard = currCard->next;
+            if(deckRoot->head == NULL){
+                deckRoot->head = currCard;       // add value back to the deck
+                tempPtr = currCard;
+            }
+            else{
+                tempPtr->next = currCard;
+                tempPtr = tempPtr->next;
+            }
+            currCard = currCard->next;          // advance current card
+            prevCard->next = NULL;              // shallow-copying side effect
+            prevCard = currCard;
+            currPlayer->cardHead = currCard;
         }
+        dummyPlayer->next = currPlayer->next;   // advance dummy player
+        currPlayer->next = NULL;                // shallow-copying side effect
+        free(currPlayer);
+        // freeFirstPlayer();                   // free this player and make next player as current
     }
 
-    for(int i = 0; i<numberOfPlayers; i++){
-        // create card and add it to the deck, assign it to default deck
-        // card_t *newCard = createCard(i+1, DEFAULT_DECK);
-        card_t *currCard = currPlayer->cardHead;
-        card_t *tempCardPtr = currCard;
-        while(currCard != NULL){
-            (deckRoot->head == NULL) ? (deckRoot->head = currCard) : (tempCardPtr = currCard);
-            // if(deckRoot->head == NULL){
-            //     deckRoot->head = currCard;
-            // }
-            // else{
-            //     tempCardPtr = currCard;
-            // }
-            currCard = currCard->next;
-        }
-        currPlayer = currPlayer->next;
-    }
-    printDeck(DEFAULT_DECK, deckRoot);
+    printDeck(DEFAULT_DECK, deckRoot);          // check if deck is assembled
+
     return deckRoot;
 }
 
@@ -282,10 +291,11 @@ int main(int argc, char **argv)
     printPlayerDeck();
     dealHand(deckRoot, numberOfPlayers);
     printPlayerDeck();
-    // deckRoot = reinitializeDeckUsingCardsFromPlayers(numberOfPlayers);
+    deckRoot = reinitializeDeckUsingCardsFromPlayers(numberOfPlayers);
     printDeck(DEFAULT_DECK, deckRoot);
-    freeMemPlayers();
+    freeFirstPlayer();
     freeMemDeck(deckRoot);
+    free(dummyPlayer);
 
 	// while(1)
 	// {

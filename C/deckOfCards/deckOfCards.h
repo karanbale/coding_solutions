@@ -42,6 +42,7 @@ typedef struct playerTracker{
 }playerTracker_t;
 
 playerTracker_t *rootPlayerTrackerPtr;
+
 /**
  * @brief           : Function to print values in given deck
  * @param deckNum   : Deck number from which, we want to print cards
@@ -107,7 +108,7 @@ void freeMemDeck(cardDeck_t *deckRoot);
  * @brief           : Function to free up memory allocated on heap for players
  * @param deckRoot  : Pointer to the root deck
 */
-void freeMemPlayers(void);
+void freeFirstPlayer(void);
 
 /**
  * @brief                   : Function to hand out cards to players
