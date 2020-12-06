@@ -17,6 +17,7 @@ typedef struct card{
     // char *cardNameStr[1];   // since "Diamonds" is 8 char long, limit to 9 char
     // char *suitNameStr[9];
     int currentHandIndexNumber; // update this index for every time this card is handed out
+    int firstDeckIndex;
     struct card *next;
 } card_t;
 
@@ -125,3 +126,10 @@ void dealHand(cardDeck_t *deckRoot, uint32_t numberOfPlayers);
  * @return                  : Return pointer to head of the cardDeck
 */
 cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers);
+
+/**
+ * @brief                   : Function to validate if current deck has returned to its original position
+ * @param deckRoot          : pointer to the head of cardDeck_t, being distribution from here
+ * @return                  : Return pointer to head of the cardDeck
+*/
+bool validateDeck(cardDeck_t *const deckRoot);

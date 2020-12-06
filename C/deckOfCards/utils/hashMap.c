@@ -22,26 +22,4 @@ unsigned int hash(const char *key, unsigned int size)
         return (hash);
 }
 
-/*
- * main() - Create a hash table of size 1, put keyed item in the hashtable,
- * call printf to print the value of the key. Free the hash before returning.
- *
- * Return: 0 upon success, 1 upon failure.
- */
-int main(void) {
-        HashTable *ht;
-
-        ht = hashTableCreate(1);
-        if (ht == NULL) {
-                return 1;
-        }
-
-        if (hashTablePut(ht, "isFun", "C") == 0) {
-                printf("%s\n", hashTableGet(ht, "isFun"));
-                hashTableFree(ht);
-                return 0;
-        }
-
-        return 1;
-}
 

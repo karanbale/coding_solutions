@@ -3,7 +3,7 @@
 
 void printPlayerDeck(void){
     // dummy player's cardHead will always be NULL as he wont be dealt any cards ever
-    if(dummyPlayer->next->cardHead == NULL){
+    if((dummyPlayer->next == NULL) || (dummyPlayer->next->cardHead == NULL)){
         printf("No player's have cards with them. \n");
         return;
     }
@@ -35,10 +35,30 @@ void printDeck(uint32_t deckNum, cardDeck_t *const deckRoot){
 
     card_t *tempPtr = deckRoot->head;
     while(tempPtr != NULL){
-        printf("%d -> ", tempPtr->cardNum);
+        if((deckNum == DEFAULT_DECK)||(deckNum == tempPtr->deckNumber)){
+            printf("%d -> ", tempPtr->cardNum);
+        }
         tempPtr = tempPtr->next;
     }
     printf("NULL\n");
+}
+
+bool validateDeck(cardDeck_t *const deckRoot){
+    
+    if(deckRoot == NULL){
+        printf("Cannot validate empty deck !\n");
+        return false;
+    }
+
+    card_t *tempPtr = deckRoot->head;
+    while(tempPtr != NULL){
+        if(tempPtr->firstDeckIndex != tempPtr->currentHandIndexNumber){
+            return false;
+        }
+        tempPtr = tempPtr->next;
+    }
+    
+    return true;
 }
 
 void freeMemDeck(cardDeck_t *deckRoot){
@@ -120,6 +140,7 @@ cardDeck_t *initializeDeck(uint32_t numberOfCards, bool incOrderOfCards){
         // create card and add it to the deck, assign it to default deck
         card_t *newCard = createCard(i+1, DEFAULT_DECK);
         newCard->currentHandIndexNumber = 0;    // this is not a hand, this is deck composition
+        newCard->firstDeckIndex = i+1;
         if(!root->head){
             root->head = newCard;
             tempPtr = newCard;
@@ -208,7 +229,7 @@ void dealHand(cardDeck_t *deckRoot, const uint32_t numberOfPlayers){
             tempPtr->next = currCardPtr;
             printf("    2. Next index: %d, Next card: %d\n", currCardPtr->currentHandIndexNumber, currCardPtr->cardNum);
         }
-        currCardPtr->currentHandIndexNumber = ++cardCounter;
+        // currCardPtr->currentHandIndexNumber = ++cardCounter;
 
         // go to next player
         if(currPlayer->next == NULL){   // wrap around back to first player
@@ -232,9 +253,11 @@ cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers){
     deckRoot->head = NULL;
 
     card_t *tempPtr = deckRoot->head;
+    uint32_t cardCounter = 0;
+
+    playerHand_t *currPlayer = dummyPlayer->next;
 
     for(int i=0; i<numberOfPlayers; i++){
-        playerHand_t *currPlayer = dummyPlayer->next;
         card_t *currCard = currPlayer->cardHead;
         card_t *prevCard = currCard;
         while(currCard != NULL){
@@ -246,15 +269,16 @@ cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers){
                 tempPtr->next = currCard;
                 tempPtr = tempPtr->next;
             }
+            currCard->currentHandIndexNumber = ++cardCounter;
             currCard = currCard->next;          // advance current card
             prevCard->next = NULL;              // shallow-copying side effect
             prevCard = currCard;
             currPlayer->cardHead = currCard;
         }
-        dummyPlayer->next = currPlayer->next;   // advance dummy player
-        currPlayer->next = NULL;                // shallow-copying side effect
-        free(currPlayer);
-        // freeFirstPlayer();                   // free this player and make next player as current
+        currPlayer = currPlayer->next;
+        // dummyPlayer->next = currPlayer->next;   // advance dummy player
+        // currPlayer->next = NULL;                // shallow-copying side effect
+        // free(currPlayer);
     }
 
     printDeck(DEFAULT_DECK, deckRoot);          // check if deck is assembled
@@ -264,7 +288,8 @@ cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers){
 
 int main(int argc, char **argv)
 {
-	int count = 0, index = 0, start = 1, i = 0, j = 0, ret = 0;
+	int count = 1;
+    bool deckNotRestored = true;
     uint32_t numberOfCards = 10;
     uint32_t numberOfPlayers = 4;
     cardDeck_t *deckRoot = NULL;
@@ -277,11 +302,11 @@ int main(int argc, char **argv)
             return 0;
         }
 	}
-	// else
-	// {
-	// 	printf("Must enter the number of cards and players: Max to be 52!\n");
-    //     return 0;
-	// }
+	else
+	{
+		printf("Must enter the number of cards and players: Max to be 52!\n");
+        return 0;
+	}
 
     // initialize deck
     deckRoot = initializeDeck(numberOfCards, false);
@@ -289,10 +314,22 @@ int main(int argc, char **argv)
     // initialize players
     initializePlayers(numberOfPlayers);
     printPlayerDeck();
-    dealHand(deckRoot, numberOfPlayers);
-    printPlayerDeck();
-    deckRoot = reinitializeDeckUsingCardsFromPlayers(numberOfPlayers);
-    printDeck(DEFAULT_DECK, deckRoot);
+    while(deckNotRestored)
+    {
+        /* code */
+        dealHand(deckRoot, numberOfPlayers);
+        printPlayerDeck();
+        deckRoot = reinitializeDeckUsingCardsFromPlayers(numberOfPlayers);
+        printDeck(DEFAULT_DECK, deckRoot);
+        if(validateDeck(deckRoot)){
+            printf("#########################################\n");
+            printf("    Restored successfully  \n");
+            printf("#########################################\n");
+            deckNotRestored = false;
+        }
+        count++;
+    }
+    
     freeFirstPlayer();
     freeMemDeck(deckRoot);
     free(dummyPlayer);
