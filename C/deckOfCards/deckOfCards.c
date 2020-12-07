@@ -26,7 +26,7 @@ void printPlayerDeck(void){
     printf("\n");
 }
 
-void printDeck(uint32_t deckNum, cardDeck_t *const deckRoot){
+void printDeck(const uint32_t deckNum, cardDeck_t *const deckRoot){
     
     if(deckRoot == NULL){
         printf("Cannot print empty deck !\n");
@@ -120,7 +120,7 @@ card_t *createCard(uint32_t cardNum, uint32_t deckNum){
     return card;
 }
 
-cardDeck_t *initializeDeck(uint32_t numberOfCards, bool incOrderOfCards){
+cardDeck_t *initializeDeck(uint32_t numberOfCards, bool shuffleCards){
     
     // Can't create a deck with 0 cards
     if(numberOfCards == 0){
@@ -139,7 +139,7 @@ cardDeck_t *initializeDeck(uint32_t numberOfCards, bool incOrderOfCards){
     root->next = NULL;
     root->head = NULL;
 
-    for(int i = 0; i<numberOfCards; i++){
+    for(uint32_t i = 0; i<numberOfCards; i++){
         // create card and add it to the deck, assign it to default deck
         card_t *newCard = createCard(i+1, DEFAULT_DECK);
         newCard->currentHandIndexNumber = 0;    // this is not a hand, this is deck composition
@@ -154,7 +154,7 @@ cardDeck_t *initializeDeck(uint32_t numberOfCards, bool incOrderOfCards){
         }
     }
 
-    //TODO: reverse linked-list if incOrderOfCards is false
+    //TODO: shuffle (reverse for simplicity) linked-list if shuffleCards is false
 
     return root;
 }
@@ -171,7 +171,7 @@ void initializePlayers(const uint32_t numberOfPlayers){
 
     playerHand_t *tempPtr = dummyPlayer;
     // create structures for each player
-    for(int i=0; i<numberOfPlayers; i++){
+    for(uint32_t i=0; i<numberOfPlayers; i++){
         playerHand_t *newPlayer = malloc(sizeof(playerHand_t));
         if(newPlayer == NULL)   {   return; }
 
@@ -198,7 +198,7 @@ void dealHand(cardDeck_t *deckRoot, const uint32_t numberOfPlayers){
     // if number of players is invalid value, we cannot proceed
     if(numberOfPlayers == 0){   return; }
 
-    uint32_t cardCounter = 0, deckCounter = 0;
+    uint32_t deckCounter = 0;
     playerHand_t *currPlayer = dummyPlayer->next;
     // Deal 1 card each to every player starting with player 1 
     // then card 2, to player 2, card 3 to player 3 and so on
@@ -261,7 +261,7 @@ cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers){
 
     playerHand_t *currPlayer = dummyPlayer->next;
 
-    for(int i=0; i<numberOfPlayers; i++){
+    for(uint32_t i=0; i<numberOfPlayers; i++){
         card_t *currCard = currPlayer->cardHead;
         card_t *prevCard = currCard;
         while(currCard != NULL){
@@ -304,8 +304,13 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		printf("Must enter the number of cards: Max to be %ld OR Min to be %ld!\n",MAX_NUM_CARD, MIN_NUM_CARD);
-        return 0;
+        printf("Please enter number of cards (MAX number set to %ld): \n",MAX_NUM_CARD);
+        scanf("%d", &numberOfCards);
+        if(numberOfCards > MAX_NUM_CARD){
+            printf("Must enter the number of cards: Max to be %ld OR Min to be %ld!\n",MAX_NUM_CARD, MIN_NUM_CARD);
+            return 0;
+        }
+		
 	}
 
     // initialize deck
@@ -315,11 +320,13 @@ int main(int argc, char **argv)
     // until deck is restored, do not stop
     while(deckNotRestored)
     {
+        // wrap around to 3, whenever we've reached 5
         if(numberOfPlayers >= 5){
             numberOfPlayers = 2;
         }
         numberOfPlayers++;
-        // printf("Current Pile count: %d\n",numberOfPlayers);
+        // printf("Current Player count: %d\n",numberOfPlayers);
+
         // initialize players
         initializePlayers(numberOfPlayers);
         // printPlayerDeck();
@@ -327,19 +334,22 @@ int main(int argc, char **argv)
         // printPlayerDeck();
         deckRoot = reinitializeDeckUsingCardsFromPlayers(numberOfPlayers);
         // printDeck(DEFAULT_DECK, deckRoot);
+        
         if(validateDeck(deckRoot)){
-            printf("#########################################\n");
-            printf("    Restored successfully  \n");
-            printf("#########################################\n");
+            // printf("#########################################\n");
+            // printf("    Restored successfully  \n");
+            // printf("#########################################\n");
             deckNotRestored = false;
         }
         freePlayers();
         count++;
     }
+
+    // clean up to avoid memory leaks
     freeMemDeck(deckRoot);
     free(dummyPlayer);
 
-	fprintf(stdout, "%ld\n", count);
+	fprintf(stdout, "Total rounds require to restore original order: %ld\n", count);
 
 	return 0;
 }

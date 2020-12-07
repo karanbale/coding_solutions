@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "utils/hashMap.h"
 
 #define DEFAULT_DECK    0UL
 #define MIN_NUM_CARD    0UL
@@ -12,10 +11,10 @@
  * @brief   : This structure holds information about how a card would look like. 
 */
 typedef struct card{
-    int cardNum;                // each card is unique, we'll just assign incremental numbers per card
-    int deckNumber;             // 0 when in a deck, greater than 0, when held by person
-    int currentHandIndexNumber; // update this index for every time this card is handed out
-    int firstHandIndex;         // update this index only during first round and don't touch this again.
+    uint32_t cardNum;                // each card is unique, we'll just assign incremental numbers per card
+    uint32_t deckNumber;             // 0 when in a deck, greater than 0, when held by person
+    uint32_t currentHandIndexNumber; // update this index for every time this card is handed out
+    uint32_t firstHandIndex;         // update this index only during first round and don't touch this again.
     struct card *next;
 } card_t;
 
@@ -48,7 +47,7 @@ playerHand_t *dummyPlayer = NULL;
  * @param deckRoot  : pointer to the root of deck
  * @return          : void
 */
-void printDeck(uint32_t deckNum, cardDeck_t *const deckRoot);
+void printDeck(const uint32_t deckNum, cardDeck_t *const deckRoot);
 
 /**
  * @brief                       : Function to print values in given player's deck
@@ -67,7 +66,7 @@ card_t *createCard(uint32_t cardNum, uint32_t deckNum);
 /**
  * @brief                   : Function to initialize a deck of cards from scratch
  * @param numberOfCards     : Number of cards present in this deck
- * @param incOrderOfCards   : True for incremental initialization (0 down to N), False for decremental initialization (N down to 0)
+ * @param incOrderOfCards   : True keeping card deck intact, False for shuffling cards (can reverse them for simplicity)
  * @return                  : Return pointer to head of the cardDeck
 */
 cardDeck_t *initializeDeck(uint32_t numberOfCards, bool incOrderOfCards);
