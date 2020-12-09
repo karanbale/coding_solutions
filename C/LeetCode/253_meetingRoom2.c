@@ -1,5 +1,4 @@
 /*
-
 Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), 
 find the minimum number of conference rooms required.
 
@@ -26,9 +25,9 @@ void printArr(int **A, int r, int c){
     }
 }
 
-int cmp(int **a, int **b){
-    if (((*a)[0]) != ((*b)[0]))    return (**a - **b);
-    else                       return (**b - **a);
+int cmp(const void **a, const void **b){
+    if ((*(int *)(a)[0]) != ((*(int *)(b)[0])))    return ((*(int *)a - *(int *)b));
+    else                       return (*(int *)b - *(int *)a);
 }
 
 int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){

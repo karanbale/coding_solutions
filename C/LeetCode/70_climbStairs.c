@@ -25,7 +25,11 @@ Constraints:
 
 #include "../standardHeaders.h"
 
-int climbStairs(int n){
+/**********************************************************************************************/
+/******************************** Solution 1 **************************************************/
+/**********************************************************************************************/
+
+int climbStairsFibonnaci(int n){
     // create an array with values initialized as 0,1,0
     // i.e. f[] = [0,1,0]
     size_t f[] = {[0]=1, [1] = 2, [2] = 0};
@@ -54,4 +58,51 @@ int climbStairs(int n){
     // return the last value that you've calculated, which is at f[0]
     return f[0];
 
+}
+
+/**********************************************************************************************/
+/******************************** Solution 2 **************************************************/
+/**********************************************************************************************/
+
+/* This following solution ran into TLE (Time limit exceeded) for n = 44 on Leetcode.
+   This indicates to me that we cannot use brute force since it runs in a O(2^n) time complexity.
+   This code will run with O(n) space complexity, sicne we create n recursive calls.
+   Looking at following solution to improve this algorithm from O(2^n) to O(n)
+*/
+
+int climbStairsBruteForceImplementation(int stepCount, int n){
+    if(stepCount > n)  return 0;
+    if(stepCount == n) return 1;
+    return (climbStairsBruteForceImplementation(stepCount+1, n) +
+           climbStairsBruteForceImplementation(stepCount+2, n));
+}
+
+int climbStairsBruteForce(int n){
+
+    return climbStairsBruteForceImplementation(0, n);
+}
+
+
+/**********************************************************************************************/
+/******************************** Solution 3 **************************************************/
+/**********************************************************************************************/
+
+/**
+ * Introduce memoization, where we keep track of every node we previously visited.
+ * We store the value of the node previously visited and instead of recomputing, we just use that value.
+ * This avoids bunch of recursive function calls.
+*/
+int climbStairsBruteForceMemoryImplementation(int stepCount, int n, int *memory){
+    if(stepCount > n)  return 0;
+    if(stepCount == n) return 1;
+    if(memory[stepCount] > 0)   return memory[stepCount];
+    memory[stepCount] = (climbStairsBruteForceImplementation(stepCount+1, n) +
+           climbStairsBruteForceImplementation(stepCount+2, n));
+    return memory[stepCount];
+}
+
+int climbStairsBruteForceMemory(int n){
+
+    int *memory = malloc(sizeof(int) * (n+1));
+    return climbStairsBruteForceMemoryImplementation(0, n, memory);
 }
