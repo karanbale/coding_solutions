@@ -21,7 +21,35 @@ Constraints:
 
 #include "../standardHeaders.h"
 
-bool canJump(int* nums, int numsSize){
+/**********************************************************************************************/
+/******************************** Solution 1 **************************************************/
+/**********************************************************************************************/
+/**
+ * Keep calculating max at each step, 
+*/
+#define max(a,b) (((a)>(b)) ? (a) : (b))
+
+bool canJumpMethod1(int* nums, int numsSize){
+    if(numsSize == 1){
+        return true;
+    }
+	int count = 0;
+    // jump can be calculated as: i < jump <= i + nums[i]
+    // 
+    for(int i=0; i<numsSize; i++){
+        if(i > count){
+            return false;
+        }
+        count = max(count, i+nums[i]);
+    }
+    return true;
+}
+
+/**********************************************************************************************/
+/******************************** Solution 2 **************************************************/
+/**********************************************************************************************/
+
+bool canJumpMethod2(int* nums, int numsSize){
 	int lastPos = numsSize-1;
 	for(int i = lastPos-1; i >= 0; i--){
 		if(i + nums[i] >= lastPos)
