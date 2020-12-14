@@ -68,7 +68,7 @@ Money robMoney(struct TreeNode* root) {
     return money;
 }
 
-int rob(struct TreeNode* root) {
+int robSolution1(struct TreeNode* root) {
     Money money = robMoney(root);
     return money.robMoney > money.notRobMoney ? money.robMoney : money.notRobMoney;
 }
@@ -80,7 +80,7 @@ int rob(struct TreeNode* root) {
 /**********************************************************************************************/
 /******************************** Solution 2 **************************************************/
 /**********************************************************************************************/
-int rob(struct TreeNode* root){
+int robSolution2(struct TreeNode* root){
     
     if(!root){
         return 0;
