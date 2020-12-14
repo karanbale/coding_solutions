@@ -32,12 +32,12 @@ bool canPermutePalindrome(char * s){
     int tempArr[256] = {0};
     
     // for each character, go to its index and increment its value by 1
-    // essentially we're just tracking how many times we've seen this number
+    // essentially we're just tracking how many times we've seen this character
     for(int i=0; i<strlen(s); i++){
         tempArr[(int)s[i]]++;
     }
     
-    // seen odd character
+    // seen odd character or not
     bool seen_odd = false;
     
     for(int i=0; i<256; i++){

@@ -40,6 +40,10 @@ struct ListNode {
 struct ListNode *fp = NULL;
 static bool forceRet = false;
 
+/**********************************************************************************************/
+/******************************** Solution 1 **************************************************/
+/**********************************************************************************************/
+
 bool isPalindromeRecursive(struct ListNode* head){
     // return when reached end of linked list
     if(head == NULL){
@@ -61,6 +65,10 @@ bool isPalindromeRecursive(struct ListNode* head){
     // this function won't exit until all recursive calls are serviced off the stack
     return ((forceRet == false) ? true : false);
 }
+
+/**********************************************************************************************/
+/******************************** Solution 2 **************************************************/
+/**********************************************************************************************/
 
 bool isPalindromeMethod1(struct ListNode* head){
     

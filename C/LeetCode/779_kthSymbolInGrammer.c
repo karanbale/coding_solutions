@@ -1,5 +1,6 @@
 /*
-On the first row, we write a 0. Now in every subsequent row, we look at the previous row and replace each occurrence of 0 with 01, and each occurrence of 1 with 10.
+On the first row, we write a 0. Now in every subsequent row, 
+we look at the previous row and replace each occurrence of 0 with 01, and each occurrence of 1 with 10.
 Given row N and index K, return the K-th indexed symbol in row N. (The values of K are 1-indexed.) (1 indexed).
 
 Examples:
@@ -42,6 +43,10 @@ N=4            0(1)    1(2)     1(3)    0(4)   0(5)   1(6)    1(7)    0(8)
 
 #include "../standardHeaders.h"
 
+/**********************************************************************************************/
+/******************************** Solution 1 **************************************************/
+/**********************************************************************************************/
+
 int kthGrammarMethod1(int N, int K){
     
     // simple observation tells us we have 2^(N-1) bits per row
@@ -58,8 +63,8 @@ int kthGrammarMethod1(int N, int K){
     // to find out Kth bit, we can traverse binary tree and find out what value it holds (value will be 0 or 1, as you can imagine)
     // notice, in this binary tree, we start with root node = 0 and node 0 has two children, 0 and 1 (given condition)
     // which means, on the left hand side of the tree, everything will be 0 (you can try drawing a tree to see this)
-    // on the right hand side of the tree, 1 has two children 1 and 0,
-    // thus, on right hand side, our bits will flip for every incremental row
+    // on the right hand side of the tree since, 1 has two children 1 and 0,
+    // our bits will flip for every incremental row
     
     size_t left = 1;
     size_t right = totalBitsAtNthRow;
@@ -87,7 +92,11 @@ int kthGrammarMethod1(int N, int K){
     
 }
 
-int kthGrammarMethod1(int N, int K){
+/**********************************************************************************************/
+/******************************** Solution 2 **************************************************/
+/**********************************************************************************************/
+
+int kthGrammarMethod2(int N, int K){
 
     /*
     The whole structure can be viewed a binary tree, when a node is 0, their two children nodes are 0 and 1, similarly, 
@@ -101,7 +110,8 @@ int kthGrammarMethod1(int N, int K){
 
     If K is odd, current node is left child and its parent is the ((K+1)/2)th node in previous row.
     
-    The value of current node depends on its parent node, without knowing its parent node value, we still cannot determine current node value. 
+    The value of current node depends on its parent node, without knowing its parent node value, 
+    we still cannot determine current node value. 
     That's why we need recursion, we keep going previous row to find the parent node until reach the first row. 
     Then all the parent node value will be determined after the recursion function returns.
     */
@@ -115,6 +125,5 @@ int kthGrammarMethod1(int N, int K){
    else{
        return ((kthGrammarMethod1(N-1, (K+1)/2) == 0) ? 0 : 1);         // K is odd, parent and child both has same value, so return same value as that of parent
    }
-
 
 }

@@ -1,5 +1,4 @@
 /*
-
 Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 You may assume that each input would have exactly one solution, and you may not use the same element twice.
 You can return the answer in any order.
@@ -113,32 +112,6 @@ int lookup(struct hashTable *table,int key){
         }
         temp = temp->next;
     }
-    return -1;
-}
-
-int binSearch(int* nums, int numsSize, int skipLimit, int target){
-    int mid, left, right;
-    left = 0;
-    right = numsSize - 1;
-    
-    if(numsSize == 1){
-        if(target == nums[numsSize])    return numsSize;
-        else    return -1;
-    }
-    
-    while(left < right){
-        mid = (left + right)/2;
-        if(nums[mid] > target){
-            right = mid - 1;
-        }
-        else if(nums[mid] < target){
-            left = mid + 1;
-        }
-        if(nums[mid] == target){
-            return mid;
-        }
-    }
-    
     return -1;
 }
 

@@ -35,7 +35,7 @@ int jumpFunction1(int* nums, int numsSize){
             // current jump will get us at or beyond last index
             if (i + nums[i] >= n - 1)
                 return count;
-            // current jump is not enough, so lets go to next level and see if has a max index 
+            // current jump is not enough, so lets go to next jump at current level and see if has a max index 
             // that can take us to the last index or beyond
             if (i + nums[i] >= maxLen) {
                 maxLen = i + nums[i];
@@ -64,10 +64,10 @@ int jumpFunction2(int* nums, int numsSize){
     int currMaxNode = 0;
     int levels = 0;
     int i=0;
-    while(i <= currMaxNode){    // keep running until all nodes are visited
-        levels++;           // increment level, since we're at that level
-        for(;i<=currMaxNode;i++){            // find the maximum node at current level 
-                            // ensure the maximum at current level is not exceeding last index
+    while(i <= currMaxNode){                    // keep running until all nodes are visited
+        levels++;                               // increment level, since we're at that level
+        for(;i<=currMaxNode;i++){               // find the maximum node at current level 
+                                                // ensure the maximum at current level is not exceeding last index
             maxNodes = max(maxNodes, i+nums[i]);
             if(maxNodes >= numsSize-1)  return levels;
         }

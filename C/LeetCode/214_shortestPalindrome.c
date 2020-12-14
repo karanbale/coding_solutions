@@ -19,7 +19,7 @@ s consists of lowercase English letters only.
 #include "../standardHeaders.h"
 
 void reverseString (char *s) {
-    char t, *d = s+strlen (s)-1;
+    char t, *d = s+strlen(s)-1;
     while (d > s) {
         t = *s;
         *s++ = *d;

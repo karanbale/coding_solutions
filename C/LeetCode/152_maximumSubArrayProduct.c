@@ -26,10 +26,10 @@ int maxProduct(int* nums, int numsSize){
         int curr = nums[i];
         
         int tempMax = fmax(curr, curr*maxSoFar);
-        int tempMax1 = fmax(tempMax, minSoFar*curr);
+        int tempMax1 = fmax(tempMax, curr*minSoFar);
         
         int tempMin = fmin(curr, curr*maxSoFar);
-        minSoFar = fmin(tempMin, minSoFar*curr);
+        minSoFar = fmin(tempMin, curr*minSoFar);
         
         maxSoFar = tempMax1;
         
