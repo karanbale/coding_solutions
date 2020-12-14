@@ -96,7 +96,9 @@ int rob(struct TreeNode* root){
         return (root->val);
     }
     
-    return fmax(root->val+rob(root->left->left)+rob(root->left->right)+rob(root->right->left)+rob(root->right->right), rob(root->left)+rob(root->right));
+    return fmax(root->val+rob(root->left->left)+rob(root->left->right)+
+                rob(root->right->left)+rob(root->right->right),
+                rob(root->left)+rob(root->right));
 
 }
 /**********************************************************************************************/
