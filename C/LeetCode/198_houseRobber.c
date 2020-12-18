@@ -61,20 +61,26 @@ int rob(int* nums, int numsSize){
 /**********************************************************************************************/
 
 int helper(int* nums, int numsSize){
-    if(numsSize==1){
-        return nums[0];
+    if(numsSize == 0)   return 0;
+    else if(numsSize==1)     return nums[0];
+    else if(numsSize==2)     return max(nums[0],nums[1]);
+    
+    int dp[3]; // Save only last 3 house in history
+    
+    /* One house , he will rob it */
+    dp[0] = nums[0];    
+
+    /* Two house available, he will rob maximum of it */
+    dp[1] = max(nums[0], nums[1]);    
+ 
+    for(int i = 2; i < numsSize; i++) {        
+        dp[2] = max(nums[i] + dp[0], dp[1]);
+        dp[0] = dp[1];
+        dp[1] = dp[2];
     }
-    if(numsSize==2){
-         return max(nums[0],nums[1]);
-    }
-    int* dp=(int*)calloc(numsSize+1,sizeof(int));
-    dp[0]=nums[0];
-    dp[1]=nums[0]>nums[1]?nums[0]:nums[1];
-    for(int i=2;i<numsSize;i++){
-        dp[i] = max(dp[i-1], nums[i]+dp[i-2]);
-    }
-    return dp[numsSize-1];
+    return dp[1];
 }
+
 int robBruteForce(int* nums, int numsSize){
     if(numsSize==0){
         return 0;
