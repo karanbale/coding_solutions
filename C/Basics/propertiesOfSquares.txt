@@ -1,0 +1,24 @@
+Odd and Even square numbers
+Squares of even numbers are even, i.e, (2n)2 = 4n2.
+Squares of odd numbers are odd, i.e, (2n + 1) = 4(n2 + n) + 1.
+Since every odd square is of the form 4n + 1, the odd numbers that are of the form 4n + 3 are not square numbers.
+
+Properties of Square Numbers
+The following are the properties of the square numbers:
+
+1. A number with 2, 3, 7 or 8 at unit’s place should never be a perfect square.
+   In other words, none of the square numbers ends in 2, 3, 7 or 8.
+2. If the number of zeros at the end is even, then the number is a perfect square number.
+   Otherwise, we can say that number ending in an odd number of zeros is never a perfect square
+3. If the even numbers are squared, it always gives even numbers.
+   Also, if the odd numbers are squared, it always gives odd numbers.
+4. If the natural numbers other than one is squared, it should be either a multiple of 3 or exceeds a multiple of 3 by 1.
+5. If the natural numbers other than one is squared, it should be either a multiple of 4 or exceeds a multiple of 4 by 1.
+6. It is noted that the unit’s digit of the square of a natural number is equal to,
+   the unit’s digit of the square of the digit at unit’s place of the given natural number.
+7. There are n natural numbers, say p and q such that p**2 = 2q**2
+8. For every natural number n, we can write it as: (n + 1) 2 – n 2 = ( n + 1) + n..
+9. If a number n is squared, it equals to the sum of first n odd natural numbers.
+10. For any natural number, say”n” which is greater than 1, we can say that (2n, n 2 – 1, n 2 + 1) should be,
+    a Pythagorean triplet.
+
