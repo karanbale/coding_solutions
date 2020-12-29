@@ -47,34 +47,37 @@ int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes
         return NULL;
     }
     
-    int left = 0;
-    int right = numsSize - 1;
-    for(int i = 0;nums[i] <= 0 && i < numsSize-2;){
-        left = i+1;
-        right = numsSize-1;
+    int target = 0;
+    
+    for(int i=0; i<numsSize-2;i++){
+        if((i>0) && (nums[i] == nums[i-1])){
+                continue;
+        }
+        int left = i+1;
+        int right = numsSize-1;
         while(left < right){
-            int sum = nums[i] + nums[left] + nums[right];
-            if(sum > 0){
+            int sum = nums[i]+nums[left]+nums[right];
+            if(sum < target)    left++;
+            else if(sum > target)   right--;
+            else{
+                (*returnSize)++;
+                returnArray[*returnSize-1] = malloc(sizeof(int)*3);
+                returnArray[*returnSize-1][0] = nums[i];
+                returnArray[*returnSize-1][1] = nums[left];
+                returnArray[*returnSize-1][2] = nums[right];
+                // avoid duplicates
+                while(left<right && (nums[right] == nums[right-1])){
+                    right--;
+                }
+                while(left<right && (nums[left] == nums[left+1])){
+                    left++;
+                }
+                left++;
                 right--;
             }
-            else if(sum < 0){
-                left++;
-            }
-            else{
-                *returnSize += 1;
-                returnArray[*returnSize - 1] = malloc(sizeof(int)*3);
-                returnArray[*returnSize - 1][0] = nums[i];
-                returnArray[*returnSize - 1][1] = nums[left];
-                returnArray[*returnSize - 1][2] = nums[right];
-                // avoid duplicates
-                do right--; while(left < right && nums[right] == nums[right+1]);
-            }
         }
-        // avoid dupliates
-        do i++; while(i < (numsSize-2) && (nums[i] == nums[i-1]));
     }
     
-    // printArr(returnArray, retArrIdx, 3);
     *returnColumnSizes = (int*)malloc(sizeof(int)*(*returnSize));
     for (int i = 0; i < *returnSize; i++)
         (*returnColumnSizes)[i] = 3;
