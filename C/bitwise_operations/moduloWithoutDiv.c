@@ -17,6 +17,7 @@ Explanation:
 */
 
 #include "utilities.h"
+#include "../standardHeaders.h"
 
 #define MODULO(num, divisor) ((num) & ((divisor)-1))
 #define ARRAY_SIZE 10
@@ -31,6 +32,7 @@ int moduloWithoutDivision(void){
         for(int j=0; j<ARRAY_SIZE-OFFSET; j++){
             printf("Num: %d, Divisor: %d Observed Remainder: %d Expected Remainder: %d\n",
             num[i],divisor[j],MODULO(num[i], divisor[j]), (num[i]%divisor[j]));
+            assert((num[i]%divisor[j]) == MODULO(num[i], divisor[j]));
         }
     }
 

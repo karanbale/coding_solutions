@@ -13,7 +13,7 @@ Solution:
     The mask (number >> 31) will be evaluated to -1 for negative numbers.
 
 Explanation:
-    for positive integers, mask will be 0 and ((number + 0) ^ number) = number.
+    for positive integers, mask will be 0 and ((number + 0) ^ 0) = number.
     for negative integers: mask will be -1 and ((number + (-1)) ^ (-1)) = number.
         We know, we store negative of a number in 2's compliment form.
         i.e. we flip all the bits from its positive counterpart and add 1 to it.

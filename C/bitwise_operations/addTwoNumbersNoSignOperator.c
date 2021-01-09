@@ -94,7 +94,7 @@ A   B     Sum     Carry
 0   0      0       0
 0   1      1       0
 1   0      1       0
-1   1      1       1
+1   1      0       1
 
 From above truth table we can deduce Sum and Carry in terms of (A, B, Cin) as following:
 Sum   = A'.B + A.B'     

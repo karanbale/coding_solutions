@@ -51,7 +51,7 @@ bool hasAlternatingBits(int n){
     // for alternating bits number, if you right shift it by 1 then AND it with number itself, answer must be 0
     // for alternating bits number, if you right shift it by 2 then AND it with number itself, 
     // it must remain same as that of when you right shift it by 2 bits.
-    // e.g. take number 4 (0b 100), it will pass the condition ((n & (n-1)) == 0) 
+    // e.g. take number 4 (0b 100), it will pass the condition ((n & (n>>1)) == 0) 
     // but without next condition ((n & (n>>2)) == (n>>2)) it will be false positive
     return (((n & (n>>1)) == 0) && ((n & (n>>2)) == (n>>2)));
     
