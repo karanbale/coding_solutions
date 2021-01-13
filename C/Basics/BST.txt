@@ -1,0 +1,15 @@
+Binary Search Tree NOTES:
+
+1. A BST is a complete tree if all its nodes are filled, from let to right, 
+2. If you represent a complete tree in an array, you should not find any empty elements in the array.
+All elements must be filled.
+                A
+        B               C
+    D       E       F       G
+
+e.g. A,B,C,D,E,F,G => this is a complete binary tree
+
+                A
+        B               C
+                    F       G
+e.g. A,B,C,-,-,F,G => this is NOT a complete binary tree

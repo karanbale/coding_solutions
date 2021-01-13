@@ -1,0 +1,62 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2577
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww28600\viewh16380\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+int resourcePool[10] = \{0,1,2\'85..9\};\
+int trackAvailable[10] = \{-1\};\
+\
+[-1,-1,-1,-1,-1,-1,-1]\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 [0,-1,-1,-1,-1,-1,-1]\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 [0,1,-1,-1,-1,-1,-1]\
+\
+\
+\
+// if item is in use \
+// take an item off of resource, item \
+// put the item back in to the pool\
+\
+// someone may pull 3 items, one at a time, but putting it back may be in random order\
+\
+int inputArrayGetItemIndex;\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+int trackIndexIdx = 0;\
+int sizeOfInputArray = 0;\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 int *getItems(void)\{\
+\
+\
+	if(inputArrayGetItemIndex == 10) return -1;\
+	for(int i=0; i<10; i++)\{\
+		if(trackAvailable[i] == -1)\{\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 				trackAvailable[i] = inputArrayGetItemIndex;\
+				return return (inputArray+inputArrayGetItemIndex++);\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 			\}\
+	\}\
+\
+	return NULL;\
+\
+\}\
+\
+void putItems(int *temp)\{\
+	int idx = inputArray - temp;\
+	trackAvailable[idx] = -1;\
+\}\
+\
+resource_t *i1 = getItems(); ==> 0\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 resource_t *i2 = getItems(); ==> 1\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 putItmes(i1);  ==> i2\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 resource_t *i3 = getItems(); ==> 2\
+}

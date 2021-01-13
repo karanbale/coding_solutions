@@ -1,26 +1,79 @@
 /*
-Given a string S, check if the letters can be rearranged so that two characters that are adjacent to each other are not the same.
-If possible, output any possible result.  If not possible, return the empty string.
+Given a non-empty string s and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
 
 Example 1:
-Input: S = "aab"
-Output: "aba"
+Input: s = "aabbcc", k = 3
+Output: "abcabc" 
+Explanation: The same letters are at least distance 3 from each other.
 
 Example 2:
-Input: S = "aaab"
-Output: ""
+Input: s = "aaabc", k = 3
+Output: "" 
+Explanation: It is not possible to rearrange the string.
 
-Note:
-S will consist of lowercase letters and have length in range [1, 500].
- 
+Example 3:
+Input: s = "aaadbbcc", k = 2
+Output: "abacabcd"
+Explanation: The same letters are at least distance 2 from each other.
 */
 
 #include "../standardHeaders.h"
 
+typedef struct queue{
+    int *queueArr;
+    int queueSize;
+    int front;
+    int rear;
+    int queueItemCount;
+}queue_t;
+
+bool isQueueEmpty(queue_t *queue){
+    return queue->queueItemCount == 0;
+}
+
+bool isQueueFull(queue_t *queue){
+    return queue->queueItemCount == queue->queueSize;
+}
+
+queue_t *createQueue(int queueSize){
+    queue_t *queue = malloc(sizeof(queue_t));
+    if(!queue)    return NULL;
+    queue->queueArr = malloc(sizeof(int)*queueSize);
+    if(!queue->queueArr)    return NULL;
+    queue->front = 0;
+    queue->queueItemCount = 0;
+    queue->rear = -1;
+    queue->queueSize = queueSize;
+    return queue;
+}
+
+void queueEnqueue(queue_t *queue, int data){
+    if(isQueueFull(queue)) return;
+    queue->queueArr[++queue->rear] = data;
+    queue->queueItemCount++;
+}
+
+int queueDequeue(queue_t *queue){
+    if(isQueueEmpty(queue))    return 0;
+    queue->queueItemCount--;
+    return queue->queueArr[queue->front++];
+}
+
+void destroyQueue(queue_t *queue){
+    free(queue->queueArr);
+    free(queue);
+}
+
+typedef struct heapStruct{
+    size_t freqCount;
+    size_t nextIndex;
+}heapStruct_t;
+
 typedef struct heap{
-    int heapSize;
-    int heapBoundary;
-    int *heapArr;
+    size_t heapSize;
+    size_t heapBoundary;
+    size_t *heapArr;
     bool isMaxHeap;
 }heap_t;
 
@@ -129,18 +182,27 @@ int removeHeap(heap_t *heap){
     return retVal;
 }
 
+void destroyHeap(heap_t *heap){
+    free(heap);
+}
+
 void printHeap(struct heap *h){
     for (int q = 0; q < 27; q++){
-        printf("%d, ", h->heapArr[q]);
+        if(h->heapArr[q]>0){
+            printf("%d, ", h->heapArr[q]);
+        }
     } 
 }
 
-char* reorganizeString(char* S){
+char * rearrangeString(char * S, int K){
+    if(K<2) return S;
+    
     int l = strlen(S);
     int s[26]; 
 	
 	// create max heap
-    heap_t *h = createHeap(100, true);
+    heap_t *h = createHeap(140000, true);
+    queue_t *waitQueue = createQueue(140000);
 
     // initialize the entire array to 0
     memset(s, 0, sizeof(int) * 26);
@@ -159,57 +221,36 @@ char* reorganizeString(char* S){
     for (int i = 0; i < 26; ++i) {
         if (s[i] >= 100) insertHeap(h, s[i]);       
     }
-
+    
+    // printHeap(h);
+    
     int idx = 0; 
-
+    // printf("K:%d, S:%s\n",K, S);
     while(!isHeapEmpty(h)){
-        int character1 = -1, character2 = -1, letterCount1 = -1, letterCount2 = -1;
-        
+        int character1 = -1;
         // take first character with max occurance in heap
         int letter = removeHeap(h);
+        // if character is valid
         if(letter != -1){
-            letterCount1 = letter / 100;              // get frequence of this character
-            // if we have any character whose frequence is more than half the total length, we can never rearrange the string characters to make it unique 
-            if (letterCount1 > (l+1)/2) return "";  
-            character1 = 'a' + (letter % 100);     // get the character itself
-        }
-
-        // take second character with max occurance in heap
-        int letter2 = removeHeap(h);
-        if(letter2 != -1){
-            letterCount2 = letter2 / 100;            // get frequence of this character
-            // if we have any character whose frequence is more than half the total length, we can never rearrange the string characters to make it unique 
-            if (letterCount2 > (l+1)/2) return "";
-            character2 = 'a' + (letter2 % 100);   // get the character itself
-        }
-
-        // for first character or for character who is not equal to previous character
-        if (idx==0 || character1 != S[idx-1]){
-            if(letter != -1){
-                S[idx++] = character1;
-                letter -= 100;          // reduce freq of the character1 by 1
-            }
-            if(letter2 != -1){
-                S[idx++] = character2;
-                letter2 -= 100;          // reduce freq of the character2 by 1
+            character1 = 'a' + (letter % 100);      // get the character itself
+            letter -= 100;                          // reduce freq of the letter by 1
+            
+            // add the character to the string
+            S[idx++] = character1;
+            
+            // add this character to the wait queue until its turn which will be after adding K characters
+            queueEnqueue(waitQueue, letter);
+            // if added K unique characters to the wait queue, pop character from wait queue and add it back to your heap, to be used next
+            if(waitQueue->queueItemCount >= K){
+                int item = queueDequeue(waitQueue);
+                if(item >= 100) insertHeap(h, item);    // make sure character you've popped has valid frequence
             }
         }
-        // if first character is same as previous character, just add second character first and then second character, to achieve uniqueness
-        else {
-            if(letter2 != -1){
-                S[idx++] = character2;
-                letter2 -= 100;          // reduce freq of the character2 by 1
-            }
-            if(letter != -1){
-                S[idx++] = character1;
-                letter -= 100;          // reduce freq of the character1 by 1
-            }
-        }
-        
-        // we're inserting one character at a time, so for characters more than 1 frequency, we need to re-insert them back to the heap, so they can be used next time around
-        if (letter >= 100) insertHeap(h, letter); 
-        if (letter2 >= 100) insertHeap(h, letter2); 
     }
 
-    return S;
+    destroyQueue(waitQueue);
+    destroyHeap(h);
+    
+    // if you've added all the characters from input string then your idx must be equal to length of input string
+    return (idx < l) ? "" : S;
 }

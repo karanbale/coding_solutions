@@ -21,12 +21,16 @@ results in no-op and sizeof(char) == 1.
 So, for anyone who might be wondering, there is no illegal memory dereference here.
 The only integer types that can correctly represent a generic pointer in C is uintptr_t and intptr_t. 
 Thus we need to type cast given integer to uintptr_t -> void * -> char * to access 1 byte of the address.
-Rest of the casting in my below solution is for portability and correctness.
+Rest of the casting in below solution is for portability and correctness.
 */
 
 int getSum_Method1(int a, int b){
     return (uintptr_t)&((char *)(void *)(uintptr_t)a)[b];
     // return (uintptr_t)&((char *)(void *)(uintptr_t)a)[b]; 
+}
+
+int getProd(int a, int b){
+    return (uintptr_t)&((char (*) [a])0x0)[b];
 }
 
 /*

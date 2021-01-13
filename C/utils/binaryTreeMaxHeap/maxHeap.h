@@ -1,5 +1,14 @@
 #include "../../standardHeaders.h"
 
+#define HEAP_SIZE 20
+
+typedef struct heap{
+    int *heapArr;
+    int heapSize;
+    int heapBoundary;
+    bool minHeap;
+}heap_t;
+
 void swap(int *x, int *y);
 int getLeftIndexMaxHeap(int idx);
 int getRightIndexMaxHeap(int idx);
