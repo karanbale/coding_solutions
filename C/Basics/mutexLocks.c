@@ -1,3 +1,4 @@
+#include "../standardHeaders.h"
 #include <pthread.h>
 
 /*
@@ -6,7 +7,7 @@ Reference: https://compas.cs.stonybrook.edu/~nhonarmand/courses/fa17/cse306/slid
 
 In order to achieve atomicity and implement sping locks / mutex locks, we need following understanding.
 
-Question: Write a simple bool lock, wrtie functions to initialize, acquire and release this lock:
+Question: Write a simple bool lock, write functions to initialize, acquire and release this lock:
 Answer:
         bool lock = false;
         void initialize_lock(bool lock){
@@ -101,16 +102,16 @@ Answer:
         In order to avoid starvation and achieve fairness, we can implement ticket lock.
         And for ticket lock, we need to use FetchAndAdd to achieve atomicity.
 
+        typedef struct{
+            int ticket;
+            int turn;
+        }lock_t;
+
         int FAA(int *ptr) {
             int old = *ptr;
             *ptr = old + 1;
             return old;
         }
-
-        typedef struct{
-            int ticket;
-            int turn;
-        }lock_t;
 
         void initialize_lock(lock_t *lock){
             lock->ticket = 0; 
@@ -128,3 +129,106 @@ Answer:
         }
 
 */
+
+#define THREAD_COUNT 5
+
+typedef struct mutex{
+    bool mutexLock;
+    int mutexCount;
+}mutex_t;
+
+mutex_t mutex;
+unsigned int counter = 0;
+pthread_mutex_t lock;
+
+int initMutex(mutex_t *mutex){
+    mutex->mutexLock = false;
+    mutex->mutexCount = 0;
+    return 0;
+}
+
+bool TestAndSet(bool *mutexLock){
+    bool oldValue = *mutexLock;
+    *mutexLock = true;
+    return oldValue;
+}
+
+bool CMPEXCHNG(bool *lock, bool oldVal, bool newVal){
+    if(oldVal != *lock){
+        return false;
+    }
+    *lock = newVal;
+    return true;
+}
+
+int acquireMutex(mutex_t *mutex){
+    // while(TestAndSet(&mutex->mutexLock) == true);
+    while(!CMPEXCHNG(&mutex->mutexLock,false,true));
+    return 0;
+}
+
+int releaseMutex(mutex_t *mutex){
+    mutex->mutexLock = false;
+    return 0;
+}
+
+void *threadHandler(void *vargp){
+    int *threadId = (int *) vargp;
+
+    // acquire mutex lock
+    // acquireMutex(&mutex);
+    pthread_mutex_lock(&lock);
+    printf("Acquired mutex lock. THREAD_ID: %d\n", *threadId);
+
+    // increment counter
+    printf("old count: %d \t", counter);
+    counter++;
+    printf("current count: %d\n", counter);
+
+    // sleep for 1 sec
+    sleep(1);
+
+    // release mutex lock
+    printf("Releasing mutex lock.THREAD_ID: %d\n", *threadId);
+    // releaseMutex(&mutex);
+    pthread_mutex_unlock(&lock);
+    return NULL;
+}
+
+int main(void){
+
+    pthread_t THREAD_ID[THREAD_COUNT];
+    int thread_arg[THREAD_COUNT];
+
+    // initialize mutex
+    // if(initMutex(&mutex)){
+    //     printf("Failed to init mutex.\n");
+    // }
+
+    if(pthread_mutex_init(&lock, NULL)){
+        printf("Failed to initialize mutex.\n");
+    }
+
+    for(int i=0; i<THREAD_COUNT; i++){
+        thread_arg[i] = i;
+        // create thread
+        pthread_create(&THREAD_ID[i], NULL, &threadHandler, (void *)&thread_arg[i]);
+    }
+
+    for(int i=0; i<THREAD_COUNT; i++){
+        // join thread
+        pthread_join(THREAD_ID[i], NULL);
+    }
+
+    return 0;
+}
+
+// int main() 
+// { 
+//     pthread_t thread_id; 
+//     printf("Before Thread\n"); 
+//     pthread_create(&thread_id, NULL, myThreadFun, NULL); 
+//     pthread_join(thread_id, NULL); 
+//     printf("After Thread\n"); 
+//     exit(0); 
+// }
