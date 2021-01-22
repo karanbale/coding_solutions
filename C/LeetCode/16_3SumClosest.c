@@ -35,9 +35,12 @@ int threeSumClosest(int* nums, int numsSize, int target){
         int left = i+1, right = numsSize-1;
         while(left < right){
             int sum = nums[i] + nums[left] + nums[right];
-            if(abs(target-sum) < maxDiff){
+            // check how far away is current sum from target
+            int currDiff = abs(target - sum);
+            // if current distance from taret is the smallest we've seen, update it
+            if(currDiff < maxDiff){
                 retSum = sum;
-                maxDiff = abs(target-sum);
+                maxDiff = currDiff;
             }
             if(sum < target){           // sum < target
                 left++;

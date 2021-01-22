@@ -42,7 +42,11 @@ void set_add(set_t *set, char c)
 
 void set_remove(set_t *set, char c)
 {
+    // reduce freq of char c
     set->countArr[(int)(c)]--;
+
+    // if freq of this character is 0, we've no more c characters left in our string
+    // hence reduce the num of items 
     if(set->countArr[(int)(c)] == 0){
         set->numOfItems--;
     }

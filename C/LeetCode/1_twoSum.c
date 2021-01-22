@@ -18,7 +18,7 @@ Output: [0,1]
 
 */
 
-#include "../utils/hashMap.h"
+#include "../utils/hashMap/hashMap.h"
 
 /**
  * Note: The returned array must be malloced, assume caller calls free().
@@ -81,25 +81,25 @@ void insert(int key, int value, struct hashTable *table){
 
 void delete(struct hashTable *hashtable)
 {
-        struct hashNode *tmp;
+    struct hashNode *tmp;
 
-        if (hashtable == NULL) {
-                return;
-        }
+    if (hashtable == NULL) {
+            return;
+    }
 
-        for (int i = 0; i < hashtable->size; ++i) {
-                if (hashtable->list[i] != NULL) {
-                        /* Traverse the list and free the nodes. */
-                        while(hashtable->list[i] != NULL) {
-                          tmp = hashtable->list[i]->next;
-                          free(hashtable->list[i]);
-                          hashtable->list[i] = tmp;
-                        }
-                        free(hashtable->list[i]);
-                }
+    for (int i = 0; i < hashtable->size; ++i) {
+        if (hashtable->list[i] != NULL) {
+            /* Traverse the list and free the nodes. */
+            while(hashtable->list[i] != NULL) {
+                tmp = hashtable->list[i]->next;
+                free(hashtable->list[i]);
+                hashtable->list[i] = tmp;
+            }
+            free(hashtable->list[i]);
         }
-        free(hashtable->list);
-        free(hashtable);
+    }
+    free(hashtable->list);
+    free(hashtable);
 }
 
 int lookup(struct hashTable *table,int key){

@@ -112,7 +112,7 @@ int minDifficultyNonRecursion(int* jobDifficulty, int jobDifficultySize, int d){
     // start by making at least 2 cuts, go upto d cuts (since we start with 1 and not 0)
     for (int i = 2; i <= d; i++) {
         // make all possible cuts from 2 until n
-        for (int j = i; j <= n; j++) {
+        for (int j = i; j <= jobDifficultySize; j++) {
             // assume result is MAXIMUM, so we can replace it with first minimum we find
             F[i][j] = INT32_MAX;
             int currMax = 0;

@@ -1,0 +1,33 @@
+Round 1:
+
+Given an array of tree nodes (randomly placed), write a function to find out if this tree
+is a valid tree or not.
+==> Assume all nodes are unique and positive.
+==> how can you find parent node from this list?
+
+What is one of the coolest thing you've professionally implemented recently?
+
+Round 2:
+
+Given a matrix of NxN size:
+=> You can only travel in (x+1, y) and (x, y+1) directions i.e. right and left. 
+==> all values in the matrix are positive integers.
+==> Travel in this matrix in the order given above and return the total sum at each index.
+Then return the maximum sum amongst all these sums and return that as a total reward.
+
+Round 3:
+
+==> Leadership principles (60 minutes)
+==> You received a critical feedback about your work, how did you deal with it?
+
+Round 4:
+
+==> Tell me about a time, where you had to deliver a project and how did you achieve it?
+==> String encoding and decoding 
+
+Round 5:
+
+==> Leadership principles and SSD related questions
+==> Describe how does a read / write works in an SSD. Give me a flow of this command.
+==> System design:
+    ==> Design a task scheduler

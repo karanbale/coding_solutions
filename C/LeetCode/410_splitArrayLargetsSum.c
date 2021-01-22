@@ -66,7 +66,7 @@ int splitArray(int* nums, int numsSize, int m){
     int right = getTotalSum(nums,numsSize);
     while(left < right){
         int mid = left + (right - left)/2;
-        int count = 0, numSplits1=1;
+        int count = 0;
         if(feasible(nums, numsSize, mid, m)){
             right = mid;
         }

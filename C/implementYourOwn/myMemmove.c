@@ -5,7 +5,7 @@ Overview:
     The memmove function copies n characters from the source to the destination object.
     In memmove before copying the characters from source to destination object,
     first copied the n character from source to the temporary array,
-    after that copy n character from the temporary array to the destination object.
+    after that, copy n character from the temporary array to the destination object.
     It prevents from the undefined behavior when the source and destination object overlaps.
 
 Syntax:
@@ -44,16 +44,15 @@ void * my_memmove(void* dest, const void* src, unsigned int n)
     }
     else
     {
-        unsigned int i = 0;
         // copy src to tmp array
-        for(i =0; i < n ; ++i)
+        for(int i =0; i < n ; ++i)
         {
-            *(tmp + i) = *(pSrc + i);
+            tmp[i] = pSrc[i];
         }
         //copy tmp to dest
-        for(i =0 ; i < n ; ++i)
+        for(int i =0 ; i < n ; ++i)
         {
-            *(pDest + i) = *(tmp + i);
+            pDest[i] = tmp[i];
         }
         free(tmp); //free allocated memory
     }
