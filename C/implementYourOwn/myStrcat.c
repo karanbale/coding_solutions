@@ -24,8 +24,15 @@ Let’s see an example code to understand this point.
 char *my_strcat(char *s1, const char *s2)
 {
     //Pointer should not null pointer
-    if((s1 == NULL) && (s2 == NULL))
+    if((s1 == NULL) && (s2 == NULL)){
         return NULL;
+    }
+
+    // if size of s2 cannot accomodate s1, return NULL
+    if(strlen(s1) < strlen(s2)){
+        return NULL;
+    }
+
     //Create copy of s1
     char *start = s1;
     //Find the end of the destination string

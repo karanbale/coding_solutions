@@ -1,5 +1,6 @@
 /*
-Given two strings S and T, return if they are equal when both are typed into empty text editors. # means a backspace character.
+Given two strings S and T, return if they are equal when both are typed into empty text editors.
+# means a backspace character.
 
 Note that after backspacing an empty text, the text will continue empty.
 
@@ -53,7 +54,7 @@ bool backspaceCompare(char * S, char * T){
     }
     s[sIdx++] = '\0';
     
-     for(int i=0; i<strlen(T); i++){
+    for(int i=0; i<strlen(T); i++){
         if(T[i] != '#'){
             t[tIdx++] = T[i];
         }

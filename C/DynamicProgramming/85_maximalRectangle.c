@@ -58,17 +58,18 @@ int maximalRectangle(char** matrix, int matrixSize, int* matrixColSize){
                 // if not first column then just add 1 to previously calculated value
                 // e.g. if current row is [1,1,1,1] then width will be => [1,2,3,4]
                 dp[i][j] = (j == 0) ? 1 : dp[i][j-1]+1;
-                int width = dp[i][j];
+                int currWidth = dp[i][j];
                 // iterate over all the rows above current row until we reach 0th row
                 // include current row as well, since we have valid width here
                 for(int k = i; k>=0 ; k--){
                     // between two widths, we take minimum width which is overlapping area of the two rectangles
                     // we can't take maximum because, it will exclude some overlapping area and not form a complete rectangle
-                    width = MIN(width, dp[k][j]);
+                    currWidth = MIN(currWidth, dp[k][j]);
                     // for each rectangle calculate current width as
                     // currWidth = minWidth*(currentRowIdx - previousRowIdx + 1);
                     // add 1 since we calculate against current row as well
-                    maxArea = MAX(maxArea, width*(i-k+1));
+                    int currentArea = currWidth*(i - k + 1);
+                    maxArea = MAX(maxArea, currentArea);
                 }
             }
         }

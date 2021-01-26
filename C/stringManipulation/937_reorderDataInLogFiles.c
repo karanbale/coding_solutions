@@ -42,9 +42,11 @@ int logCompare(const void *plog1, const void *plog2){
 
 char** reorderLogFiles(char** logs, int logsSize, int* returnSize) {
     int logIdx, totalDigitStrings;
-    // start comparing from last element, since we want to preserve order of deigit-logs
-    // if we compare last element with second last element and found digit log at second last position, we can simply swap these two, and move digit log to the end and preserve its order
-    // keep running above alogrithm to sort input logs such that digit logs in order on right hand side of the list and letter-logs are on left side
+    // start comparing from last element, since we want to preserve order of digit-logs
+    // if we compare last element with second last element and found digit log at second last position, 
+    // we can simply swap these two, and move digit log to the end and preserve its order
+    // keep running above alogrithm to sort input logs such that digit logs in order on right hand side of the list
+    // and letter-logs are on left side
     logIdx = totalDigitStrings = logsSize - 1;
     int spacePos = 0;
     char* tempPtr = NULL;

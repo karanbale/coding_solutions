@@ -1,5 +1,25 @@
 /*
+Given two strings s and t, return the minimum window in s which will contain all the characters in t.
+If there is no such window in s that covers all characters in t, return the empty string "".
 
+Note that If there is such a window, it is guaranteed that there will always be only one unique minimum window in s.
+
+Example 1:
+
+Input: s = "ADOBECODEBANC", t = "ABC"
+Output: "BANC"
+Example 2:
+
+Input: s = "a", t = "a"
+Output: "a"
+ 
+Constraints:
+
+1 <= s.length, t.length <= 105
+s and t consist of English letters.
+ 
+
+Follow up: Could you find an algorithm that runs in O(n) time?
 */
 
 #include "../standardHeaders.h"
@@ -66,11 +86,11 @@ char * minWindow(char * s, char * t){
         set_add(hashSetT, t[i]);
         if(set_count(hashSetT,t[i]) == 1) uniqueTCharCount++;
     }
-    
+
     int leftIdx = 0;
     int subStrCount = INT32_MAX;
     int charCount = 0;
-    int minWindowCopyIdx = 0;
+    int subStrStartIdx = 0;
     
     // start iterating over string s
     for (int rightIdx = 0; rightIdx < lenOfS; rightIdx++) {
@@ -82,12 +102,13 @@ char * minWindow(char * s, char * t){
             // add char to S hashSet
             set_add(hashSetS, s[rightIdx]);
             // if count of char in T is greater than equal to char count in S
-            if(set_count(hashSetT, s[rightIdx]) >= set_count(hashSetS, s[rightIdx])){
+            // if(set_count(hashSetT, s[rightIdx]) >= set_count(hashSetS, s[rightIdx])){
+            if(set_count(hashSetS, s[rightIdx]) <= set_count(hashSetT, s[rightIdx])){
                 // printf("%c : %d, ",s[rightIdx],rightIdx);
                 charCount++;
             }
         }
-        // set_remove(hashSetT, s[rightIdx]);
+
         // as soon as this count goes beyond size of T, lets try to squeeze window
         // from left and minimize our
         if(charCount == lenOfT) {
@@ -100,7 +121,7 @@ char * minWindow(char * s, char * t){
             }
             if(subStrCount > (rightIdx-leftIdx+1)){
                 subStrCount = rightIdx-leftIdx+1;
-                minWindowCopyIdx = leftIdx;
+                subStrStartIdx = leftIdx;
             }
         }
     }
@@ -109,8 +130,7 @@ char * minWindow(char * s, char * t){
     if(subStrCount != INT32_MAX)
     {
         result = (char*)malloc((subStrCount+1)*sizeof(char));
-        // memcpy(result,&s[minWindowCopyIdx],subStrCount);
-        strncpy(result, s+minWindowCopyIdx, subStrCount);
+        strncpy(result, s+subStrStartIdx, subStrCount);
         result[subStrCount] = '\0';
     }
     else

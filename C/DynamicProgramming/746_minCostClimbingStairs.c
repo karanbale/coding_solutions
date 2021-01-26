@@ -1,7 +1,8 @@
 /*
 On a staircase, the i-th step has some non-negative cost cost[i] assigned (0 indexed).
 Once you pay the cost, you can either climb one or two steps. 
-You need to find minimum cost to reach the top of the floor, and you can either start from the step with index 0, or the step with index 1.
+You need to find minimum cost to reach the top of the floor,
+and you can either start from the step with index 0, or the step with index 1.
 
 Example 1:
 Input: cost = [10, 15, 20]
@@ -20,7 +21,9 @@ Every cost[i] will be an integer in the range [0, 999].
 
 #include "../standardHeaders.h"
 
-int minCostClimbingStairs(int* cost, int costSize){
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+
+int minCostClimbingStairs1(int* cost, int costSize){
 
     for(int i=2;i<costSize; i++){
         // take the min of last two indexes, and add it to current index
@@ -29,5 +32,23 @@ int minCostClimbingStairs(int* cost, int costSize){
 
     // return minimum of last two indexes
     return fmin(cost[costSize-1], cost[costSize-2]);
+
+}
+
+int minCostClimbingStairs(int* cost, int costSize){
+
+    int dp[3] = {0};
+    dp[0] = cost[0];
+    dp[1] = cost[1];
+
+    for(int i=2;i<costSize; i++){
+        // take the min of last two indexes, and add it to current index
+        dp[2] = MIN(dp[0], dp[1])+cost[i];
+        dp[0] = dp[1];
+        dp[1] = dp[2];
+    }
+
+    // return minimum of last two indexes
+    return MIN(dp[0],dp[1]);
 
 }
