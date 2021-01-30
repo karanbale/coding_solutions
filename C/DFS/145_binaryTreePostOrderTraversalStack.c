@@ -33,14 +33,14 @@ Recursive solution is trivial, could you do it iteratively?
 
 #include "../standardHeaders.h"
 
-struct TreeNode {
+typedef struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
 }TreeNode_t;
 
 typedef struct stackt{
-    struct TreeNode **arr;
+    TreeNode_t **arr;
     int stackSize;
     int top;
 }stack_T;
@@ -56,7 +56,7 @@ bool isStackEmpty(stack_T *stackt){
 stack_T *createStack(int stackSize){
     stack_T *stackt = (stack_T *) malloc(sizeof(struct stackt));
     if(!stackt)  return NULL;
-    stackt->arr = (TreeNode_t *) malloc(sizeof(TreeNode_t)*stackSize);
+    stackt->arr = (TreeNode_t **) malloc(sizeof(TreeNode_t)*stackSize);
     if(!stackt->arr) return NULL;
     stackt->stackSize = stackSize;
     stackt->top = -1;

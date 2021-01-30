@@ -20,7 +20,7 @@ return its level order traversal as:
 
 #include "../standardHeaders.h"
 
-struct TreeNode {
+struct TreeNode{
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
@@ -39,7 +39,7 @@ typedef struct _queue{
 queue_t *createQueue(int queueSize){
     queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     if(!queue)  return NULL;
-    queue->node = (TreeNode_t **) malloc(sizeof(TreeNode_t *)*queueSize);
+    queue->node = (struct TreeNode **) malloc(sizeof(struct TreeNode *)*queueSize);
     for(int i=0; i<queueSize; i++){
         queue->node[i] = NULL;
     }
