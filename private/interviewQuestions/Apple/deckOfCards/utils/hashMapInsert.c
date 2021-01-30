@@ -56,7 +56,7 @@ int hashTablePut(HashTable *hashtable, const char *key, const char *value)
                 return 1;
         }
 
-        node = malloc(sizeof(List));
+        node = (List *) malloc(sizeof(List));
         if (node == NULL) {
                 return 1;
         }

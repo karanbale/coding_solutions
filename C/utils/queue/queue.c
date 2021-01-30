@@ -2,7 +2,7 @@
 #include "queue.h"
 
 queue_t *createQueue(int queueSize){
-    queue_t *queue = malloc(sizeof(queue_t));
+    queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     if(!queue){
         return NULL;
     }

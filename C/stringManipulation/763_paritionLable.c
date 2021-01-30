@@ -28,7 +28,7 @@ int* partitionLabels(char * S, int* returnSize){
     *returnSize = 0;
     if(!strlen(S))  return 0;
     int len = strlen(S);
-    int *retArr = malloc(sizeof(int));
+    int *retArr = (int *) malloc(sizeof(int));
     *returnSize = 0;
     
     int maxIdxArr[26];

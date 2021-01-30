@@ -24,10 +24,10 @@ void swap(int *x, int *y){
 }
 
 heap_t *createHeap(int heapSize, bool isMinHeap){
-    heap_t *heap = malloc(sizeof(heap_t));
+    heap_t *heap = (heap_t *) malloc(sizeof(heap_t));
     if(!heap) return NULL;
     heap->heapSize = heapSize;
-    heap->heapArr = malloc(sizeof(int) * heapSize);
+    heap->heapArr = (int *) malloc(sizeof(int) * heapSize);
     if(!heap->heapArr) return NULL;
     heap->heapBoundary = 0;
     heap->minHeap = isMinHeap;

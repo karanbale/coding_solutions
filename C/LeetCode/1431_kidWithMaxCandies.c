@@ -55,7 +55,7 @@ bool* kidsWithCandies(int* candies, int candiesSize, int extraCandies, int* retu
     *returnSize = candiesSize;
     int maxCandieCount = 0;
     
-    bool *retArray = malloc(sizeof(bool *)*candiesSize);
+    bool *retArray = (bool *) malloc(sizeof(bool *)*candiesSize);
     memset(retArray, false, sizeof(retArray[0]));
     
     // find kid with max candies in the array

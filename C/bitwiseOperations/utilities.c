@@ -20,7 +20,7 @@ char * int2bin(int i)
 {
     size_t bits = sizeof(int) * CHAR_BIT;
 
-    char * str = malloc(bits + 1);
+    char * str = (char *) malloc(bits + 1);
     if(!str) return NULL;
     str[bits] = 0;
 

@@ -24,7 +24,7 @@ struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
-};
+}TreeNode_t;
 
 #define SIZE 1100
 
@@ -37,9 +37,9 @@ typedef struct _queue{
 }queue_t;
 
 queue_t *createQueue(int queueSize){
-    queue_t *queue = malloc(sizeof(queue_t));
+    queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     if(!queue)  return NULL;
-    queue->node = malloc(sizeof(struct TreeNode *)*queueSize);
+    queue->node = (TreeNode_t **) malloc(sizeof(TreeNode_t *)*queueSize);
     for(int i=0; i<queueSize; i++){
         queue->node[i] = NULL;
     }
@@ -85,11 +85,11 @@ int** levelOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes
         *returnColumnSizes = NULL;
         return NULL;
     }
-    int **returnArray = malloc(sizeof(int*) * 1000);
+    int **returnArray = (int **) malloc(sizeof(int*) * 1000);
     if (!returnArray) {
         exit(0);
     }
-    *returnColumnSizes = malloc(sizeof(int) * 1000);
+    *returnColumnSizes = (int *) malloc(sizeof(int) * 1000);
 
     queue_t *queue = createQueue(SIZE);
     if (!queue) {
@@ -101,7 +101,7 @@ int** levelOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes
     while(!isQueueEmpty(queue)){
         level = queue->queueItemCount;
         int levelItemCount = 0;
-        returnArray[*returnSize] = malloc(sizeof(int)*level);
+        returnArray[*returnSize] = (int *) malloc(sizeof(int)*level);
         // iterate over all items in queue, pop them and add their kids to queue
         // until queue is empty
         while(level > levelItemCount){

@@ -103,6 +103,6 @@ int climbStairsBruteForceMemoryImplementation(int stepCount, int n, int *memory)
 
 int climbStairsBruteForceMemory(int n){
 
-    int *memory = malloc(sizeof(int) * (n+1));
+    int *memory = (int *) malloc(sizeof(int) * (n+1));
     return climbStairsBruteForceMemoryImplementation(0, n, memory);
 }

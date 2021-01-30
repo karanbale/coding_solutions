@@ -31,7 +31,7 @@ static inline void backtrack(int ***visited, int *toBeVisited, int startIdx, int
         int newSize = ((*returnSize))*sizeof(int *);
         *visited = realloc(*visited, newSize);
         
-        (*visited)[*returnSize-1] = malloc(sizeof(int)*endIdx);
+        (*visited)[*returnSize-1] = (int *) malloc(sizeof(int)*endIdx);
         // for permutation, you will have all inputs just shuffled around
         // thus store all of current shuffled toBeVisited nodes
         for(int i=0; i< endIdx; i++){
@@ -72,9 +72,9 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
         return NULL;
     }
     
-    int **retArr = malloc(sizeof(int *));
-    int *used = malloc(sizeof(int) * numsSize);
-    int *temp = malloc(sizeof(int) * numsSize);
+    int **retArr = (int **) malloc(sizeof(int *));
+    int *used = (int *) malloc(sizeof(int) * numsSize);
+    int *temp = (int *) malloc(sizeof(int) * numsSize);
     memset(used,0,sizeof(int) * numsSize);
     
     qsort(nums, numsSize, sizeof(nums[0]), cmpInt);
@@ -83,7 +83,7 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
     backtrack(&retArr, nums, 0, numsSize, returnSize, used, temp);
     free(used);
 
-    *returnColumnSizes = (int*)malloc((*returnSize) * sizeof(int));
+    *returnColumnSizes = (int*) malloc((*returnSize) * sizeof(int));
     for(int i=0; i< *returnSize; i++){
         (*returnColumnSizes)[i] = numsSize;
     }

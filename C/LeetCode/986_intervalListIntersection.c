@@ -42,8 +42,8 @@ void printArr(int **A, int r, int c){
 
 int** intervalIntersection(int** A, int ASize, int* AColSize, int** B, int BSize, int* BColSize, int* returnSize, int** returnColumnSizes){
     int maxOverlap = ASize+BSize;
-    int** retArr = malloc(sizeof(int*)*maxOverlap);
-    int* retColSize = malloc(sizeof(int)*maxOverlap);
+    int** retArr = (int **) malloc(sizeof(int*)*maxOverlap);
+    int* retColSize = (int *) malloc(sizeof(int)*maxOverlap);
 
     int retArrRowIdx = 0;
     int firstPtr = 0, secondPtr = 0;
@@ -54,7 +54,7 @@ int** intervalIntersection(int** A, int ASize, int* AColSize, int** B, int BSize
         
         if(maxStart <= minEnd){
             // Allocate required memory in run-time, to minimize mem utilization to minimum
-            retArr[retArrRowIdx] = malloc(sizeof(int)*2);
+            retArr[retArrRowIdx] = (int *) malloc(sizeof(int)*2);
             retArr[retArrRowIdx][0] = maxStart;
             retArr[retArrRowIdx][1] = minEnd;
             retColSize[retArrRowIdx] = 2;

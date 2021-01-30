@@ -45,15 +45,15 @@ typedef struct queue{
 }queue_t;
 
 queue_t *createQueue(int queueSize){
-    queue_t *queue = malloc(sizeof(queue_t));
+    queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     if(!queue){
         return NULL;
     }
     queue->front = 0;
     queue->rear = -1;
     queue->currItemCount = 0;
-    queue->arrayRow = malloc(sizeof(int)*queueSize);
-    queue->arrayCol = malloc(sizeof(int)*queueSize);
+    queue->arrayRow = (int *) malloc(sizeof(int)*queueSize);
+    queue->arrayCol = (int *) malloc(sizeof(int)*queueSize);
     if(!queue->arrayRow || !queue->arrayCol){
         return NULL;
     }

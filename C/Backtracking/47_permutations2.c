@@ -21,6 +21,35 @@ Constraints:
 -10 <= nums[i] <= 10
 */
 
+/*
+startIdx: 0, endIdx: 3
+	used: [0,0,0,]
+startIdx: 1, endIdx: 3
+	used: [1,0,0,]
+startIdx: 2, endIdx: 3
+	used: [1,1,0,]
+startIdx: 3, endIdx: 3
+	used: [1,1,1,]
+returning
+
+startIdx: 2, endIdx: 3
+	used: [1,0,1,]
+startIdx: 3, endIdx: 3
+	used: [1,1,1,]
+returning
+returning
+
+startIdx: 1, endIdx: 3
+	used: [0,0,1,]
+startIdx: 2, endIdx: 3
+	used: [1,0,1,]
+startIdx: 3, endIdx: 3
+	used: [1,1,1,]
+returning
+returning
+returning
+*/
+
 #include "../standardHeaders.h"
 
 void printArr(int *nums, int numsSize){
@@ -43,14 +72,15 @@ static inline int cmpInt(const void * a, const void * b)
 }
 
 static inline void backtrack(int ***visited, int *toBeVisited, int startIdx, int endIdx, int* returnSize, int *used, int *temp){
+    printArr(used, endIdx);
     // end condition met, store this shuffled combination
     if(startIdx == endIdx){
         (*returnSize)++;
         // add toBeVisited to visited list
         int newSize = ((*returnSize))*sizeof(int *);
-        *visited = realloc(*visited, newSize);
+        *visited = (int **) realloc(*visited, newSize);
         
-        (*visited)[*returnSize-1] = malloc(sizeof(int)*endIdx);
+        (*visited)[*returnSize-1] = (int *) malloc(sizeof(int)*endIdx);
         // for permutation, you will have all inputs just shuffled around
         // thus store all of current shuffled toBeVisited nodes
         for(int i=0; i< endIdx; i++){
@@ -91,9 +121,9 @@ int** permuteUnique(int* nums, int numsSize, int* returnSize, int** returnColumn
         return NULL;
     }
     
-    int **retArr = malloc(sizeof(int *));
-    int *used = malloc(sizeof(int) * numsSize);
-    int *temp = malloc(sizeof(int) * numsSize);
+    int **retArr = (int **) malloc(sizeof(int *));
+    int *used = (int *) malloc(sizeof(int) * numsSize);
+    int *temp = (int *) malloc(sizeof(int) * numsSize);
     memset(used,0,sizeof(int) * numsSize);
     
     qsort(nums, numsSize, sizeof(nums[0]), cmpInt);

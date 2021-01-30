@@ -56,7 +56,7 @@ int* inorderTraversal(struct TreeNode* root, int* returnSize){
     
     *returnSize = 0;
     if(!root)   return 0;
-    int *retArr = malloc(sizeof(int)*100);
+    int *retArr = (int *) malloc(sizeof(int)*100);
     inorderTraversalHelper(root, returnSize, retArr);
     return retArr;
     

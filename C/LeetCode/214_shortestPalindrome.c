@@ -52,7 +52,7 @@ char * shortestPalindrome(char * s){
     }
     
     // string memory to return 
-    char *tempString = malloc(sizeof(char *)*2*strlen(s));
+    char *tempString = (char *) malloc(sizeof(char *)*2*strlen(s));
     // reverse copy of input string, helpful for accelerated computations during memcpy
     // if we dont have it, we can copy 1 byte at a time, from end of s, but it will be slow operation
     char *reverseS = malloc(sizeof(char)*strlen(s)+1);

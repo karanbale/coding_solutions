@@ -37,7 +37,7 @@ typedef struct queue{
 }queue_t;
 
 queue_t *createQueue(void){
-    queue_t *queue = malloc(sizeof(queue_t));
+    queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     queue->front = NULL;
     queue->rear = NULL;
     queue->queueItemCount = 0;
@@ -46,14 +46,14 @@ queue_t *createQueue(void){
 
 void queueEnqueue(queue_t *queue, struct TreeNode *node){
     if(!queue->front){
-        queue->front = malloc(sizeof(struct queueNode));
+        queue->front = (queueNode_t *) malloc(sizeof(queueNode_t));
         if(!queue->front)   return;
         queue->front->node = node;
         queue->front->next= NULL;
         queue->rear = queue->front;
     }
     else{
-        queue->rear->next = malloc(sizeof(struct queueNode));
+        queue->rear->next = (queueNode_t *) malloc(sizeof(queueNode_t));
         if(!queue->rear->next)   return;
         queue->rear = queue->rear->next;
         queue->rear->node = node;
@@ -115,8 +115,8 @@ int** levelOrderBottom(struct TreeNode* root, int* returnSize, int** returnColum
     
     *returnSize = 0;
     int rowCount = 0;
-    int **retArr = malloc(sizeof(int *)*1000);
-    *returnColumnSizes = malloc(sizeof(int)*1000);
+    int **retArr = (int **) malloc(sizeof(int *)*1000);
+    *returnColumnSizes = (int *) malloc(sizeof(int)*1000);
     queue_t *queue = createQueue();
     queueEnqueue(queue,root);
     int level[1000] = {0}, levelIdx = 0;
@@ -124,7 +124,7 @@ int** levelOrderBottom(struct TreeNode* root, int* returnSize, int** returnColum
         int itemCount = 0;
         int itemAtCurrentLevel = queue->queueItemCount;
         level[levelIdx++] = queue->queueItemCount;
-        retArr[rowCount] = malloc(sizeof(int)*itemAtCurrentLevel);
+        retArr[rowCount] = (int *) malloc(sizeof(int)*itemAtCurrentLevel);
         if(!retArr[rowCount])    return NULL;
         while(itemAtCurrentLevel > itemCount){
             struct TreeNode *node = queueDequeue(queue);
@@ -143,9 +143,9 @@ int** levelOrderBottom(struct TreeNode* root, int* returnSize, int** returnColum
     free(queue);
     
     // reverse retArr
-    int **tempRetArr = malloc(sizeof(int *)*1000);
+    int **tempRetArr = (int **) malloc(sizeof(int *)*1000);
     for(int i=rowCount-1; i>=0; i--){
-        tempRetArr[rowCount-i-1] = malloc(sizeof(int)*level[i]);
+        tempRetArr[rowCount-i-1] = (int *) malloc(sizeof(int)*level[i]);
         tempRetArr[rowCount-i-1] = retArr[i];
         (*returnColumnSizes)[rowCount-i-1] = level[i];
     }

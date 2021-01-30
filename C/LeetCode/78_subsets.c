@@ -51,8 +51,8 @@ int** subsets(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
     int maxBitLen = 1 << numsSize;
     
     *returnSize = 0;
-    int **retArr = malloc(maxBitLen*sizeof(int *));
-    *returnColumnSizes = malloc(maxBitLen*sizeof(int));
+    int **retArr = (int **) malloc(maxBitLen*sizeof(int *));
+    *returnColumnSizes = (int *) malloc(maxBitLen*sizeof(int));
     
     // first output will always be 0, since 0 is a valid combination
     (*returnColumnSizes)[(*returnSize)++] = 0;
@@ -66,7 +66,7 @@ int** subsets(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
         (*returnColumnSizes)[(*returnSize)] = size;
         
         // malloc subarray
-        int *tempArr = malloc(sizeof(int)*size);
+        int *tempArr = (int *) malloc(sizeof(int)*size);
         int tempArrIdx = 0;
         // store sub array to output
         retArr[(*returnSize)++] = tempArr;

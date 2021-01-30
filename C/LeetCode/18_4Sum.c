@@ -68,7 +68,7 @@ int** fourSum(int* nums, int numsSize, int target, int* returnSize, int** return
                 else{
                     *returnSize += 1;
                     // returnArray= (int **)realloc(returnArray, sizeof(int*)*(*returnSize));
-                    returnArray[*returnSize-1] = malloc(sizeof(int)*4);
+                    returnArray[*returnSize-1] = (int *) malloc(sizeof(int)*4);
                     returnArray[*returnSize-1][0] = nums[i];
                     returnArray[*returnSize-1][1] = nums[j];
                     returnArray[*returnSize-1][2] = nums[left];

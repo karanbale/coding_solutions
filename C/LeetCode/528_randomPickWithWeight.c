@@ -61,10 +61,10 @@ typedef struct {
 } Solution;
 
 Solution* solutionCreate(int* w, int wSize) {
-    Solution *s = malloc(sizeof(Solution));
+    Solution *s = (Solution *) malloc(sizeof(Solution));
     assert(s != NULL);
     s->weightSize = wSize;
-    s->sumOfWeightsArr = malloc(sizeof(int)*wSize);
+    s->sumOfWeightsArr = (int *) malloc(sizeof(int)*wSize);
     assert(s->sumOfWeightsArr != NULL);
     
     // calculate total sum of the array, this will be our max range total

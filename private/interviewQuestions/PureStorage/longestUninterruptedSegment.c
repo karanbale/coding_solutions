@@ -84,7 +84,7 @@ Expected Output:
 
 */
 
-#include "../../C/standardHeaders.h"
+#include "../../../C/standardHeaders.h"
 
 typedef struct {
 int size;
@@ -93,11 +93,11 @@ int *arr;
 
 
 arr_integer longestUncorruptedSegment(arr_integer sourceArray, arr_integer destinationArray) {
-    printf("size: %d\n",destinationArray.arr);
+    printf("size: %d\n",destinationArray.size);
 
     arr_integer returnData;
     returnData.size = 2;
-    int *arr = malloc(sizeof(int)*returnData.size);
+    int *arr = (int *) malloc(sizeof(int)*returnData.size);
     returnData.arr = arr;
     
     if(sourceArray.size != destinationArray.size) return returnData;

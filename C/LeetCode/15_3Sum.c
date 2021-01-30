@@ -61,7 +61,7 @@ int** threeSum(int* nums, int numsSize, int* returnSize, int** returnColumnSizes
             else if(sum > target)   right--;
             else{
                 (*returnSize)++;
-                returnArray[*returnSize-1] = malloc(sizeof(int)*3);
+                returnArray[*returnSize-1] = (int *) malloc(sizeof(int)*3);
                 returnArray[*returnSize-1][0] = nums[i];
                 returnArray[*returnSize-1][1] = nums[left];
                 returnArray[*returnSize-1][2] = nums[right];

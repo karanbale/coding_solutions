@@ -26,7 +26,7 @@ Do it without using any builtin function like __builtin_popcount in c++ or in an
  */
 void countBits(int num){
     //printf("num: %d, return size: %d\n",num, *returnSize);
-    int* output_arr = malloc(sizeof(int)*(num+1));
+    int* output_arr = (int *) malloc(sizeof(int)*(num+1));
     output_arr[0] = 0;
     for(int i=1; i<=num; i++){
         int count = 0, temp = i;

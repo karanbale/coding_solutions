@@ -106,7 +106,7 @@ void freePlayers(void){
 
 card_t *createCard(uint32_t cardNum, uint32_t deckNum){
     
-    card_t *card = malloc(sizeof(card_t));
+    card_t *card = (card_t *) malloc(sizeof(card_t));
     
     // heap allocation success / not
     if(!card){
@@ -128,7 +128,7 @@ cardDeck_t *initializeDeck(uint32_t numberOfCards, bool shuffleCards){
     }
 
     card_t *tempPtr = NULL;
-    cardDeck_t *root = malloc(sizeof(cardDeck_t));
+    cardDeck_t *root = (cardDeck_t *) malloc(sizeof(cardDeck_t));
     
     // heap allocation success / not
     if(!root){
@@ -164,7 +164,7 @@ void initializePlayers(const uint32_t numberOfPlayers){
     if(numberOfPlayers == 0){   return; }
 
     // playerHand_t *dummyPlayer = NULL;
-    dummyPlayer = malloc(sizeof(playerHand_t));
+    dummyPlayer = (playerHand_t *) malloc(sizeof(playerHand_t));
     dummyPlayer->cardHead=NULL;
     dummyPlayer->next=NULL;
     dummyPlayer->numberOfCards = 0;
@@ -172,7 +172,7 @@ void initializePlayers(const uint32_t numberOfPlayers){
     playerHand_t *tempPtr = dummyPlayer;
     // create structures for each player
     for(uint32_t i=0; i<numberOfPlayers; i++){
-        playerHand_t *newPlayer = malloc(sizeof(playerHand_t));
+        playerHand_t *newPlayer = (playerHand_t *) malloc(sizeof(playerHand_t));
         if(newPlayer == NULL)   {   return; }
 
         newPlayer->numberOfCards = 0;
@@ -248,7 +248,7 @@ void dealHand(cardDeck_t *deckRoot, const uint32_t numberOfPlayers){
 }
 
 cardDeck_t *reinitializeDeckUsingCardsFromPlayers(uint32_t numberOfPlayers){
-    cardDeck_t *deckRoot = malloc(sizeof(cardDeck_t));
+    cardDeck_t *deckRoot = (cardDeck_t *) malloc(sizeof(cardDeck_t));
     // heap allocation success / not
     if(!deckRoot){
         return NULL;

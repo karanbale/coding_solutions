@@ -37,7 +37,7 @@ typedef struct Set {
 }set_t;
 
 set_t *createHashSet(size_t size){
-    set_t *hashSet = malloc(sizeof(set_t));
+    set_t *hashSet = (set_t *) malloc(sizeof(set_t));
     hashSet->size = size;
     hashSet->numOfItems = 0;
     return hashSet;
@@ -129,13 +129,13 @@ char * minWindow(char * s, char * t){
     char *result = NULL;
     if(subStrCount != INT32_MAX)
     {
-        result = (char*)malloc((subStrCount+1)*sizeof(char));
+        result = (char*) malloc((subStrCount+1)*sizeof(char));
         strncpy(result, s+subStrStartIdx, subStrCount);
         result[subStrCount] = '\0';
     }
     else
     {
-        result = (char*)malloc(1*sizeof(char));
+        result = (char*) malloc(1*sizeof(char));
         result[0] = '\0';
     }
     free(hashSetS);

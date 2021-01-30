@@ -60,7 +60,7 @@ to next iteration, thus there is no limitation on how many linked list digits on
 #define SUM(a, b) ((a) + (b))
 
 struct ListNode* newNode(size_t val){
-    struct ListNode* node1 = malloc(sizeof(*node1));
+    struct ListNode* node1 = (struct ListNode *) malloc(sizeof(*node1));
     if((node1 == NULL) || (val > INT32_MAX)){
         printf("returning...\n");
         free(node1);
@@ -120,13 +120,13 @@ struct ListNode* retNodesFromNumSolution2(size_t num){
     
     size_t tempNum = num;
     if(tempNum == 0){
-        struct ListNode* tempNewNode = malloc(sizeof *tempNewNode);
+        struct ListNode* tempNewNode = (struct ListNode *) malloc(sizeof *tempNewNode);
         tempNewNode->next = NULL;
         tempNewNode->val = 0;
         return tempNewNode;
     }
     while(tempNum != 0){
-        struct ListNode* tempNewNode = malloc(sizeof *tempNewNode);
+        struct ListNode* tempNewNode = (struct ListNode *) malloc(sizeof *tempNewNode);
         tempNewNode->next = NULL;
         if(tempNewNode == NULL) {
             printf("returning..");
@@ -205,7 +205,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
     struct ListNode* tempCurrNode = NULL;
     
     while((tempNode1 != NULL) || (tempNode2 != NULL)){
-        struct ListNode* tempNewNode = malloc(sizeof *tempNewNode);
+        struct ListNode* tempNewNode = (struct ListNode *) malloc(sizeof *tempNewNode);
         tempNewNode->next = NULL;
         if(tempNewNode == NULL) {
             printf("returning..");
@@ -229,7 +229,7 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
         tempNode2 = (tempNode2 != NULL ? tempNode2->next : NULL);
     }
     if(carry){
-        struct ListNode* tempNewNode = malloc(sizeof *tempNewNode);
+        struct ListNode* tempNewNode = (struct ListNode *) malloc(sizeof *tempNewNode);
         if(tempNewNode == NULL) {
             return NULL;
         }
@@ -247,15 +247,15 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2){
 struct ListNode* fromNumberToNodesWrapper(char* numArr){
     struct ListNode* tempHeadNode = NULL;
     struct ListNode* tempCurrNode = NULL;
-    while(numArr != '\0'){
+    while(*numArr != '\0'){
         //allocate new node on heap and check its not NULL i.e. it was allocated successfully
-        struct ListNode* tempNewNode = malloc(sizeof *tempNewNode);
+        struct ListNode* tempNewNode = (struct ListNode *) malloc(sizeof *tempNewNode);
         if(tempNewNode == NULL) {
             return NULL;
         }
         tempNewNode->next = NULL;
         tempNewNode->val = atoi(numArr);
-        //*numArr++;
+        numArr++;
     }
     return tempHeadNode;
 }

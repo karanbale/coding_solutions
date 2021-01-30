@@ -56,14 +56,15 @@ static inline void bubble_sort(int *nums, int start, int end)
     }
 }
 
-void nextPermutation(int* nums, int numsSize){
+int *nextPermutation(int* nums, int numsSize){
     
     // scan nums from right to left
     // find first irregularity i.e. a[i] > a[i-1]
     // NOTE: everything to the right of a[i-1] is sorted, since we could not find any a[i-1] < a[i]
     // start looking to the right of a[i-1] and find next closest but slightly bigger element to a[i-1], lets call it a[j]
     // swap, a[j] and a[i-1] ==> NOTE: This swapping may affect current order on the right hand side of a[i-1]
-    // reverse all the numbers after a[i-1], as long as there are no duplicates, and only reverse if first element > last element (swapping first smaller element with last bigger element will enerate a bigger overall array permutation, not what we want)
+    // reverse all the numbers after a[i-1], as long as there are no duplicates, 
+    // and only reverse if first element > last element (swapping first smaller element with last bigger element will enerate a bigger overall array permutation, not what we want)
     // answer is now smallest possible next permutation
     
     int firstIrregularIdx = -1;
@@ -82,7 +83,7 @@ void nextPermutation(int* nums, int numsSize){
         bubble_sort(nums, startIdx, endIdx);
     }
     else{
-        // start looking to the right of a[i-1] and find next closest but sligghtly bigger element to a[i-1], lets call it a[j]
+        // start looking to the right of a[i-1] and find next closest but slightly bigger element to a[i-1], lets call it a[j]
         int currIrregularNumber = nums[firstIrregularIdx];
         int currentClosestElementIdx = -1, currentDiff = INT32_MAX;
         for(int i=firstIrregularIdx+1; i < numsSize; i++){

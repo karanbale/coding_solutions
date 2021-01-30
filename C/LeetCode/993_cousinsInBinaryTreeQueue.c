@@ -46,7 +46,7 @@ typedef struct queue{
 }queue_t;
 
 queue_t *createQueue(void){
-    queue_t *queue = malloc(sizeof(struct queue));
+    queue_t *queue = (queue_t *) malloc(sizeof(struct queue));
     queue->front = NULL;
     queue->rear = NULL;
     if(!queue)  return NULL;
@@ -56,14 +56,14 @@ queue_t *createQueue(void){
 
 void queueEnqueue(queue_t *queue, struct TreeNode *node){
     if(!queue->front){
-        queue->front = malloc(sizeof(struct queueNode));
+        queue->front = (struct queueNode *) malloc(sizeof(struct queueNode));
         if(!queue->front)   return;
         queue->front->node = node;
         queue->front->next = NULL;
         queue->rear = queue->front;
     }
     else{
-        queue->rear->next = malloc(sizeof(struct queueNode));
+        queue->rear->next = (struct queueNode *) malloc(sizeof(struct queueNode));
         if(!queue->rear)   return;
         queue->rear = queue->rear->next;
         queue->rear->node = node;

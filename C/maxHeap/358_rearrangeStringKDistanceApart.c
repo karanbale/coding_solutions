@@ -37,9 +37,9 @@ bool isQueueFull(queue_t *queue){
 }
 
 queue_t *createQueue(int queueSize){
-    queue_t *queue = malloc(sizeof(queue_t));
+    queue_t *queue =(queue_t *) malloc(sizeof(queue_t));
     if(!queue)    return NULL;
-    queue->queueArr = malloc(sizeof(int)*queueSize);
+    queue->queueArr = (int *) malloc(sizeof(int)*queueSize);
     if(!queue->queueArr)    return NULL;
     queue->front = 0;
     queue->queueItemCount = 0;
@@ -77,8 +77,8 @@ typedef struct heap{
     bool isMaxHeap;
 }heap_t;
 
-void swap(int *x, int *y){
-    int temp = *x;
+void swap(size_t *x, size_t *y){
+    size_t temp = *x;
     *x = *y;
     *y = temp;
 }
@@ -96,10 +96,10 @@ int getRightChildIdx(int idx){
 }
 
 heap_t *createHeap(int heapSize, bool isMaxHeap){
-    heap_t *heap = malloc(sizeof(heap_t));
+    heap_t *heap = (heap_t *) malloc(sizeof(heap_t));
     if(!heap)   return NULL;
     
-    heap->heapArr = malloc(sizeof(int)*heapSize);
+    heap->heapArr = (size_t *) malloc(sizeof(int)*heapSize);
     if(!heap->heapArr) return NULL;
     
     heap->heapSize = heapSize;
@@ -189,7 +189,7 @@ void destroyHeap(heap_t *heap){
 void printHeap(struct heap *h){
     for (int q = 0; q < 27; q++){
         if(h->heapArr[q]>0){
-            printf("%d, ", h->heapArr[q]);
+            printf("%ld, ", h->heapArr[q]);
         }
     } 
 }

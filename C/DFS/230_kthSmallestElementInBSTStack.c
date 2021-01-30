@@ -39,7 +39,7 @@ struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
-};
+}TreeNode_t;
 
 typedef struct stackt{
     struct TreeNode **stackArr;
@@ -56,11 +56,11 @@ bool isStackFull(stackt_t *stack){
 }
 
 stackt_t *createStack(int stackSize){
-    stackt_t *stack = malloc(sizeof(stackt_t));
+    stackt_t *stack = (stackt_t *) malloc(sizeof(stackt_t));
     if(!stack)  return NULL;
     stack->top = -1;
     stack->stackSize = stackSize;
-    stack->stackArr = malloc(sizeof(struct TreeNode *)*stackSize);
+    stack->stackArr = (struct TreeNode **) malloc(sizeof(struct TreeNode *)*stackSize);
     if(!stack->stackArr)    return NULL;
     return stack;
 }

@@ -82,9 +82,9 @@ bool isStackFull(stackt *stack){
 }
 
 stackt *createStack(size_t stackSize){
-    stackt *stack = malloc(sizeof(stackt));
+    stackt *stack = (stackt *) malloc(sizeof(stackt));
     if(!stack)  return NULL;
-    stack->Arr = malloc(sizeof(int)*stackSize);
+    stack->Arr = (size_t *) malloc(sizeof(int)*stackSize);
     if(!stack->Arr) return NULL;
     stack->top = -1;
     stack->stackSize = stackSize;

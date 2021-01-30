@@ -56,14 +56,14 @@ It's also guaranteed that f(x, y) will fit in 32 bit signed integer if 1 <= x, y
  * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
  */
 int** findSolutionSolution1(int (*customFunction)(int, int), int z, int* returnSize, int** returnColumnSizes) {
-	int *c = *returnColumnSizes = malloc(sizeof(int*)*z);
+	int *c = *returnColumnSizes = (int *) malloc(sizeof(int*)*z);
     int retArrayRowIdx = 0;
     int **retArray = malloc(sizeof(int*)*z);
     for (int i = 1 ; i <= z ; i++){
         for (int j = z ; j >= 1 ; j--){
             if (customFunction(i, j) == z){
                 *(c+retArrayRowIdx) = 2;
-                retArray[retArrayRowIdx] = malloc(sizeof(int)*2);
+                retArray[retArrayRowIdx] = (int *) malloc(sizeof(int)*2);
                 retArray[retArrayRowIdx][0] = i;
                 retArray[retArrayRowIdx++][1] = j;
                 
@@ -82,8 +82,8 @@ int** findSolutionSolution2(int (*customFunction)(int, int), int z, int* returnS
     }
     *returnSize = 0;
     
-    *returnColumnSizes = malloc(sizeof(int));
-    int **retArray = malloc(sizeof(int*));
+    *returnColumnSizes = (int *) malloc(sizeof(int));
+    int **retArray = (int **) malloc(sizeof(int*));
 
     if(!retArray || !returnColumnSizes){
         return NULL;
@@ -97,7 +97,7 @@ int** findSolutionSolution2(int (*customFunction)(int, int), int z, int* returnS
             if(customFunction(i, j) == z){
                 (*returnSize)++;
                 retArray =  realloc(retArray, *returnSize * sizeof(int*));
-                retArray[*returnSize -1] = malloc(2*sizeof(int));
+                retArray[*returnSize -1] = (int *) malloc(2*sizeof(int));
                 if(!retArray[*returnSize-1])   return NULL;
                 else{
                     retArray[*returnSize - 1][0] = i;
@@ -107,7 +107,7 @@ int** findSolutionSolution2(int (*customFunction)(int, int), int z, int* returnS
         }
     }
     
-    *returnColumnSizes = malloc(*returnSize * sizeof(int));
+    *returnColumnSizes = (int *) malloc(*returnSize * sizeof(int));
     for(int i = 0; i < *returnSize; i++)
     {
         (*returnColumnSizes)[i] = 2;

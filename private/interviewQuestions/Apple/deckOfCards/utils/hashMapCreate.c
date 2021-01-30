@@ -16,7 +16,7 @@ HashTable *hashTableCreate(unsigned int size)
                 return NULL;
         }
 
-        ht = malloc(sizeof(HashTable));
+        ht = (HashTable *) malloc(sizeof(HashTable));
         if (ht == NULL) {
                 return (NULL);
         }

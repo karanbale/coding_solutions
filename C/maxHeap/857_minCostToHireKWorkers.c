@@ -298,7 +298,7 @@ void get_dp(worker_t *arr, int qualitySize, int kNumOfWorkers, int *dp){
     int temp[kNumOfWorkers + 1];
     int n = 0;
     int sum = 0;
-     // add K-1 workers with minimum wageToQualityRatio to temp heap
+    // add K-1 workers with minimum wageToQualityRatio to temp heap
     // Note: our members are already sorted as per their wageToQualityRatio, from highest to lowest
     // thus lets just focus on (K-1) workers with minimum wageToQualityRatio
     for (int i = qualitySize - kNumOfWorkers; i < qualitySize ; i++){
@@ -340,7 +340,7 @@ double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int wageSi
     if (qualitySize == 1)
         return wage[0];
     // initialize member structure
-    worker_t * member = malloc(sizeof(worker_t) * qualitySize);
+    worker_t * member = (worker_t *) malloc(sizeof(worker_t) * qualitySize);
     for (int i = 0; i < qualitySize; i++){
         member[i].quality = quality[i];
         member[i].wage = wage[i];

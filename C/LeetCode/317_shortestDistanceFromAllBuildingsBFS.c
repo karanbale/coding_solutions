@@ -55,13 +55,13 @@ typedef struct queue{
 }queue_t;
 
 queue_t *createQueue(int queueSize){
-    queue_t *queue = malloc(sizeof(queue_t));
+    queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     if(!queue)  return NULL;
     queue->front = 0;
     queue->rear = -1;
     queue->numOfItems = 0;
-    queue->arrayRows = malloc(sizeof(int)*queueSize);
-    queue->arrayCols = malloc(sizeof(int)*queueSize);
+    queue->arrayRows = (int *) malloc(sizeof(int)*queueSize);
+    queue->arrayCols = (int *) malloc(sizeof(int)*queueSize);
     
     if(!queue->arrayRows || !queue->arrayCols)   return NULL;
     
@@ -119,9 +119,9 @@ int shortestDistance(int** grid, int gridSize, int* gridColSize){
     int queueSize = numOfRows*numOfCols;
     // emptyPlotData_t *emptyPlotDataArray[queueSize];
     
-    int **distance = malloc(sizeof(int *)*numOfRows);
-    int **reach = malloc(sizeof(int *)*numOfRows);
-    int **visited = malloc(sizeof(int *)*numOfRows);
+    int **distance = (int **) malloc(sizeof(int *)*numOfRows);
+    int **reach = (int **) malloc(sizeof(int *)*numOfRows);
+    int **visited = (int **) malloc(sizeof(int *)*numOfRows);
     for(int i=0; i<numOfRows; i++){
         distance[i] = calloc(numOfCols, sizeof(int));
         visited[i] = calloc(numOfCols, sizeof(int));
@@ -139,7 +139,7 @@ int shortestDistance(int** grid, int gridSize, int* gridColSize){
                 // printf("Pushing r: %d, c:%d\n",row, col);
                 queueEnqueue(queue, row, col);
 
-                int **visited = malloc(sizeof(int *)*numOfRows);
+                int **visited = (int **) malloc(sizeof(int *)*numOfRows);
                 for(int k=0; k<numOfRows; k++){
                     visited[k] = calloc(numOfCols, sizeof(int));
                 }

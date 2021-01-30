@@ -26,7 +26,7 @@ typedef struct Set {
 }set_t;
 
 set_t *createHashSet(size_t size){
-    set_t *hashSet = malloc(sizeof(set_t));
+    set_t *hashSet = (set_t *) malloc(sizeof(set_t));
     hashSet->size = size;
     hashSet->numOfItems = 0;
     return hashSet;

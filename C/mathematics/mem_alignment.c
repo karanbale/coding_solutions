@@ -14,7 +14,7 @@ static void memset_16aligned(void *space, char byte, size_t nbytes)
 static void test_mask(size_t align)
 {
     uintptr_t mask = ~(uintptr_t)(align - 1);
-    void *mem = malloc(1024+align-1);
+    void *mem = (void *) malloc(1024+align-1);
     void *ptr = (void *)(((uintptr_t)mem+align-1) & mask);
     assert((align & (align - 1)) == 0);
     printf("Mask: 0x%08" PRIXPTR "\n", mask);

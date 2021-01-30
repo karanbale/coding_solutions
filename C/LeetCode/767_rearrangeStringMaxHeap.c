@@ -23,10 +23,10 @@ struct heap {
 };
 
 struct heap* newHeap(int size){
-    struct heap *h = malloc(sizeof(struct heap));
+    struct heap *h = (struct heap *) malloc(sizeof(struct heap));
     // Index starts at 1 to make the math in helper fn's easier.. just for this problem.
     h->idx = 1; 
-    h->A = malloc(sizeof(int)* size);
+    h->A = (int *) malloc(sizeof(int)* size);
 
     return h; 
 } 

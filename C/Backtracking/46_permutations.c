@@ -21,6 +21,16 @@ Constraints:
 All the integers of nums are unique.
 */
 
+/*
+Time complexity Analysis:
+    Since we're drilling down on each value of n and perform n! computations, the time complexity is:
+    (n x n!), however for each n, size of n shrinks (we go from n to n-1 to n-2 etc upto 0)
+    so time complexity is slightly better than (n x n!) but worse than (n!)
+
+Space Complexity Analysis: 
+    Space complexity is n! since in the output we will have n! sub-arrays for given array of size n.
+*/
+
 #include "../standardHeaders.h"
 
 void swap(int *idx1, int *idx2){
@@ -35,9 +45,8 @@ void backtrack(int ***visited, int *toBeVisited, int startIdx, int endIdx, int* 
         (*returnSize)++;
         // add toBeVisited to visited list
         int newSize = ((*returnSize))*sizeof(int *);
-        *visited = realloc(*visited, newSize);
-        
-        (*visited)[*returnSize-1] = malloc(sizeof(int)*endIdx);
+        *visited = (int **) realloc(*visited, newSize);
+        (*visited)[*returnSize-1] = (int *) malloc(sizeof(int)*endIdx);
         // for permutation, you will have all inputs just shuffled around
         // thus store all of current shuffled toBeVisited nodes
         for(int i=0; i< endIdx; i++){
@@ -69,12 +78,12 @@ int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
         return NULL;
     }
     
-    int **retArr = malloc(sizeof(int *));
+    int **retArr = (int **) malloc(sizeof(int *));
 
     *returnSize = 0;
     backtrack(&retArr, nums, 0, numsSize, returnSize);
 
-    *returnColumnSizes = (int*)malloc(*returnSize * sizeof(int));
+    *returnColumnSizes = (int*) malloc(*returnSize * sizeof(int));
     for(int i=0; i< *returnSize; i++){
         (*returnColumnSizes)[i] = numsSize;
     }

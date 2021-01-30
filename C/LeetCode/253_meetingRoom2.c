@@ -41,13 +41,13 @@ int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
     
     // put all time in a array, mark 1 as start and mark -1 as end
     int **events=NULL;
-    events = (int**)malloc(intervalsSize*2*sizeof(int*));
+    events = (int**) malloc(intervalsSize*2*sizeof(int*));
     for(int i=0;i<intervalsSize;i++)
     {   
-        events[i*2] = (int*)malloc(2*sizeof(int));
+        events[i*2] = (int*) malloc(2*sizeof(int));
         events[i*2][0] = intervals[i][0];
         events[i*2][1] = 1;
-        events[i*2+1] = (int*)malloc(2*sizeof(int));
+        events[i*2+1] = (int*) malloc(2*sizeof(int));
         events[i*2+1][0] = intervals[i][1];
         events[i*2+1][1] = -1;
     }

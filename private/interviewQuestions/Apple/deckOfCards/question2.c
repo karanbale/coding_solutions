@@ -106,7 +106,7 @@ static char *GetErrorString(int x)
 int main(int argc,char* argv[])
 {
    // initialize buffer
-   buf.buf = malloc(BUF_SIZE);                                      // R.C.: need a check if malloc operation was successful.
+   buf.buf = (char *) malloc(BUF_SIZE);                                      // R.C.: need a check if malloc operation was successful.
    buf.size = BUF_SIZE;
 
    // Perform enqueue() and dequeue();

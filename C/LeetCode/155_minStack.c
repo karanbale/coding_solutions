@@ -48,9 +48,9 @@ typedef struct stack{
 /** initialize your data structure here. */
 
 MinStack* minStackCreate() {
-    MinStack *stack = malloc(sizeof(MinStack));
+    MinStack *stack = (MinStack *) malloc(sizeof(MinStack));
     if(!stack)  return NULL;
-    stack->arr = malloc(sizeof(int)*SIZE);
+    stack->arr = (int *) malloc(sizeof(int)*SIZE);
     if(!stack->arr) return NULL;
     stack->top = -1;
     stack->size = SIZE;

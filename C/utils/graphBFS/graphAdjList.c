@@ -9,10 +9,10 @@ vertex_t *createNewVertex(int value){
 }
 
 graph_t *createGraph(int numVertices){
-    graph_t *graph = malloc(sizeof(graph_t));
+    graph_t *graph = (graph_t *) malloc(sizeof(graph_t));
     graph->numOfVertices = numVertices;
 
-    graph->graphAdjList = malloc(sizeof(graphAdjList_t) * numVertices);
+    graph->graphAdjList =  (graphAdjList_t *) malloc(sizeof(graphAdjList_t) * numVertices);
     for(int i=0; i<numVertices; i++){
         graph->graphAdjList[i].adjListHead = NULL;
     }

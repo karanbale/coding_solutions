@@ -89,7 +89,7 @@ int* searchRangeSolution1(int* nums, int numsSize, int target, int* returnSize){
 int* searchRangeSolution2(int* nums, int numsSize, int target, int* returnSize){
     
     *returnSize = 2;
-    int *retArray = malloc(sizeof(int) * 2);
+    int *retArray = (int *) malloc(sizeof(int) * 2);
     retArray[0] = retArray[1] = -1;
     
     int left, right;

@@ -65,7 +65,7 @@ char * minWindow(char * S, char * T){
     }
     
     if(subStrLen != INT32_MAX){
-        char *retArr = malloc(sizeof(char)*(subStrLen+1));
+        char *retArr = (char *) malloc(sizeof(char)*(subStrLen+1));
         strncpy(retArr, S+subStrStartIdx, subStrLen);
         retArr[subStrLen] = '\0';
         return retArr;

@@ -23,7 +23,7 @@ Could you solve it with constant space complexity?
  * Note: The returned array must be malloced, assume caller calls free().
  */
 int* productExceptSelf(int* nums, int numsSize, int* returnSize){
-    int *retArray = calloc(sizeof(int), numsSize);
+    int *retArray = (int *) calloc(sizeof(int), numsSize);
     for(int i=0; i<numsSize; i++){
         retArray[i] = 1;
     }

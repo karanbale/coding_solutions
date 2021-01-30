@@ -31,7 +31,7 @@ int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* retu
     int* temp=NULL;
     int retArrIdx = 0;
     
-    int* col = malloc(sizeof(int)*intervalsSize);
+    int* col = (int *) malloc(sizeof(int)*intervalsSize);
     for(int i =0; i<intervalsSize; i++){
         col[i] = 2;
     }

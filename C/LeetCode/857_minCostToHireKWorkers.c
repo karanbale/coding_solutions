@@ -340,7 +340,7 @@ double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int wageSi
     if (qualitySize == 1)
         return wage[0];
     // initialize member structure
-    worker_t * member = malloc(sizeof(worker_t) * qualitySize);
+    worker_t * member = (worker_t *) malloc(sizeof(worker_t) * qualitySize);
     for (int i = 0; i < qualitySize; i++){
         member[i].quality = quality[i];
         member[i].wage = wage[i];

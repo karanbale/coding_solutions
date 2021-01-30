@@ -37,7 +37,7 @@ struct TreeNode {
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
-};
+}TreeNode_t;
 
 typedef struct stackt{
     struct TreeNode **arr;
@@ -54,9 +54,9 @@ bool isStackEmpty(stack_T *stackt){
 }
 
 stack_T *createStack(int stackSize){
-    stack_T *stackt = malloc(sizeof(struct stackt));
+    stack_T *stackt = (stack_T *) malloc(sizeof(struct stackt));
     if(!stackt)  return NULL;
-    stackt->arr = malloc(sizeof(struct TreeNode)*stackSize);
+    stackt->arr = (TreeNode_t *) malloc(sizeof(TreeNode_t)*stackSize);
     if(!stackt->arr) return NULL;
     stackt->stackSize = stackSize;
     stackt->top = -1;
@@ -85,7 +85,7 @@ void freeStack(stack_T *stackt){
 int* preorderTraversal(struct TreeNode* root, int* returnSize){
     *returnSize = 0;
     if(!root)   return 0;
-    int *retArr = malloc(sizeof(int));
+    int *retArr = (int *) malloc(sizeof(int));
     if(!retArr) return NULL;
     stack_T *stackt = createStack(100);
     if(!stackt)  return NULL;
@@ -106,7 +106,7 @@ int* preorderTraversal(struct TreeNode* root, int* returnSize){
     }
     
     // simply revert the output of in-order traversal
-    int *tempRetArr = malloc((*returnSize)*sizeof(int));
+    int *tempRetArr = (int *) malloc((*returnSize)*sizeof(int));
     for(int i=(*returnSize)-1; i>=0; i--){
         tempRetArr[(*returnSize)-1-i] = retArr[i];
     }

@@ -52,7 +52,7 @@ The number of nodes will not exceed 1000.
 };
 
 struct Node *createNode(int data){
-    struct Node *node = malloc(sizeof(struct Node));
+    struct Node *node = (struct Node *) malloc(sizeof(struct Node));
     if(!node)   return NULL;
     node->val = data;
     node->next = NULL;
