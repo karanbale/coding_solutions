@@ -35,9 +35,9 @@ void backtrack(int ***visited, int *toBeVisited, int startIdx, int endIdx, int* 
         (*returnSize)++;
         // add toBeVisited to visited list
         int newSize = ((*returnSize))*sizeof(int *);
-        *visited = realloc(*visited, newSize);
+        *visited = (int **)realloc(*visited, newSize);
         
-        (*visited)[*returnSize-1] = malloc(sizeof(int)*endIdx);
+        (*visited)[*returnSize-1] = (int *)malloc(sizeof(int)*endIdx);
         // for permutation, you will have all inputs just shuffled around
         // thus store all of current shuffled toBeVisited nodes
         for(int i=0; i< endIdx; i++){
@@ -69,7 +69,7 @@ int** permute(int* nums, int numsSize, int* returnSize, int** returnColumnSizes)
         return NULL;
     }
     
-    int **retArr = malloc(sizeof(int *));
+    int **retArr = (int **)malloc(sizeof(int *));
 
     *returnSize = 0;
     backtrack(&retArr, nums, 0, numsSize, returnSize);
