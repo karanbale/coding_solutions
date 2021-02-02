@@ -106,10 +106,12 @@ int* searchRangeSolution2(int* nums, int numsSize, int target, int* returnSize){
         }
         else if(nums[mid] == target){
             int nextHighestIdx = mid;
+            // extend search party to the left, as far as we can extend or until we reach 0
             while(mid>=0 && nums[mid]==target){
                 mid--;
             }
             retArray[0] = mid+1;
+            // extend search party to the right, as far as we can extend or until we reach end of input array
             while(nextHighestIdx<numsSize && nums[nextHighestIdx]==target){
                 nextHighestIdx++;
             }
