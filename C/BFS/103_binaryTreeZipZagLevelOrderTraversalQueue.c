@@ -118,20 +118,26 @@ int** zigzagLevelOrder(struct TreeNode* root, int* returnSize, int** returnColum
     *returnColumnSizes = (int *) malloc(sizeof(int)*1000);
     queue_t *queue = createQueue();
     queueEnqueue(queue,root);
-    int level = 0;
+
+    // zigZagFlip simply means that, do you want to store items at current level
+    // from 0 ... last or from last ... 0
     bool zigZagFlip = false;
     while(!isQueueEmpty(queue)){
         int itemCount = queue->queueItemCount;
         int itemAtCurrentLevel = queue->queueItemCount;
         retArr[rowCount] = (int *) malloc(sizeof(int)*itemAtCurrentLevel);
         if(!retArr[rowCount])    return NULL;
+        // store items in reverse order
         int count = itemCount-1;
+        // store items serially starting with index 0
         if(!zigZagFlip)  count = 0;
         while(itemAtCurrentLevel){
             struct TreeNode *node = queueDequeue(queue);
+            // store items in reverse order
             if(zigZagFlip){
                 retArr[rowCount][--itemAtCurrentLevel] = node->val;
             }
+            // store items serially starting with index 0
             else{
                 retArr[rowCount][count] = node->val;
                 itemAtCurrentLevel--;

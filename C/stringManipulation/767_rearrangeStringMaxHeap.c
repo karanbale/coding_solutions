@@ -47,7 +47,6 @@ heap_t *createHeap(int heapSize, bool isMaxHeap){
     if(!heap)   return NULL;
 
     heap->heapArr = (int *) malloc(sizeof(int)*heapSize);
-
     if(!heap->heapArr) return NULL;
     
     heap->heapSize = heapSize;

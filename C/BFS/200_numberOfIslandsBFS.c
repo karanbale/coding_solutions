@@ -29,6 +29,16 @@ n == grid[i].length
 grid[i][j] is '0' or '1'.
 */
 
+/*
+Complexity Analysis
+
+Time complexity : O(M x N)O(M×N) where M is the number of rows and N is the number of columns.
+
+Space complexity : O(min(M, N)),
+because in worst case where the grid is filled with lands,
+the size of queue can grow up to min(M,N).
+*/
+
 #include "../standardHeaders.h"
 
 typedef struct queue{

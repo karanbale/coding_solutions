@@ -1,69 +1,78 @@
 /*
-Given an m x n 2d grid map of '1's (land) and '0's (water), return the number of islands.
-An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
-You may assume all four edges of the grid are all surrounded by water.
+You are given a m x n 2D grid initialized with these three possible values.
 
-Example 1:
-Input: grid = [
-  ["1","1","1","1","0"],
-  ["1","1","0","1","0"],
-  ["1","1","0","0","0"],
-  ["0","0","0","0","0"]
-]
-Output: 1
+-1 : A wall or an obstacle.
 
-Example 2:
-Input: grid = [
-  ["1","1","0","0","0"],
-  ["1","1","0","0","0"],
-  ["0","0","1","0","0"],
-  ["0","0","0","1","1"]
-]
-Output: 3
+0 : A gate.
 
-Constraints:
+INF : Infinity means an empty room. We use the value 231 - 1 = 2147483647 to represent INF,
+as you may assume that the distance to a gate is less than 2147483647.
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate,
+it should be filled with INF.
 
-m == grid.length
-n == grid[i].length
-1 <= m, n <= 300
-grid[i][j] is '0' or '1'.
+Example:
+
+Given the 2D grid:
+
+INF  -1  0  INF
+INF INF INF  -1
+INF  -1 INF  -1
+  0  -1 INF INF
+
+After running your function, the 2D grid should be:
+
+  3  -1   0   1
+  2   2   1  -1
+  1  -1   2  -1
+  0  -1   3   4
+
+*/
+
+/*
+Complexity analysis
+
+Time complexity : O(mn x k).
+For each gate k, we will visit (m x n) empty rooms.
+
+Space complexity : O(mn).
+We may invoke at max (mxn) recursive dfs function calls.
 */
 
 #include "../standardHeaders.h"
 
-void dfs(char** grid, int gridSize, int gridColSize, int rowIdx, int colIdx){
+void dfs(int** rooms, int i, int j, int x, int y, int count){
+    if(count < rooms[i][j])
+        rooms[i][j] = count;
     
-    grid[rowIdx][colIdx] = '0';
-    
-    if(((rowIdx - 1) >= 0) && (grid[rowIdx-1][colIdx] == '1'))  dfs(grid, gridSize, gridColSize, rowIdx-1, colIdx);
-    
-    if(((rowIdx + 1) < gridSize) && (grid[rowIdx + 1][colIdx] == '1')) dfs(grid, gridSize, gridColSize, rowIdx+1, colIdx);
-    
-    if(((colIdx - 1) >= 0) && (grid[rowIdx][colIdx-1] == '1'))  dfs(grid, gridSize, gridColSize, rowIdx, colIdx-1);
-    
-    if(((colIdx + 1) < gridColSize) && (grid[rowIdx][colIdx+1] == '1')) dfs(grid, gridSize, gridColSize, rowIdx, colIdx+1);
-    
+    count++;
+    if((i>0)&&(rooms[i-1][j] > count))
+            dfs(rooms,i-1,j,x,y,count);
+    if((i<x-1) &&(rooms[i+1][j] > count))
+            dfs(rooms,i+1,j,x,y,count);
+    if((j>0) && (rooms[i][j-1] > count))
+            dfs(rooms,i,j-1,x,y,count);
+    if((j<y-1) && (rooms[i][j+1] > count))
+            dfs(rooms,i,j+1,x,y,count);
 }
 
-int numIslands(char** grid, int gridSize, int* gridColSize){
+void wallsAndGates(int** rooms, int roomsSize, int* roomsColSize){
     
-    if((gridSize == 0) || (gridColSize == 0))   return 0;
-    // printf("%d\n", *gridColSize);
-    size_t numOfIslands = 0;
-    for(int i=0; i<gridSize; i++){
-        for(int j=0; j< (*gridColSize); j++){
-            if(grid[i][j] == '1'){
-                numOfIslands++;
-                dfs(grid, gridSize, *gridColSize, i, j);
+    for(int i=0; i<roomsSize; i++){
+        for(int j=0; j<*roomsColSize; j++){
+            // found a gate, issue DFS 
+            if(rooms[i][j] == 0){
+                dfs(rooms, i, j, roomsSize, *roomsColSize, 0);
             }
         }
     }
-    
-    return numOfIslands;
 }
 
 /*
-Inputs to test:
-[["1","1","1","1","0"],["1","1","0","1","0"],["1","1","0","0","0"],["0","0","0","0","0"]] ==> output: 1
-[["1","1","1"],["0","1","0"], ["1","0","0"],["1","0","1"]]  ==> output : 3
+Sample inputs to test:
+
+[[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]
+
+[[-1,2147483647,0,2147483647,-1,2147483647,-1,-1,-1,0,0,2147483647,-1,0,0,0,0,0,-1,0,0,2147483647,0,2147483647,2147483647,-1,2147483647,-1,2147483647,-1,-1,-1,0]]
+
+[[0,2147483647,0,2147483647],[-1,-1,-1,-1],[2147483647,2147483647,2147483647,2147483647]]
 */

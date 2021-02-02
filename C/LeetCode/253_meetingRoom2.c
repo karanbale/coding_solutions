@@ -24,10 +24,20 @@ void printArr(int **A, int r, int c){
     }
 }
 
-int cmp(const void **a, const void **b){
-    if ((*(int *)(a)[0]) != ((*(int *)(b)[0])))    return ((*(int *)a - *(int *)b));
-    else                       return (*(int *)b - *(int *)a);
+int cmpfunc(const void *pa, const void *pb)
+{
+    const int *a = *(const int **)pa;
+    const int *b = *(const int **)pb;
+    if(a[0] != b[0])
+        return a[0] - b[0];
+    else
+        return b[0] - a[0];
 }
+
+// int cmp(const void *a, const void **b){
+//     if ((*(int **)(a)[0]) != ((*(int *)(b)[0])))    return ((*(int *)a - *(int *)b));
+//     else                       return (*(int *)b - *(int *)a);
+// }
 
 int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
     
@@ -35,7 +45,7 @@ int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
         return 0;
     }
     
-    qsort((void *)intervals, intervalsSize, sizeof(int*), cmp);
+    qsort((void *)intervals, intervalsSize, sizeof intervals[0], cmpfunc);
     
     int max = 0;
     
@@ -53,7 +63,7 @@ int minMeetingRooms(int** intervals, int intervalsSize, int* intervalsColSize){
     }
     
     // sort entire array so that start and end times are organized in correct sequence
-    qsort(events,intervalsSize*2,sizeof(int*), cmp);
+    qsort(events,intervalsSize*2,sizeof(int*), cmpfunc);
     
     // printArr(events, intervalsSize*2, 2);
     // track running sum and max

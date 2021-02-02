@@ -18,7 +18,6 @@ Output: true
 Example 3:
 Input: root = [1,2,3,null,4], x = 2, y = 3
 Output: false
- 
 
 Constraints:
 
@@ -27,15 +26,6 @@ Each node has a unique integer value from 1 to 100.
 */
 
 #include "../standardHeaders.h"
-
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     struct TreeNode *left;
- *     struct TreeNode *right;
- * };
- */
 
 struct TreeNode {
     int val;
@@ -132,7 +122,6 @@ bool isCousins(struct TreeNode* root, int x, int y){
     // => BFS On entire tree
     // => if node->left && node->right contain x and y, return
     // if node->left == x or y, store level as xLevel
-    // compare xLevel against yLevel
     // if node->right == x or y store level as yLevel
     // compare yLevel against xLevel
     // if xLevel == yLevel && xLevel != -1 && yLevel != -1, return true
@@ -161,6 +150,7 @@ bool isCousins(struct TreeNode* root, int x, int y){
         int parentItemCount = queue->queueItemCount;
         while(parentItemCount){
             struct TreeNode *node = queueDequeue(queue);
+            // check if left child exist
             if(node->left){
                 // check if left node matches x or y
                 if(node->left->val == x){
@@ -173,6 +163,7 @@ bool isCousins(struct TreeNode* root, int x, int y){
                 }
                 queueEnqueue(queue, node->left);
             }
+            // check if right child exist
             if(node->right){
                 // check if right node matches x or y
                 if(node->right->val == x){

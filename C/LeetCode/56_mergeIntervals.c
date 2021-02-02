@@ -22,9 +22,14 @@ intervals[i].length == 2
 
 #include "../standardHeaders.h"
 
-int cmpfunc(int **a, int **b)
+int cmpfunc(const void *pa, const void *pb)
 {
-    return (*a)[0] - (*b)[0];
+    const int *a = *(const int **)pa;
+    const int *b = *(const int **)pb;
+    if(a[0] == b[0])
+        return a[1] - b[1];
+    else
+        return a[0] - b[0];
 }
 
 int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* returnSize, int** returnColumnSizes){
@@ -42,7 +47,7 @@ int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* retu
         return NULL;
     }
     
-    qsort((void *)intervals, intervalsSize, sizeof(int*), cmpfunc);
+    qsort((void *)intervals, intervalsSize, sizeof intervals[0], cmpfunc);
     
     temp = intervals[0];
     printf("temp[0]: %d,temp[1] %d\n", temp[0], temp[1]);

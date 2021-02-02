@@ -189,7 +189,7 @@ void destroyHeap(heap_t *heap){
 void printHeap(struct heap *h){
     for (int q = 0; q < 27; q++){
         if(h->heapArr[q]>0){
-            printf("%d, ", h->heapArr[q]);
+            printf("%ld, ", h->heapArr[q]);
         }
     } 
 }

@@ -20,13 +20,13 @@ return its level order traversal as:
 
 #include "../standardHeaders.h"
 
-struct TreeNode{
+#define SIZE 1100
+
+typedef struct TreeNode{
     int val;
     struct TreeNode *left;
     struct TreeNode *right;
 }TreeNode_t;
-
-#define SIZE 1100
 
 typedef struct _queue{
     struct TreeNode **node;
@@ -39,7 +39,7 @@ typedef struct _queue{
 queue_t *createQueue(int queueSize){
     queue_t *queue = (queue_t *) malloc(sizeof(queue_t));
     if(!queue)  return NULL;
-    queue->node = (struct TreeNode **) malloc(sizeof(struct TreeNode *)*queueSize);
+    queue->node = (TreeNode_t **) malloc(sizeof(TreeNode_t *)*queueSize);
     for(int i=0; i<queueSize; i++){
         queue->node[i] = NULL;
     }
@@ -97,14 +97,13 @@ int** levelOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes
     }
     
     queueEnqueue(queue, root);
-    int level = 0;
+    int currLevelNodeCount = 0;
     while(!isQueueEmpty(queue)){
-        level = queue->queueItemCount;
+        currLevelNodeCount = queue->queueItemCount;
         int levelItemCount = 0;
-        returnArray[*returnSize] = (int *) malloc(sizeof(int)*level);
-        // iterate over all items in queue, pop them and add their kids to queue
+        // iterate over all items in queue, pop them one at a time and add their kids to queue
         // until queue is empty
-        while(level > levelItemCount){
+        while(currLevelNodeCount > levelItemCount){
             struct TreeNode *node = queueDequeue(queue);
             returnArray[*returnSize][levelItemCount++] = node->val;
             if(node->left){
@@ -114,7 +113,8 @@ int** levelOrder(struct TreeNode* root, int* returnSize, int** returnColumnSizes
                 queueEnqueue(queue, node->right);
             }
         }
-        (*returnColumnSizes)[(*returnSize)++] = level;
+        returnArray[*returnSize] = (int *) malloc(sizeof(int)*currLevelNodeCount);
+        (*returnColumnSizes)[(*returnSize)++] = currLevelNodeCount;
     }
     free(queue);
     return returnArray;

@@ -22,6 +22,26 @@ Two cells are connected if they are adjacent cells connected horizontally or ver
 
 */
 
+/*
+Complexity Analysis
+
+Time Complexity: O(N), where N is the number of cells in the board. 
+In the worst case where it contains only the O cells on the board, 
+we would traverse each cell twice: once during the DFS traversal and the other time during the cell reversion in the last step.
+
+Space Complexity: O(N) where N is the number of cells in the board. 
+There are mainly two places that we consume some additional memory.
+
+We keep a list of border cells as starting points for our traversal.
+We could consider the number of border cells is proportional to the total number (NN) of cells.
+
+During the recursive calls of DFS() function, we would consume some space in the function call stack, 
+i.e. the call stack will pile up along with the depth of recursive calls. 
+And the maximum depth of recursive calls would be NN as in the worst scenario mentioned in the time complexity.
+
+As a result, the overall space complexity of the algorithm is \mathcal{O}(N)O(N).
+*/
+
 #include "../standardHeaders.h"
 
 void printArray(char **grid, int rowIdxSize, int colIdxSize){

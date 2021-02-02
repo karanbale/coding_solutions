@@ -27,6 +27,17 @@ After running your function, the 2D grid should be:
   0  -1   3   4
 
 */
+
+/*
+Complexity analysis
+
+Time complexity : O(mn x k).
+For each gate k, we will visit (m x n) empty rooms.
+
+Space complexity : O(mn).
+We may invoke at max (mxn) recursive dfs function calls.
+*/
+
 #include "../standardHeaders.h"
 
 void dfs(int** rooms, int i, int j, int x, int y, int count){
@@ -58,5 +69,14 @@ void wallsAndGates(int** rooms, int roomsSize, int* roomsColSize){
             }
         }
     }
-
 }
+
+/*
+Sample inputs to test:
+
+[[2147483647,-1,0,2147483647],[2147483647,2147483647,2147483647,-1],[2147483647,-1,2147483647,-1],[0,-1,2147483647,2147483647]]
+
+[[-1,2147483647,0,2147483647,-1,2147483647,-1,-1,-1,0,0,2147483647,-1,0,0,0,0,0,-1,0,0,2147483647,0,2147483647,2147483647,-1,2147483647,-1,2147483647,-1,-1,-1,0]]
+
+[[0,2147483647,0,2147483647],[-1,-1,-1,-1],[2147483647,2147483647,2147483647,2147483647]]
+*/
