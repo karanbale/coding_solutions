@@ -1,0 +1,97 @@
+Round 3:
+
+You have an embedded system with a Linux-llke operating system (flat memory model, no userspace), and a touchscreen. 
+It is multicore, has multiple tasks (or threads), and has whatever timers, locking, and
+signals and threading/scheduling utilities you need.
+
+Your goal is to draw a dot under the finger wherever someone is touching the screen. The finger can be moving.
+
+-----
+
+About the display: Your drawing utility was written by a “Friend”, prototype void draw(int x, int y);. 
+draw() will erase the framebuffer, then draw a dot where you specify, and block until the framebuffer with the dot is given to the display controller. 
+The display panel is video mode, 60 Hz constant vsync (vsync interrupt is from the panel, back to the CPU).
+
+Your touch controller is on an 400 KHz I2C bus, and has one interrupt pin coming back to the CPU. 
+When the interrupt fires, you have an X and Y position locked into two 16-bit registers at address 0 and 2 in the controller,
+and they won’t change until you read them. You have a “touch_i2c_read(UINT16 reg, UINT16* val); ” utility. 
+The touch interrupt will fire as fast as 120-150 Hz range, the sampling rate of the touch controller is not fixed, 
+and it will only clear the interrupts (and give new data) after you’ve read the previous x/y coordinates out.
+
+Part 1) Implement the touch interrupt service routine, and the main task that will draw the dot.
+
+Utilities provided to you:
+void draw(int x, int y); /* blocking until subsequent vsync */
+void touch_i2c_read(UINT16 *x, UINT16 *y);
+(plus any timers, task creation, locking and signals you need.)
+(plus, any initialization you need will happen in a separate thread.
+Lock initialization, data structures created ahead of time, task creation, etc,
+don't implement that and just assume it's done.)
+
+Your functions to implement (minimally):
+void touch_isr(void); /* (edge triggerred interrupt service routine */
+void draw_task(void); /* infinite loop, main task, if you need it */
+
+
+
+
+
+
+
+
+
+// vsync => 60 hz
+// touch intr => 120-150 hz
+
+Bool isTouchIntrRegSet(INTR_T *touchIntr);
+Bool clearTouchIntrReg(INTR_T *touchIntr);
+Bool touch_isr_received = false;
+INTR_T *touchIntr;
+Void touch_isr(void){
+	if(isTouchIntrRegSet(touchIntr) == 1){
+Touch_isr_received = true;
+clearTouchIntrReg(touchIntr);
+}
+}
+
+Bool mutexLock = false;
+Bool TestAndSet(bool *mutexLock){
+	Bool *oldValue = mutexLock;
+	mutexLock != mutexLock;
+	Return oldValue;
+}
+
+bool aquireLock(void){
+	while(!TestAndSet(mutexLock));
+	Return true;
+}
+
+Void releaseLock(void){
+	mutexLock = false;
+}
+
+void draw_task(void){
+	Int x = -1;
+	Int y = -1;
+	if(Touch_isr_received){
+	touch_i2c_read(&x, &y);
+	Touch_isr_received = false;
+	acquireLock();
+	draw(x,y);
+	delay(10);
+}
+}
+
+Pthread_t *threads[10];
+// setup threads => initialized with draw task, 
+// acquire ids
+// assign x and y values to threads to do the work when they are about to be executed
+
+Void createAndQueueThread(void){
+	for(int i=0; i<10; i++){
+		Threads[i] = threads.create(i);
+}
+for(int i=0; i<10; i++){
+	threads.join(*draw_task);
+}
+}
