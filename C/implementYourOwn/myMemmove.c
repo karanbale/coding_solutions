@@ -35,9 +35,9 @@ However, on most platforms, the difference will be minimal.
 void * my_memmove(void* dest, const void* src, unsigned int n)
 {
     char *pDest = (char *)dest;
-    const char *pSrc =( const char*)src;
+    const char *pSrc = (const char*)src;
     //allocate memory for tmp array
-    char *tmp  = (char *)malloc(sizeof(char ) * n);
+    char *tmp  = (char *)malloc(sizeof(char) * n);
     if(NULL == tmp)
     {
         return NULL;
@@ -45,7 +45,7 @@ void * my_memmove(void* dest, const void* src, unsigned int n)
     else
     {
         // copy src to tmp array
-        for(int i =0; i < n ; ++i)
+        for(int i=0; i < n ; i++)
         {
             tmp[i] = pSrc[i];
         }

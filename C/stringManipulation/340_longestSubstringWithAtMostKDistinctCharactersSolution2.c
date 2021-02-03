@@ -26,11 +26,11 @@ int lengthOfLongestSubstringTwoDistinct(char * s){
     int leftIdxOfInputString = 0;
     int subStrCount = 0, uniqueCharCount = 0;
     // start iterating over string s
-    for (int i = 0; i < strlen(s); i++) {
+    for (int rightIdxOfInputString = 0; rightIdxOfInputString < strlen(s); rightIdxOfInputString++) {
         // update frequence of current character in map table
-        map[s[i]]++;
+        map[s[rightIdxOfInputString]]++;
         // keep count of unique characters we're finding, unique since their freq is only 1
-        if(map[s[i]] == 1)   uniqueCharCount++;
+        if(map[s[rightIdxOfInputString]] == 1)   uniqueCharCount++;
         // if frequency of unique characters goes beyond k (here k = 2), lets increment our hashSetIdx
         // reduce frequency of each character
         while(uniqueCharCount > lenOfDistinctCharacters){
@@ -40,7 +40,7 @@ int lengthOfLongestSubstringTwoDistinct(char * s){
             }
             leftIdxOfInputString++;
         }
-        subStrCount = MAX(subStrCount, i - leftIdxOfInputString+1);
+        subStrCount = MAX(subStrCount, rightIdxOfInputString - leftIdxOfInputString+1);
         
     }
     return subStrCount;

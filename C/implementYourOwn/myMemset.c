@@ -31,7 +31,7 @@ The memory which you are passing in memset must be valid otherwise you will get 
 //Own Created memset
 void *my_memset(void *s, int c,  unsigned int len)
 {
-    unsigned char* p=s;
+    unsigned char *p = (unsigned char *)s;
     while(len--)
     {
         *p++ = (unsigned char)c;

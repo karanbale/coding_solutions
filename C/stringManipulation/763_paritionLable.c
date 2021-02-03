@@ -19,7 +19,6 @@ S will consist of lowercase English letters ('a' to 'z') only.
 
 #include "../standardHeaders.h"
 
-
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 /**
  * Note: The returned array must be malloced, assume caller calls free().

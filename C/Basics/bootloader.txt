@@ -1,0 +1,8 @@
+As a minimum, bootloaders must supply the following: 
+a communication channel, a method to erase and reprogram Flash memory, 
+and a method to validate and execute newly programmed application code.
+
+Additionally, a bootloader should be able to detect, report, and handle errors that occur during the bootload operation, 
+such as power failure, loss of communication, and Flash write error. 
+Flash error protection is usually done by storing a checksum or Cyclic Redundancy Code (CRC) for the application.
+

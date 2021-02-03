@@ -34,6 +34,8 @@ Sample inputs:
 
 bool isAnagram(char * s, char * t){
     
+    if(strlen(s) != strlen(t))  return 0;
+
     int hashSet[ASCII_EXTENDED_SIZE] = {0};
     
     while(*s){  hashSet[(int)*s++]++;    }

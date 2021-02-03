@@ -64,11 +64,11 @@ bool feasible(int *nums, int numsSize, int currentTotal, int numsSplitsLimits){
 int splitArray(int* nums, int numsSize, int m){
     int left = getMaxItem(nums,numsSize);
     int right = getTotalSum(nums,numsSize);
-    while(left < right){
+    while(left <= right){
         int mid = left + (right - left)/2;
         int count = 0, numSplits1=1;
         if(feasible(nums, numsSize, mid, m)){
-            right = mid;
+            right = mid - 1;
         }
         else{
             left = mid + 1;

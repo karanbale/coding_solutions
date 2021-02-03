@@ -26,14 +26,14 @@ bool isPerfectSquare(int num){
     left = 0;
     right = num;
     
-    while(left < right){
+    while(left <= right){
         int mid = left + (right - left) / 2;
         double sqr = (double)mid*mid;
         if(sqr == num){
             return true;
         }
         if(sqr > num){
-            right = mid;
+            right = mid-1;
         }
         else{
             left = mid+1;

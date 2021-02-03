@@ -36,7 +36,7 @@ typedef struct Set {
     
 }set_t;
 
-set_t *createHashSet(size_t size){
+inline static set_t *createHashSet(size_t size){
     set_t *hashSet = (set_t *) malloc(sizeof(set_t));
     hashSet->size = size;
     hashSet->numOfItems = 0;
@@ -51,6 +51,11 @@ void set_add(set_t *set, char c)
     set->countArr[(int)c]++;
 }
 
+inline static int set_count(set_t *set, char c)
+{
+    return set->countArr[(int)c];
+}
+
 void set_remove(set_t *set, char c)
 {
     // reduce freq of char c
@@ -58,15 +63,10 @@ void set_remove(set_t *set, char c)
         set->countArr[(int)(c)]--;
         // if freq of this character is 0, we've no more c characters left in our string
         // hence reduce the num of items 
-        if(set->countArr[(int)(c)] == 0){
+        if(set_count(set, c) == 0){
             set->numOfItems--;
         }
     }
-}
-
-int set_count(set_t *set, char c)
-{
-    return set->countArr[(int)c];
 }
 
 char * minWindow(char * s, char * t){
@@ -81,10 +81,8 @@ char * minWindow(char * s, char * t){
     set_t *hashSetS = createHashSet(strlen(t));
     memset(hashSetS->countArr,0,ASCII_EXTENDED_SIZE*sizeof(int));
 
-    int uniqueTCharCount = 0;
     for (int i = 0; i < strlen(t); i++) {
         set_add(hashSetT, t[i]);
-        if(set_count(hashSetT,t[i]) == 1) uniqueTCharCount++;
     }
 
     int leftIdx = 0;
@@ -102,7 +100,6 @@ char * minWindow(char * s, char * t){
             // add char to S hashSet
             set_add(hashSetS, s[rightIdx]);
             // if count of char in T is greater than equal to char count in S
-            // if(set_count(hashSetT, s[rightIdx]) >= set_count(hashSetS, s[rightIdx])){
             if(set_count(hashSetS, s[rightIdx]) <= set_count(hashSetT, s[rightIdx])){
                 // printf("%c : %d, ",s[rightIdx],rightIdx);
                 charCount++;
@@ -113,12 +110,14 @@ char * minWindow(char * s, char * t){
         // from left and minimize our
         if(charCount == lenOfT) {
             // printf("rightIdx: %d, leftIdx: %d, subStrCount: %d\n",rightIdx, leftIdx, subStrCount);
-            while((set_count(hashSetS, s[leftIdx]) > set_count(hashSetT, s[leftIdx])) ||(set_count(hashSetT, s[leftIdx]) == 0)){
-                if(set_count(hashSetS, s[leftIdx]) > set_count(hashSetT, s[leftIdx])){
-                    set_remove(hashSetS, s[leftIdx]);
-                }
+            // start squeezing the window from left
+            // remove any character that does not exist in T or its freq of occurance in S > freq of occurance in T
+            while((set_count(hashSetS, s[leftIdx]) > set_count(hashSetT, s[leftIdx])) ||
+                    (set_count(hashSetT, s[leftIdx]) == 0)){
+                set_remove(hashSetS, s[leftIdx]);
                 leftIdx++;
             }
+            // if current substr is smaller than previous substr, lets consider it
             if(subStrCount > (rightIdx-leftIdx+1)){
                 subStrCount = rightIdx-leftIdx+1;
                 subStrStartIdx = leftIdx;

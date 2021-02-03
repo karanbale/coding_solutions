@@ -1,6 +1,7 @@
 /*
 Given a non-negative integer x, compute and return the square root of x.
-Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.
+Since the return type is an integer, the decimal digits are truncated,
+and only the integer part of the result is returned.
 
 Example 1:
 Input: x = 4
@@ -13,7 +14,7 @@ Explanation: The square root of 8 is 2.82842..., and since the decimal part is t
 
 Constraints:
 
-0 <= x <= 231 - 1
+0 <= x <= 2^31 - 1
 */
 
 #include "../standardHeaders.h"
@@ -34,14 +35,14 @@ int mySqrtSolution2(int x){
     left = 0;
     right = x;
     
-    while(left < right){
+    while(left <= right){
         int mid = left + (right-left)/2;
         // following line cannot contain mid*mid as (mid*mid), i.e. in round brackets
         // adding round brackes will trunkate the MSB bits of the results
         // yielding wrong value
         unsigned long long int sqr = (unsigned long long int) mid*mid;
         if(sqr > x){
-            right = mid;
+            right = mid-1;
         }
         else{
             left = mid+1;

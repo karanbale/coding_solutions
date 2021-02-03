@@ -39,12 +39,12 @@ int firstBadVersion(int n) {
     left = 1;
     right = n;
     
-    while(left < right){
+    while(left <= right){
         int mid = left + (right-left)/2;
         if(isBadVersion(mid)){
             // return current only if previous version is good
             if(isBadVersion(mid-1) == false) return mid;
-            right = mid;
+            right = mid-1;
         }
         else{
             left = mid+1;
