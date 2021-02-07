@@ -144,7 +144,6 @@ void heapify(heap_t *heap, int idx){
     
     int leftIdx = getLeftChildIdx(idx);
     int rightIdx = getRightChildIdx(idx);
-    int parentIdx = getParentIdx(idx);
     
     int largestValIdx = idx;
     

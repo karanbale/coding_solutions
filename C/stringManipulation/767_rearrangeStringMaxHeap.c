@@ -18,9 +18,9 @@ S will consist of lowercase letters and have length in range [1, 500].
 #include "../standardHeaders.h"
 
 typedef struct heap{
-    int *heapArr;
     int heapSize;
     int heapBoundary;
+    int *heapArr;
     bool isMaxHeap;
 }heap_t;
 
@@ -46,7 +46,7 @@ heap_t *createHeap(int heapSize, bool isMaxHeap){
     heap_t *heap = (heap_t *)malloc(sizeof(heap_t));
     if(!heap)   return NULL;
 
-    heap->heapArr = (int *) malloc(sizeof(int)*heapSize);
+    heap->heapArr = malloc(sizeof(int)*heapSize);
     if(!heap->heapArr) return NULL;
     
     heap->heapSize = heapSize;
