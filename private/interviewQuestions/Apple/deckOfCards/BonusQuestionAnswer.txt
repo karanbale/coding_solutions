@@ -1,4 +1,0 @@
-Bonus Question:
-    - We're asked if one person is playing with deck of cards, then how many rounds does he need to go through, before the deck is adequetly shuffled from its original sequence.
-    - I think, each card has a probability of going to N locations in the deck. If you place one card at any random position in the deck, then second card can either go above this first card or below, thus has a probablity of N/2 to achieve adequete randomness. With this logic, third card will have probablity of N/3 and so on...
-    - Thus I think, in order to achieve adequete randomness, we can have (N/1 + N/2 + N/3 .... + N/(N-1) + N/N) rounds to achieve randomness.

@@ -1,6 +1,0 @@
-What is a const in C ?
-
-https://leetcode.com/problems/product-of-array-except-self/
-
-Describe a project you were part of, describe your contribution, describe what was an innovative step that you took,
-to make it better?
