@@ -130,9 +130,9 @@ int main()
         // split it into 4 variables and cross check against our manual calculation
         // performed in big128_mul() function
         uint32_t p1 = (p & UINT32_MAX);
-        u_int32_t p2 = ((p >> 32u) & UINT32_MAX);
-        u_int32_t p3 = ((p >> 64u) & UINT32_MAX);
-        u_int32_t p4 = ((p >> 96u) & UINT32_MAX);
+        uint32_t p2 = ((p >> 32u) & UINT32_MAX);
+        uint32_t p3 = ((p >> 64u) & UINT32_MAX);
+        uint32_t p4 = ((p >> 96u) & UINT32_MAX);
 
         // assert if multiplications doesn't match
         assert(p_.v[0] == p1);
