@@ -9,3 +9,9 @@
 #include <assert.h>
 #include <ctype.h>
 #include <unistd.h>  //Header file for sleep(). man 3 sleep for details.
+#ifdef __APPLE__
+#include <dispatch/dispatch.h>
+#else
+#include <semaphore.h>
+#endif 
+#include <pthread.h>

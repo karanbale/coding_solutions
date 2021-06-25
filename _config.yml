@@ -1,1 +1,51 @@
 theme: jekyll-theme-hacker
+
+stages:
+  - test
+  - build
+
+# klockwork:
+#   stage: test
+#   script:
+#   # do something here
+#   artifacts:
+#     when: always
+#     expose_as: 'Klockwork_scan'
+#     paths: ['kw-checker.log']
+
+unit tests:
+  stage: test
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake -DBUILD_VERSION=$(CI_PIPELINE_IID)
+    - make
+    - ctest --output-on-failure | tee tests.txt
+  artifacts:
+    when: always
+    expose_as: 'Unit tests results'
+    paths: [ 'tests.txt']
+
+static library:
+  stage: build
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake -DBUILD_VERSION=$(CI_PIPELINE_IID)
+    - make c_python_lib
+    - cp c_python_lib.a ../
+  artifacts:
+    paths:
+    - c_python_lib.a
+  
+shared library:
+  stage: build
+  script:
+    - mkdir -p build
+    - cd build
+    - cmake -DBUILD_VERSION=$(CI_PIPELINE_IID)
+    - make c_python_lib
+    - cp c_python_lib.so ../
+  artifacts:
+    paths:
+      - c_python_lib.so

@@ -197,7 +197,9 @@ void *threadHandler(void *vargp){
 
 int main(void){
 
+    // Create an array of threads
     pthread_t THREAD_ID[THREAD_COUNT];
+    // create array of args to threads
     int thread_arg[THREAD_COUNT];
 
     // initialize mutex
@@ -205,6 +207,7 @@ int main(void){
     //     printf("Failed to init mutex.\n");
     // }
 
+    // Initialize threads
     if(pthread_mutex_init(&lock, NULL)){
         printf("Failed to initialize mutex.\n");
     }
