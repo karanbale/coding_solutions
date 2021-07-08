@@ -95,8 +95,14 @@ int trap(int* height, int heightSize){
     return water;
 }
 
+void runAlgo(int *waterHeightArr, int size) {
+    printf("Water level: %d\n", trap(waterHeightArr, size));
+}
+
 int main(void) {
     int waterHeightArr[] = {0,1,0,2,1,0,1,3,2,1,2,1};
-    printf("Water level: %d\n", trap(&waterHeightArr,sizeof(waterHeightArr)/sizeof(waterHeightArr[0])));
+    runAlgo(&waterHeightArr, sizeof(waterHeightArr)/sizeof(waterHeightArr[0]));
+    int waterHeightArr1[1] = {};
+    runAlgo(&waterHeightArr1, 1);
     return 0;
 }
