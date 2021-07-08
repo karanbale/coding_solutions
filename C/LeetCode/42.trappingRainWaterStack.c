@@ -16,12 +16,11 @@ n == height.length
 0 <= height[i] <= 105
 */
 
-#include "../StandardHeaders.h"
+#include "../standardHeaders.h"
 
 #define ENABLE_PRINTS 0
 #define TM_PRINTF(f_, ...) ENABLE_PRINTS? printf((f_), ##__VA_ARGS__) : 0
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
 typedef struct stackt{
     int *arr;
     int front;
@@ -68,30 +67,31 @@ void freeStack(stackT *stack){
 }
 
 int trap(int* height, int heightSize){
-    int ans = 0;
-    int leftMax[heightSize], rightMax[heightSize];
-    leftMax[0] = height[0];
-    rightMax[heightSize-1] = height[heightSize-1];
-    for(int i=1; i<heightSize; i++) {
-        leftMax[i] = MAX(height[i], leftMax[i-1]);
+    int currentIdx = 0;
+    int level = 0, water = 0;
+    
+    stackT *stack = createStack(heightSize);
+    if(!stack)  return false;
+    
+    while (currentIdx < heightSize) {
+        while(!isStackEmpty(stack) && (height[currentIdx] > height[stackPeek(stack)])){
+            int previousTowerIdx = stackPop(stack);
+            TM_PRINTF("\tPopped height[%d]:%d from stack, currentIdx: %d\n",previousTowerIdx,height[previousTowerIdx], currentIdx);
+            if(isStackEmpty(stack)) break;
+            int waterLevel = MIN(height[currentIdx], height[stackPeek(stack)]) - height[previousTowerIdx];
+            int distance = (currentIdx - stackPeek(stack) - 1);
+            water += distance * waterLevel;
+            TM_PRINTF("\t\tDistance: %d, waterLevel: %d, water: %d\n",distance, waterLevel, water);
+        }
+        stackPush(stack, currentIdx);
+        TM_PRINTF("Pushing height[%d]:%d to stack\n",currentIdx,height[currentIdx]);
+        currentIdx++;
     }
-    for(int i=heightSize-2; i>=0; i--) {
-        rightMax[i] = MAX(height[i], rightMax[i+1]);
-    }
-    for(int i =1; i<heightSize-1; i++) {
-        ans += MIN(leftMax[i], rightMax[i]) - height[i];
-    }
-    return ans;
-}
-
-void runAlgo(int *waterHeightArr, int size) {
-    printf("Water level: %d\n", trap(waterHeightArr, size));
+    return water;
 }
 
 int main(void) {
     int waterHeightArr[] = {0,1,0,2,1,0,1,3,2,1,2,1};
-    runAlgo(&waterHeightArr, sizeof(waterHeightArr)/sizeof(waterHeightArr[0]));
-    int waterHeightArr1[1] = {};
-    runAlgo(&waterHeightArr1, 1);
+    printf("Water level: %d\n", trap(&waterHeightArr,sizeof(waterHeightArr)/sizeof(waterHeightArr[0])));
     return 0;
 }
