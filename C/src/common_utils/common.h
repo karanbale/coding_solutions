@@ -1,5 +1,8 @@
 #include "../../standardHeaders.h"
 
+#define ENABLE_PRINTS 0
+#define TM_PRINTF(f_, ...) ENABLE_PRINTS? printf((f_), ##__VA_ARGS__) : 0
+
 int numOf1sInNum(int num);
 char *int2bin(int a, char *buffer, int buf_size);
 void printArr(int *nums, int numsSize);

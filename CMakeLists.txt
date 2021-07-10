@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.14)
 set(PROJECT_DESCRIPTION "C Python Algorithms")
 
 message("Setting CMAKE Compiler path to: ${CMAKE_C_COMPILER}\n")
-# set(CMAKE_C_COMPILER "/usr/bin/clang")
+# set(CMAKE_C_COMPILER /usr/bin/clang)
+set(CMAKE_C_COMPILER /usr/bin/gcc)
 
 # Defines the project name
 project(c_python_algorithm_lib
@@ -21,10 +22,11 @@ option(BUILD_SHARED_LIBS "Build the shared library" OFF)
 include(${PROJECT_SOURCE_DIR}/cmake/macros.cmake)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    set(CMAKE_C_STANDARD 99)
+    # set(CMAKE_C_STANDARD 99)
+    set(CMAKE_C_STANDARD 11)
     set(CMAKE_C_EXTENSIONS OFF)
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-    include(CTest)
+    # include(CTest)
 
     find_package(Doxygen)
     if (Doxygen_FOUND)

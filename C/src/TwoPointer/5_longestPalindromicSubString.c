@@ -24,26 +24,14 @@ Constraints:
 s consist of only digits and English letters (lower-case and/or upper-case),
 */
 
-#include "../standardHeaders.h"
+#include "TwoPointer_Header.h"
+#include "common.h"
 
-/**********************************************************************************************/
-/******************************** Solution 1 **************************************************/
-/**********************************************************************************************/
-int expandFromMiddle(char *s, int left, int right);
-
-void printArr(char *s, int size){
-    while(*s){
-        printf("%c",*s++);
-    }
-    printf("\n");
-}
-
-char * longestPalindromeMethod1(char * s){
+char * longestPalindrome(char * s) {
     
     if(s == NULL){
         return NULL;
     }
-
     char *start, *end;
     char *p = s, *subStart = s;
     int maxLen = 1;
@@ -56,7 +44,7 @@ char * longestPalindromeMethod1(char * s){
         p = end + 1;
         
         while(*(end + 1) && (start > s) && *(end + 1) == *(start - 1)){
-            printf("comparing: %c, %c\n",*(end+1), *(start - 1));
+            TM_PRINTF("comparing: %c, %c\n",*(end+1), *(start - 1));
             start--;
             end++;
         }
@@ -65,10 +53,16 @@ char * longestPalindromeMethod1(char * s){
             subStart = start;
         }
     }
-    
     char *rst = (char *) calloc(maxLen + 1, sizeof(char));
     strncpy(rst, subStart, maxLen);
-    return rst;
+    return rst;   
 }
 
-/**********************************************************************************************/
+int main(void) {
+    printf("Longest palindrome: %s\n", longestPalindrome("aabaa"));
+    printf("Longest palindrome: %s\n", longestPalindrome("a"));
+    printf("Longest palindrome: %s\n", longestPalindrome("babad"));
+    printf("Longest palindrome: %s\n", longestPalindrome("racecar"));
+    printf("Longest palindrome: %s\n", longestPalindrome("cbbd"));
+    return 0;
+}

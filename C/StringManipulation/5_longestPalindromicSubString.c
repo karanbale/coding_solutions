@@ -56,7 +56,7 @@ char * longestPalindromeMethod1(char * s){
         p = end + 1;
         
         while(*(end + 1) && (start > s) && *(end + 1) == *(start - 1)){
-            printf("comparing: %c, %c\n",*(end+1), *(start - 1));
+            TM_PRINTF("comparing: %c, %c\n",*(end+1), *(start - 1));
             start--;
             end++;
         }

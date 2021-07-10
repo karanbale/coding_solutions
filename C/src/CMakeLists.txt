@@ -3,6 +3,7 @@ add_library(${LIBRARY_NAME})
 
 add_subdirectory(Backtracking)
 add_subdirectory(DFS)
+add_subdirectory(TwoPointer)
 
 get_property(lib_srcs GLOBAL PROPERTY OPTANE_LIB_SRC)
 target_sources(${LIBRARY_NAME}
