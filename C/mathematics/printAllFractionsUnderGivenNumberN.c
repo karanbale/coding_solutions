@@ -49,7 +49,7 @@ int compare(const void *a, const void *b){
 }
 
 fractions_t *createFractions(int numerator, int denominator){
-	fractions_t *node = malloc(sizeof(fractions_t));
+	fractions_t *node = (fractions_t *) malloc(sizeof(fractions_t));
 	assert(node != NULL);
 	node->numerator = numerator;
 	node->denominator = denominator;
@@ -59,7 +59,7 @@ fractions_t *createFractions(int numerator, int denominator){
 int main()
 {
     printf("Hello World\n");
-    fractions_t **fractionsArr = malloc(SIZE * sizeof(fractions_t *));
+    fractions_t **fractionsArr = (fractions_t **) malloc(SIZE * sizeof(fractions_t *));
     assert(fractionsArr != NULL);
     int N = 5;
 	int idx = 0;

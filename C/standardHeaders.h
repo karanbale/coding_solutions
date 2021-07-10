@@ -15,3 +15,6 @@
 #include <semaphore.h>
 #endif 
 #include <pthread.h>
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))

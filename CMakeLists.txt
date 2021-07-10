@@ -2,20 +2,23 @@ cmake_minimum_required(VERSION 3.14)
 
 set(PROJECT_DESCRIPTION "C Python Algorithms")
 
-message("Generating header file: ${CMAKE_BINARY_DIR}/config.h")
-set(PROJECT_VERSION_MAJOR "2")
-set(PROJECT_VERSION_MINOR "1")
-configure_file(config.h.in config.h)
+message("Setting CMAKE Compiler path to: ${CMAKE_C_COMPILER}\n")
+# set(CMAKE_C_COMPILER "/usr/bin/clang")
 
-project(c_python_algorithm
-        LANGUAGES C
+# Defines the project name
+project(c_python_algorithm_lib
         VERSION 0.1.0
-)
+        LANGUAGES C
+        DESCRIPTION "Collection of coding challenges"
+        )
 
-# set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/modules")
-message(STATUS "lib${LIBRARY_NAME} ${CMAKE_PROJECT_VERSION}")
+set(LIBRARY_NAME c_python_algorithm)
+
+message(STATUS "Lib name: ${LIBRARY_NAME}, Lib version: ${CMAKE_PROJECT_VERSION}")
 
 option(BUILD_SHARED_LIBS "Build the shared library" OFF)
+
+include(${PROJECT_SOURCE_DIR}/cmake/macros.cmake)
 
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(CMAKE_C_STANDARD 99)
@@ -34,22 +37,45 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     if(CCACHE_PROGRAM)
         set(CMAKE_CXX_COMPILE_FEATURES "${CCACHE_PROGRAM")
     else ()
-        message(STATUS "ccahe not found, not using it.")
+        message(STATUS "ccache not found, not using it.")
     endif ()
 
-    add_subdirectory(codesignal)
+    message("Adding subdirectory C")
     add_subdirectory(C)
 endif ()
 
-# enable_testing()
+configure_file(
+        "${PROJECT_SOURCE_DIR}/cmake/version.h.in"
+        "${PROJECT_SOURCE_DIR}/C/version.h"
+        )
 
-# if ((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR c_python_algorithm_lib_BUILD_TESTING) AND BUILD_TESTING)
-#     add_subdirectory(tests)
-# endif ()
+enable_testing()
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-# set(CPACK_PROJECT_NAME ${PROJECT_NAME})
-# set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
-# include(CPack)
+write_basic_package_version_file(
+    CPythonTargetsVersion.cmake
+        VERSION ${PACKAGE_VERSION}
+        COMPATIBILITY AnyNewerVersion
+        )
+
+install(TARGETS ${LIBRARY_NAME}
+        EXPORT ${LIBRARY_NAME}Targets
+        LIBRARY DESTINATION  ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION  ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION  ${CMAKE_INSTALL_BINDIR}
+        )
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+install(EXPORT ${LIBRARY_NAME}Targets
+        FILE CPythonTargets.cmake
+        NAMESPACE ${LIBRARY_NAME}::
+        DESTINATION lib/cmake/${LIBRARY_NAME}
+        )
+
+install(FILES "${CMAKE_CURRENT_LIST_DIR}/cmake/CPythonTargets.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/CPythonTargetsVersion.cmake"
+        DESTINATION lib/cmake/${LIBRARY_NAME}
+        )

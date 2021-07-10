@@ -19,18 +19,23 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 
 #include "../standardHeaders.h"
 
-#define max(a,b)    ((a) > (b) ? (a) : (b))
-
 /**********************************************************************************************/
 /******************************** Solution 1 **************************************************/
 /**********************************************************************************************/
 
+/*
+Time Complexity:
+    O(n^2) since two for loops are used.
+    Our loop runs n(n-1)/2 times here.
+Space Complexity:
+    O(1) since only 2 variables are using
+*/
 int maxProfitSolution1(int* prices, int pricesSize){
     
     int maxProfit = 0;
     for(int i=0; i<pricesSize; i++){
         for(int j=i+1; j<pricesSize; j++){
-            maxProfit = max(maxProfit, (prices[j]-prices[i]));
+            maxProfit = MAX(maxProfit, (prices[j]-prices[i]));
         }
     }
     return maxProfit;
@@ -40,6 +45,13 @@ int maxProfitSolution1(int* prices, int pricesSize){
 /**********************************************************************************************/
 /******************************** Solution 2 **************************************************/
 /**********************************************************************************************/
+
+/*
+Time Complexity:
+    O(n) since only single pass is used.
+Space Complexity:
+    O(1) since only 2 variables are using
+*/
 
 int maxProfitSolution2(int* prices, int pricesSize){
     
@@ -56,4 +68,28 @@ int maxProfitSolution2(int* prices, int pricesSize){
     }
     return maxProfit;
 
+}
+
+/**********************************************************************************************/
+/******************************** Solution 3 **************************************************/
+/**********************************************************************************************/
+
+/*
+Time Complexity:
+    O(n) since only two for loop passes are used.
+Space Complexity:
+    O(1) since only 2 variables are using
+*/
+
+int maxProfitSolution3(int* prices, int pricesSize){
+    int lowToLeft[pricesSize];
+    lowToLeft[0] = INT32_MAX;
+    for(int i=1; i<pricesSize; i++) {
+        lowToLeft[i] = MIN(prices[i-1], lowToLeft[i-1]);
+    }
+    int maxProfit = 0;
+    for(int i=1; i<pricesSize; i++) {
+        maxProfit = MAX(maxProfit, prices[i] - lowToLeft[i]);
+    }
+    return maxProfit;
 }

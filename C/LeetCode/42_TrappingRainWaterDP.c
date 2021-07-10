@@ -21,9 +21,6 @@ n == height.length
 #define ENABLE_PRINTS 0
 #define TM_PRINTF(f_, ...) ENABLE_PRINTS? printf((f_), ##__VA_ARGS__) : 0
 
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
 typedef struct stackt{
     int *arr;
     int front;
@@ -91,9 +88,10 @@ void runAlgo(int *waterHeightArr, int size) {
 }
 
 int main(void) {
+    // int *waterHeightArr = (int *) malloc(sizeof(int) * 12);
     int waterHeightArr[] = {0,1,0,2,1,0,1,3,2,1,2,1};
-    runAlgo(&waterHeightArr, sizeof(waterHeightArr)/sizeof(waterHeightArr[0]));
+    runAlgo(waterHeightArr, sizeof(waterHeightArr)/sizeof(waterHeightArr[0]));
     int waterHeightArr1[1] = {};
-    runAlgo(&waterHeightArr1, 1);
+    runAlgo(waterHeightArr1, 1);
     return 0;
 }
