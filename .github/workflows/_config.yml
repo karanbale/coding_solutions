@@ -7,11 +7,14 @@ stages:
 # klockwork:
 #   stage: test
 #   script:
-#   # do something here
+#     - export REPO_PATH=$PWD
+#     - export PATH=$REPO_PATH/scripts/klocwork-checker:/home/klocwork/bin:$PATH
+#     - ./scripts/run-klocwork.sh
+#     - mv build/kw-checker.log .
 #   artifacts:
 #     when: always
-#     expose_as: 'Klockwork_scan'
-#     paths: ['kw-checker.log']
+#     expose_as: 'Klocwork scan'
+#     paths: [ 'kw-checker.log' ]
 
 unit tests:
   stage: test
@@ -32,11 +35,11 @@ static library:
     - mkdir -p build
     - cd build
     - cmake -DBUILD_VERSION=$(CI_PIPELINE_IID)
-    - make c_python_lib
-    - cp c_python_lib.a ../
+    - make c_python_algorithm
+    - cp c_python_algorithm.a ../
   artifacts:
     paths:
-    - c_python_lib.a
+    - c_python_algorithm.a
   
 shared library:
   stage: build
@@ -44,8 +47,21 @@ shared library:
     - mkdir -p build
     - cd build
     - cmake -DBUILD_VERSION=$(CI_PIPELINE_IID)
-    - make c_python_lib
-    - cp c_python_lib.so ../
+    - make c_python_algorithm
+    - cp c_python_algorithm.so ../
   artifacts:
     paths:
-      - c_python_lib.so
+      - c_python_algorithm.so
+
+pages:
+  stage: deploy
+  script:
+    - mkdir -p build
+    - cd build
+    - mkdir -p ../public/
+    - cp -r docs/html/* ../public/
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

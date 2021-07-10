@@ -10,12 +10,12 @@ target_sources(${LIBRARY_NAME}
         "${lib_srcs}"
 )
 
-# target_include_directories(${LIBRARY_NAME}
-#     PUBLIC
-#         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
-#         $<INSTALL_INTERFACE:/include>
-#     PRIVATE
-#         ${CMAKE_CURRENT_SOURCE_DIR}/src/common_utils/
-# )
+find_program(CLANG_TIDY_PATH "clang-tidy")
+if (CLANG_TIDY_PATH)
+    set_target_properties(${LIBRARY_NAME} PROPERTIES C_CLANG_TIDY
+            "clang-tidy;-checks=bugprone-*,clang-analyzer-*,concurrency-*,
+            misc-*,cert-*,performance-*,readability-*,portability-*;-warnings-as-errors=*"
+            )
+endif ()
 
 include(${PROJECT_SOURCE_DIR}/cmake/macros.cmake)

@@ -43,7 +43,7 @@ char * longestPalindromeMethod1(char * s){
     if(s == NULL){
         return NULL;
     }
-    
+
     char *start, *end;
     char *p = s, *subStart = s;
     int maxLen = 1;
@@ -56,7 +56,7 @@ char * longestPalindromeMethod1(char * s){
         p = end + 1;
         
         while(*(end + 1) && (start > s) && *(end + 1) == *(start - 1)){
-            printf("comparing: %c, %c",*(end+1), *(start - 1));
+            printf("comparing: %c, %c\n",*(end+1), *(start - 1));
             start--;
             end++;
         }

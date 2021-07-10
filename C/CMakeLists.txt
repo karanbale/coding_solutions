@@ -24,13 +24,6 @@ target_sources(${LIBRARY_NAME}
         "${lib_srcs}"
 )
 
-# find_program(CLANG_TIDY_PATH "clang-tidy")
-# if (CLANG_TIDY_PATH)
-#     set_target_properties(${LIBRARY_NAME} PROPERTIES C_CLANG_TIDY
-#             "clang-tidy;-checks=bugprone-*,clang-analyzer-*,concurrency-*,misc-*,cert-*,performance-*,readability-*,portability-*;-warnings-as-errors=*"
-#             )
-# endif ()
-
 target_compile_options(${LIBRARY_NAME} PRIVATE -Wall -Wextra -pedantic)
 target_compile_features(${LIBRARY_NAME} PUBLIC c_std_99)
 

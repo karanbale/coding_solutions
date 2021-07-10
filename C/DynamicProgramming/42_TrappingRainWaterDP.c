@@ -37,7 +37,7 @@ bool isStackFull(stackT *stack){
 }
 
 stackT *createStack(int stackSize){
-    stackT *stack = malloc(sizeof(stackT));
+    stackT *stack = (stackT *) malloc(sizeof(stackT));
     if(!stack)  return NULL;
     stack->arr = malloc(sizeof(int)*stackSize);
     if(!stack->arr) return NULL;
