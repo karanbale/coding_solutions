@@ -103,3 +103,25 @@ bool searchMatrixSolution2(int** matrix, int matrixSize, int* matrixColSize, int
     return false;
 }
 
+bool searchMatrixSolution3(int** matrix, int matrixSize, int* matrixColSize, int target){
+    
+    int rowSize = matrixSize;
+    int colSize = *matrixColSize;
+    
+    int left, right;
+    left = 0;
+    right = rowSize*colSize;
+    if(left == right)   return matrix[left][right] == target;
+    int rowIdx, colIdx;
+    
+    while(left < right) {
+        int mid = left + (right - left)/2;
+        rowIdx = mid/colSize;
+        colIdx = mid%colSize;
+        int currentNum = matrix[rowIdx][colIdx];
+        if(currentNum == target)    return true;
+        if(currentNum < target) left = mid+1;
+        else right = mid;
+    }
+    return false;
+}

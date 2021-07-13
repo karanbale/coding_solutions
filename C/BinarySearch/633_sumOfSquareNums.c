@@ -30,14 +30,14 @@ Constraints:
 
 #include "../standardHeaders.h"
 
-bool isPerfectSquare(int num){
+bool isPerfectSquare(int num) {
     if(num < 2) return true;
-    
+
     int left, right;
-    
+
     left = 0;
     right = num;
-    
+
     while(left < right){
         int mid = left + (right - left) / 2;
         double sqr = (double)mid*mid;
@@ -51,7 +51,7 @@ bool isPerfectSquare(int num){
             left = mid+1;
         }
     }
-    
+
     return false;
 }
 
