@@ -59,6 +59,22 @@ int maxSubArray(int* nums, int numsSize){
 
 }
 
+int maxSubArray2(int* nums, int numsSize){
+    
+    if(numsSize == 1) {
+        return nums[0];
+    }
+
+    int max = nums[0];
+    int currentSum = nums[0];
+    for(int i=1; i<numsSize; i++) {
+        if(currentSum < 0) currentSum = 0;
+        currentSum += nums[i];
+        max = MAX(max, currentSum);
+    }
+    return max;
+}
+
 /*
 Inputs to test:
 [-2,1]

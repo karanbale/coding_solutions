@@ -29,8 +29,6 @@ Note:
 Answers within 10^-5 of the correct answer will be considered correct.
 */
 
-#include "../standardHeaders.h"
-
 /*
 ######################################################################################################################
 Input: quality = [10,20,5], wage = [70,50,30], K = 2
@@ -190,153 +188,68 @@ ans = min(30.6, sum([7, 70, 70])) = 30.6
 
 */
 
-#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#include "MaxHeap_Header.h"
+#include "common.h"
+#include "heap.h"
 
-typedef struct worker{
+typedef struct worker {
     int quality;
     int wage;
     double wageToQualityRatio;
 }worker_t;
 
-/*##########################################################################################################*/
-int cmpW(const void * a, const void * b){
+void printArr1(worker_t *member, int numOfWorkers) {
+    for (int i = 0; i < numOfWorkers; i++){
+        TM_PRINTF("%d. Worker quality: %d\n", i, member[i].quality);
+        TM_PRINTF("%d. Worker Wage.  : %d\n", i, member[i].wage);
+        TM_PRINTF("%d. Worker ratio  : %f\n", i, member[i].wageToQualityRatio);
+        TM_PRINTF("\n");
+    }
+}
+
+void get_dp(worker_t *arr, int qualitySize, int kNumOfWorkers, int *dp) {
+    if (kNumOfWorkers == 0)
+        return;
+    heap_t *h = createHeap((kNumOfWorkers + 1), true);
+    int sum = 0;
+    // add K-1 workers with minimum wageToQualityRatio to temp heap
+    // Note: our members are already sorted as per their wageToQualityRatio, from highest to lowest
+    // thus lets just focus on (K-1) workers with minimum wageToQualityRatio
+    for (int i = qualitySize - kNumOfWorkers; i < qualitySize ; i++) {
+        TM_PRINTF("inserting wage: %d, quality: %d, ratio: %f\n", arr[i].wage, arr[i].quality, arr[i].wageToQualityRatio);
+        insertHeap(h, arr[i].quality);
+        sum += arr[i].quality;
+    }
+    TM_PRINTF("final sum: %d\n\n",sum);
+    // assign the sum of minimum wageToQualityRatio to dp's last index
+    dp[qualitySize - kNumOfWorkers] = sum;
+    
+    // iterate over remaining member structures from top to bottom (reverse order)
+    // we iterate over workers, who were not added to heap in above step
+    for (int i = qualitySize - kNumOfWorkers - 1; i >= 0; i--) {
+        TM_PRINTF("Considering: %d\n", arr[i].quality);
+        // if we find a worker in the heap whose quality is bigger than current, lets remove it 
+        // and lets add this new worker
+        if (arr[i].quality < peekHeap(h)){
+            int poppedItem = removeHeap(h);
+            TM_PRINTF("Popped item: %d\n", poppedItem);
+            sum = sum - poppedItem;
+            sum = sum + arr[i].quality;
+            insertHeap(h, arr[i].quality);
+        }
+        dp[i] = sum;
+    }
+    destroyHeap(h);
+}
+
+int cmpW(const void * a, const void * b) {
     double temp = ((worker_t *)b)->wageToQualityRatio - ((worker_t *)a)->wageToQualityRatio;
     if (temp < 0)
         return -1;
     return 1;
 }
 
-/*##########################################################################################################*/
-
-void swap(int *x, int *y){
-    int temp = *x;
-    *x = *y;
-    *y = temp;
-}
-
-/*##########################################################################################################*/
-int getLeftIndexMaxHeap(int idx){
-    return ( 2*idx + 1);
-}
-
-int getRightIndexMaxHeap(int idx){
-    return ( 2*idx + 2);
-}
-
-int getParentIndex(int idx){
-    return ((idx-1)/2);
-}
-
-void maxHeapify(int *array, int arraySize, int idx){
-    // get left child idx
-    int leftIdx = getLeftIndexMaxHeap(idx);
-    
-    // get right child idx
-    int rightIdx = getRightIndexMaxHeap(idx);
-    
-    // Assume current index holds largest value amongst three nodes
-    int largestValIdx = idx;
-    
-    // find if left node holds value > current value
-    if((leftIdx < arraySize) && (array[leftIdx] > array[largestValIdx])){
-        largestValIdx = leftIdx;
-    }
-    
-    // find if right node holds value > current value
-    if((rightIdx < arraySize) && (array[rightIdx] > array[largestValIdx])){
-        largestValIdx = rightIdx;
-    }
-    
-    // if index of largest value is not same as input index, swap them
-    if(largestValIdx != idx){
-        swap(&array[idx], &array[largestValIdx]);
-        maxHeapify(array, arraySize, largestValIdx);
-    }
-    
-}
-
-// deletes the max item and return
-int deleteFromMaxHeap(int *array, int *arraySize){
-    if(*arraySize == 0)
-    {
-        printf("The heap is empty.\n");
-        exit(1);
-    }
-    int max_item = array[0];
-
-    // replace the first item with the last item
-    // int temp = array[*arraySize - 1];
-    array[0] = array[*arraySize - 1];
-    *arraySize = *arraySize - 1;
-
-    // maintain the heap property by heapifying the 
-    // first item
-    maxHeapify(array, *arraySize, 0);
-    // printf("\tPopping: %d\n",max_item);
-    return max_item;
-}
-
-void insertMaxHeap(int *array, int *arraySize, int data){
-    // printf("Inserting %d\n",data);
-    // add value to the end of the array
-    array[*arraySize] = data;
-    *arraySize = *arraySize + 1;
-    // get the last index 
-    int idx = *arraySize - 1;
-
-    // keep swapping current data with its parent, if current data is 
-    while((idx != 0) && (array[idx] > array[getParentIndex(idx)])){
-        swap(&array[getParentIndex(idx)], &array[idx]);
-        idx = getParentIndex(idx);
-    }
-}
-/*##########################################################################################################*/
-
-void get_dp(worker_t *arr, int qualitySize, int kNumOfWorkers, int *dp){
-    if (kNumOfWorkers == 0)
-        return;
-    int temp[kNumOfWorkers + 1];
-    int n = 0;
-    int sum = 0;
-    // add K-1 workers with minimum wageToQualityRatio to temp heap
-    // Note: our members are already sorted as per their wageToQualityRatio, from highest to lowest
-    // thus lets just focus on (K-1) workers with minimum wageToQualityRatio
-    for (int i = qualitySize - kNumOfWorkers; i < qualitySize ; i++){
-        // printf("inserting: %d\n", arr[i].quality);
-        insertMaxHeap(temp, &n, arr[i].quality);
-        sum += arr[i].quality;
-    }
-    // printf("final sum: %d\n\n",sum);
-    // assign the sum of minimum wageToQualityRatio to dp's last index
-    dp[qualitySize - kNumOfWorkers] = sum;
-    
-    // iterate over remaining member structures from top to bottom (reverse order)
-    // we iterate over workers, who were not added to heap in above step
-    for (int i = qualitySize - kNumOfWorkers - 1; i >= 0; i--){
-        // printf("Considering: %d\n", arr[i].quality);
-        // if we find a worker in the heap whose quality is bigger than current, lets remove it 
-        // and lets add this new worker
-        if (arr[i].quality < temp[0]){
-            int poppedItem = deleteFromMaxHeap(temp, &n);
-            // printf("Popped item: %d\n", poppedItem);
-            sum = sum - poppedItem;
-            sum = sum + arr[i].quality;
-            insertMaxHeap(temp, &n, arr[i].quality);
-        }
-        dp[i] = sum;
-    }
-}
-
-void printArr(worker_t *member, int numOfWorkers){
-    for (int i = 0; i < numOfWorkers; i++){
-        printf("%d. Worker quality: %d\n", i, member[i].quality);
-        printf("%d. Worker Wage.  : %d\n", i, member[i].wage);
-        printf("%d. Worker ratio  : %f\n", i, member[i].wageToQualityRatio);
-        printf("\n");
-    }
-}
-
-double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int wageSize, int K){
+double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int wageSize, int K) {
     if (qualitySize == 1)
         return wage[0];
     // initialize member structure
@@ -346,31 +259,32 @@ double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int wageSi
         member[i].wage = wage[i];
         member[i].wageToQualityRatio = (double)wage[i] / quality[i];
     }
-    
-    // printArr(member, qualitySize);
-    
+
+    printArr1(member, qualitySize);
+
     // sort member array, based upon wageToQualityRatio
     qsort(member, qualitySize, sizeof(worker_t), cmpW);
-    // printf("POST SORTING....\n\n");
-    // printArr(member, qualitySize);
-    
+    TM_PRINTF("POST SORTING....\n\n");
+    printArr1(member, qualitySize);
+
     double result = INT32_MAX, cost;
-    int max = INT32_MAX;
     int dp[qualitySize];
     get_dp(member, qualitySize, K-1, dp);
-    
-    // for(int i=0; i<qualitySize; i++){
-    //     printf("dp[%d]: %d ",i, dp[i]);
-    // }
-    // printf("\n");
+
+    for(int i=0; i<qualitySize; i++){
+        TM_PRINTF("dp[%d]: %d ",i, dp[i]);
+    }
+    TM_PRINTF("\n");
     // now iterate over each member
     for (int i = 0; i <= qualitySize - K; i++){
         int total = member[i].quality;
         if (K != 1)
             total += dp[i + 1];
         cost = total * member[i].wageToQualityRatio;
-        // printf("current cost: %f\n", cost);
+        TM_PRINTF("current cost: %f\n", cost);
         result = fmin(result, cost);
     }
+    free(member);
     return result;
 }
+

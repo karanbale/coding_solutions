@@ -41,8 +41,8 @@ void printArray_2D(char **grid, int rowIdxSize, int colIdxSize) {
     printf("]\n");
 }
 
-void swap(int *idx1, int *idx2) {
-    int temp = *idx1;
+void swap(size_t *idx1, size_t *idx2) {
+    size_t temp = *idx1;
     *idx1 = *idx2;
     *idx2 = temp;
 }
