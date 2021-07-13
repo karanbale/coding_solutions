@@ -1,0 +1,5 @@
+Source: https://www.cs.cmu.edu/afs/cs/academic/class/15492-f07/www/pthreads.html
+
+POSIX Thread (pthread) libraries
+- pthreads are most effective on multi-processory or multi-core systems.
+- 
