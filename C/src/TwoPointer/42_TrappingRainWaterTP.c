@@ -20,7 +20,7 @@ n == height.length
 #include "common.h"
 
  // Solution using two pointer approach
-int trap(int* height, int heightSize){
+int trap(int* height, int heightSize) {
     if(0 == heightSize) {
         return 0;
     }

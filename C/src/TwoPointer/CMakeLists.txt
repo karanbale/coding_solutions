@@ -4,6 +4,7 @@ set(component_name "TwoPointer")
 
 set(srcs
     5_longestPalindromicSubString.c
+    27_RemoveElement.c
     42_TrappingRainWaterTP.c
 )
 
