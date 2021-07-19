@@ -17,9 +17,15 @@ Theory of operation for negative numbers:
 
 E.g.
 Number = 12
-+(Num) = 0b00001010 (12)
--(Num) = 0b11110110 (-12)
- (ANS) = 0b00000010 (2)
++(Num) = 0b00001100 (12)
++(Num) = 0b11110011 (bit flipped 12)
++(1)   = 0b00000001 (Add 1 to it)
+-----------------------------
+-(Num) = 0b11110100 (-12)
+
++(Num) = 0b00001100 (12)
+-(Num) = 0b11110100 (-12)
+ (ANS) = 0b00000100 (2)
 
 Number = 8
 +(Num) = 0b00001000 (8)
@@ -32,7 +38,7 @@ Number = 8
 
 #define EVEN_ODD_METHOD_1(x) ((x)&(-(x)))
 #define EVEN_ODD_METHOD_2(x) ((x)&((x)-1))
-#define ARR_LEN 5
+// #define ARR_LEN 5
 
 // following method wont work if you pass in INT32_MAX to it
 // because unsigned int can only accomodate upto 32 int
@@ -43,12 +49,13 @@ int64_t int_to_bin(uint64_t k){
 
 int main(void){
 
-    int num[ARR_LEN] = {5,4,1,0,8};
+    int num[] = {5,4,1,0,8, 12};
+    int arrLen = sizeof(num)/sizeof(num[0]);
 
     printf("max pow value: %f\n", log2(INT32_MAX));
     printf("max value that is square of 2: %d\n",(int) pow(2, (int)log2(INT32_MAX)+1));
 
-    for(int i=0; i<ARR_LEN; i++){
+    for(int i=0; i<arrLen; i++){
         // if ANDing of a number and its negative counterpart is equal to the number itself,
         // then given number is always power of 2
         
