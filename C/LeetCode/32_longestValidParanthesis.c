@@ -75,7 +75,7 @@ void freeStack(stackT *stack){
     free(stack);
 }
 
-int longestValidParentheses(char * s){
+int longestValidParentheses1(char * s){
 
     if(strlen(s) == 0)  return 0;
     
@@ -131,7 +131,7 @@ int longestValidParentheses(char * s){
 /******************************** Solution 2 **************************************************/
 /**********************************************************************************************/
 
-int longestValidParentheses1(char * s){
+int longestValidParentheses2(char * s){
 
     if(strlen(s) == 0)  return 0;
     
@@ -142,7 +142,10 @@ int longestValidParentheses1(char * s){
     int longestCount = 0;
     for(int i=1; i<strlen(s); i++){
         if(s[i] == ')'){
+            // check if previous char is '('
             if(s[i-1] == '('){
+                // curr length at i is 2 i.e. (), add that to previous len calculated
+                // for addition, we should have processed at least 2 characters
                 stack[i] = (i>=2 ? stack[i-2] : 0) + 2;
             }
             else if((i-stack[i-1] > 0) && (s[i-stack[i-1]-1] == '(')){
@@ -154,4 +157,47 @@ int longestValidParentheses1(char * s){
     
     return longestCount;
     
+}
+
+/**********************************************************************************************/
+/******************************** Solution 3 **************************************************/
+/**********************************************************************************************/
+
+int longestValidParentheses3(char * s){
+    int maxLen = 0;
+    int leftPtr = 0, rightPtr = 0;
+    for(int i=0; i<strlen(s); i++) {
+        if(s[i] == '(') {
+            leftPtr++;
+        }
+        else {
+            rightPtr++;
+        }
+        if(leftPtr == rightPtr) {
+            maxLen = fmax(maxLen, rightPtr*2);
+        }
+        else if(rightPtr > leftPtr) {
+            leftPtr =0;
+            rightPtr = 0;
+        }
+    }
+    leftPtr =0, rightPtr = 0;
+    for(int i=strlen(s)-1; i >= 0; i--) {
+        if(s[i] == '(') {
+            leftPtr++;
+        }
+        else {
+            rightPtr++;
+        }
+        if(leftPtr == rightPtr) {
+            maxLen = fmax(maxLen, leftPtr*2);
+        }
+        else if(rightPtr < leftPtr) {
+            leftPtr =0;
+            rightPtr = 0;
+        }
+    }
+    
+    return maxLen;
+
 }

@@ -26,7 +26,7 @@ void printArr(int *nums, int numsSize) {
     for(int i=0; i<numsSize; i++){
         printf("%d,",nums[i]);
     }
-    printf("]\n");
+    printf("\b]\n");
 }
 
 void printArray_2D(char **grid, int rowIdxSize, int colIdxSize) {
@@ -36,9 +36,9 @@ void printArray_2D(char **grid, int rowIdxSize, int colIdxSize) {
         for(int j=0; j<colIdxSize; j++){
             printf("%c,", grid[i][j]);
         }
-        printf("],\n");
+        printf("\b],\n");
     }
-    printf("]\n");
+    printf("\b]\n");
 }
 
 void swap(size_t *idx1, size_t *idx2) {
@@ -49,6 +49,17 @@ void swap(size_t *idx1, size_t *idx2) {
 
 int cmpInt(const void * a, const void * b) {
     return (*(int*)a - *(int*)b);
+}
+
+int compare(const void *a, const void *b) {
+    int x = *(int *)a;
+    int y = *(int *)b;
+    return (x > y) - (y > x);
+}
+
+int reverse_compare(const void *a, const void *b)
+{
+    return compare(b, a);
 }
 
 void bubble_sort(int *nums, int start, int end) {

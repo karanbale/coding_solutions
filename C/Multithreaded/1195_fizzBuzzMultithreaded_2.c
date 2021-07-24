@@ -62,8 +62,7 @@ FizzBuzz* fizzBuzzCreate(int n) {
 void fizz(FizzBuzz* obj) {
     while (1) {
         pthread_mutex_lock(&obj->m);
-        while (obj->curr <= obj->n &&
-               (obj->curr % 5 == 0 || obj->curr % 3 != 0)) {
+        while (obj->curr <= obj->n && obj->curr % 3 != 0) {
             pthread_cond_wait(&obj->cv, &obj->m);
         }
 
@@ -83,8 +82,7 @@ void fizz(FizzBuzz* obj) {
 void buzz(FizzBuzz* obj) {
     while (1) {
         pthread_mutex_lock(&obj->m);
-        while (obj->curr <= obj->n &&
-               (obj->curr % 5 != 0 || obj->curr % 3 == 0)) {
+        while (obj->curr <= obj->n && obj->curr % 5 != 0) {
             pthread_cond_wait(&obj->cv, &obj->m);
         }
 
