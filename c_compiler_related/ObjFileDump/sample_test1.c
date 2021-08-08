@@ -19,7 +19,7 @@ int main(void)
 
       printf("xptr pointer points to address %p which holds a value of %d.\n", xptr, *xptr);
 
-    `  display(x, xptr);
+      display(x, xptr);
 
       return 0;
 
@@ -29,7 +29,7 @@ void display(int y, int *yptr)
 
 {
 
-      char var[7] = "ABCDEF"; 
+//      char var[7] = "ABCDEF"; 
 
       printf("In display() function:\n");
 
