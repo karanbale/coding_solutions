@@ -57,9 +57,7 @@ bool isPalindrome(char * s){
     }
     newStr[idx] = '\0';
     int leftIdx = 0, rightIdx = idx-1;
-    for(; (leftIdx<rightIdx) && (tolower(newStr[leftIdx]) == tolower(newStr[rightIdx])); leftIdx++, rightIdx--) {
-        0;
-    }
+    for(; (leftIdx<rightIdx) && (tolower(newStr[leftIdx]) == tolower(newStr[rightIdx])); leftIdx++, rightIdx--);
     free(newStr);
     return (leftIdx<rightIdx) ? false : true;
 }

@@ -56,7 +56,7 @@ static inline void bubble_sort(int *nums, int start, int end)
     }
 }
 
-void nextPermutation(int* nums, int numsSize){
+int *nextPermutation(int* nums, int numsSize){
     
     // scan nums from right to left
     // find first irregularity i.e. a[i] > a[i-1]

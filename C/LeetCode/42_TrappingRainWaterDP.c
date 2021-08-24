@@ -21,51 +21,6 @@ n == height.length
 #define ENABLE_PRINTS 0
 #define TM_PRINTF(f_, ...) ENABLE_PRINTS? printf((f_), ##__VA_ARGS__) : 0
 
-typedef struct stackt{
-    int *arr;
-    int front;
-    int stackSize;
-}stackT;
-
-bool isStackEmpty(stackT *stack){
-    return stack->front == -1;
-}
-
-bool isStackFull(stackT *stack){
-    return stack->front == stack->stackSize;
-}
-
-stackT *createStack(int stackSize){
-    stackT *stack = malloc(sizeof(stackT));
-    if(!stack)  return NULL;
-    stack->arr = malloc(sizeof(int)*stackSize);
-    if(!stack->arr) return NULL;
-    stack->front = -1;
-    stack->stackSize = stackSize;
-    return stack;
-}
-
-int stackPush(stackT *stack, int inputIdx){
-    if(isStackFull(stack))  return -1;
-    stack->arr[++stack->front] = inputIdx;
-    return 1;
-}
-
-int stackPop(stackT *stack){
-    if(isStackEmpty(stack))  return -1;
-    return stack->arr[stack->front--];
-}
-
-int stackPeek(stackT *stack){
-    if(isStackEmpty(stack))  return -1;
-    return stack->arr[stack->front];
-}
-
-void freeStack(stackT *stack){
-    free(stack->arr);
-    free(stack);
-}
-
 int trap(int* height, int heightSize){
     int ans = 0;
     int leftMax[heightSize], rightMax[heightSize];

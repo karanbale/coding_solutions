@@ -1,6 +1,0 @@
-@startuml 
-title LRUCache
-rectangle Input {
-    
-}
-@enduml

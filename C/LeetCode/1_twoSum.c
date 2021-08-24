@@ -79,7 +79,7 @@ void insert(int key, int value, struct hashTable *table){
     
 }
 
-void delete(struct hashTable *hashtable)
+void deleteT(struct hashTable *hashtable)
 {
     struct hashNode *tmp;
 
@@ -119,7 +119,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize){
     
     int *retNums;
     *returnSize = 2;
-    retNums = calloc(2, sizeof(int));
+    retNums = (int *)calloc(2, sizeof(int));
     
     struct hashTable *table = createTable(numsSize);
 
@@ -137,6 +137,7 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize){
     }
     
 ret:    *returnSize = 2;
+    deleteT(table);
     return retNums;
 
 }

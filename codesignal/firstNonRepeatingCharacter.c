@@ -87,7 +87,7 @@ int firstDuplicate(arr_integer a) {
                 printf("b[%d]=%d\n",i, b[i]);
                 printf("a[%d]          = %d\n",i,a.arr[i]);
                 printf("Matching Index = %d\n",b[i]);
-                printf("breaking up bitch !\n");
+                printf("breaking up !\n");
                 break;
             }
             b[i] = 0;
