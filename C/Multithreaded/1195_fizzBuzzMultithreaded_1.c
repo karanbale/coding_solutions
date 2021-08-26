@@ -63,7 +63,6 @@ rk_sema_init(struct rk_sema *s, uint32_t value)
 static inline void
 rk_sema_wait(struct rk_sema *s)
 {
-
 #ifdef __APPLE__
     dispatch_semaphore_wait(s->sem, DISPATCH_TIME_FOREVER);
 #else
@@ -77,7 +76,6 @@ rk_sema_wait(struct rk_sema *s)
 static inline void
 rk_sema_post(struct rk_sema *s)
 {
-
 #ifdef __APPLE__
     dispatch_semaphore_signal(s->sem);
 #else
@@ -88,7 +86,6 @@ rk_sema_post(struct rk_sema *s)
 static inline void
 rk_sema_destroy(struct rk_sema *s)
 {
-
 #ifdef __APPLE__
     dispatch_release(s->sem);
 #else
