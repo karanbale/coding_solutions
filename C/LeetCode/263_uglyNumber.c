@@ -24,7 +24,16 @@ Input is within the 32-bit signed integer range: [−231,  231 − 1].
 
 #include "../standardHeaders.h"
 
-bool isUgly(int num){
+bool isUglyMethod1(int num){
+    if(num > 0) {
+        for(int i=2; i<6; i++) {
+            while(0 == (num%i)) num /= i;
+        }
+    }
+    return num == 1;
+}
+
+bool isUglyMethod2(int num){
     int temp;
     if(num == 1){
         return true;
