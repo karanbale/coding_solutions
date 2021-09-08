@@ -25,7 +25,7 @@ char *StrStr(char *str, char *substr)
 	  }
 	  return NULL;
 }
-
+ 
 /* Main Method */
 int main()
 {

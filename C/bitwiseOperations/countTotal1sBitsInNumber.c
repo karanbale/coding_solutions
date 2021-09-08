@@ -36,7 +36,7 @@ void countBits(int num){
         }
         output_arr[i] = count;
     }
-
+    
     for(int i=0; i<=num; i++){
         printf("output_arr[%d]: %d\n",i,output_arr[i]);
     }

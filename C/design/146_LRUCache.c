@@ -60,15 +60,15 @@ typedef struct {
 LRUCache *lRUCacheCreate(int capacity) {
     if (capacity > SIZE)
         return NULL;
-    LRUCache *cache = (LRUCache *)calloc(1, sizeof *cache);
+    LRUCache *cache = calloc(1, sizeof *cache);
     
-    cache->cacheArr = (cacheData_t **) calloc(1, sizeof(cacheData_t *)*SIZE);
+    cache->cacheArr = calloc(1, sizeof(cacheData_t *)*SIZE);
     assert(cache->cacheArr != NULL);
     
-    cache->headPtr = (cacheData_t *) calloc(1, sizeof(cacheData_t));
+    cache->headPtr = calloc(1, sizeof(cacheData_t));
     assert(cache->headPtr != NULL);
 
-    cache->tailPtr = (cacheData_t *) calloc(1, sizeof(cacheData_t));
+    cache->tailPtr = calloc(1, sizeof(cacheData_t));
     assert(cache->tailPtr != NULL);
 
 

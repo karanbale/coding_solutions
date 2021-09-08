@@ -146,7 +146,7 @@ int longestValidParentheses1(char * s){
                 stack[i] = (i>=2 ? stack[i-2] : 0) + 2;
             }
             else if((i-stack[i-1] > 0) && (s[i-stack[i-1]-1] == '(')){
-                stack[i] = stack[i-1] + ((i-stack[i-1]-2) >= 0 ? stack[i-stack[i-1]-2] : 0) + 2;
+                stack[i] = stack[i-1] + ((i-stack[i-1]) >= 2 ? stack[i-stack[i-1]-2] : 0) + 2;
             }
         }
         longestCount = MAX(longestCount, stack[i]);
@@ -155,20 +155,3 @@ int longestValidParentheses1(char * s){
     return longestCount;
     
 }
-/*
-
-(((((())))))
-[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-i = 6
-[0,0,0,0,0,0,2,0,0,0,0,0,0,0,0]
-i = 7
-[0,0,0,0,0,0,2,4,0,0,0,0,0,0,0]
-i = 8
-[0,0,0,0,0,0,2,4,6,0,0,0,0,0,0]
-i = 9
-[0,0,0,0,0,0,2,4,6,8,0,0,0,0,0]
-i = 10
-[0,0,0,0,0,0,2,4,6,8,10,0,0,0,0]
-i = 11
-[0,0,0,0,0,0,2,4,6,8,10,10+,0,0,0]
-*/

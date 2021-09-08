@@ -117,10 +117,6 @@ int getSum_HalfAdder_Method3(int a, int b){
     return a;
 }
 
-#define METHOD4(x, y) ((x)-(~(y))-1)
-#define METHOD5(x, y) ((x)-(-(y)))
-#define METHOD6(x, y) (-(-(x)-(y)))
-
 int main(void){
 
     int nums[4] = {1,2,INT32_MAX,INT32_MIN};
@@ -130,9 +126,6 @@ int main(void){
         printf("Method 1: %d\n",getSum_Method1(nums[i], nums[i+1]));
         printf("Method 2: %d\n",getSum_Method2(nums[i], nums[i+1]));
         printf("Method 3: %d\n",getSum_FullAdder_Method3(nums[i], nums[i+1]));
-        printf("Method 4: %d\n", METHOD4(nums[i], nums[i+1]));
-        printf("Method 5: %d\n", METHOD5(nums[i], nums[i+1]));
-        printf("Method 6: %d\n", METHOD6(nums[i], nums[i+1]));
         printf("\n");
     }
     return 0;

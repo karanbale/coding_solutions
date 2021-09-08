@@ -17,7 +17,7 @@ char* ItoA(int x)
 	
 	return (ptr);
 }
-
+ 
 int main()
 {
 	int i=12345;

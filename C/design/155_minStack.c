@@ -34,6 +34,8 @@ Methods pop, top and getMin operations will always be called on non-empty stacks
 */
 
 #include "../standardHeaders.h"
+
+
 #define SIZE 100000
 
 typedef struct stack{
