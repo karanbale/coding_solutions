@@ -123,7 +123,7 @@ struct task_block *task_create(char *name, void (*start)(void *arg), void *arg)
     struct task_block *t;
     int i;
     if (n_tasks >= MAX_TASKS)
-    return NULL;
+        return NULL;
     t = &TASKS[n_tasks];
     t->id = n_tasks++;
     for (i = 0; i < TASK_NAME_MAXLEN; i++) {

@@ -67,8 +67,8 @@ void *consumer(void *vargs) {
 
 int main(void) {
     // define threads for producer and consumer
-    pthread_t producer[MAX_PRODUCER_COUNT];
-    pthread_t consumer[MAX_CONSUMER_COUNT];
+    pthread_t producerT[MAX_PRODUCER_COUNT];
+    pthread_t consumerT[MAX_CONSUMER_COUNT];
     // define some thread IDs
     int thread_id[MAX_PRODUCER_COUNT] = {1, 2, 3, 4, 5};
     // initialize mutex
@@ -78,19 +78,19 @@ int main(void) {
     sem_init(&full, 0, 0);
     // create producer threads
     for(int i=0; i<MAX_PRODUCER_COUNT; i++) {
-        pthread_create(&producer[i], NULL, (void *)producer, (void *)&thread_id[i]);
+        pthread_create(&producerT[i], NULL, producer, (void *)&thread_id[i]);
     }
     // create consumer threads
     for(int i=0; i<MAX_CONSUMER_COUNT; i++) {
-        pthread_create(&consumer[i], NULL, (void *)consumer, (void *)&thread_id[i]);
+        pthread_create(&consumerT[i], NULL, consumer, (void *)&thread_id[i]);
     }
     // wait for producer threads to finish
     for(int i=0; i<MAX_PRODUCER_COUNT; i++) {
-        pthread_join(producer[i], NULL);
+        pthread_join(producerT[i], NULL);
     }
     // wait for consumer threads to finish
     for(int i=0; i<MAX_CONSUMER_COUNT; i++) {
-        pthread_join(consumer[i], NULL);
+        pthread_join(consumerT[i], NULL);
     }
     // destroy semaphores
     sem_destroy(&empty);

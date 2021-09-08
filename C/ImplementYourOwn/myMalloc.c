@@ -5,7 +5,6 @@
 #define _start_heap 0x80000000;
 #define _end_heap 0x80001000;
 
-
 #define USED_MEMORY 0xAABBCCDD
 #define FREE_MEMORY 0xDEADC0DE
 
@@ -53,6 +52,5 @@ void free(void *ptr) {
     if(blk->signature == FREE_MEMORY)   return;
     if(blk->signature == USED_MEMORY) {
         blk->signature = FREE_MEMORY;
-        blk->size = 0;
     }
 }

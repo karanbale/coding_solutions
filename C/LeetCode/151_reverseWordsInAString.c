@@ -43,7 +43,7 @@ Follow-up: If the string data type is mutable in your language, can you solve it
 #include "../standardHeaders.h"
 
 void cleanSpaces(char *s) {
-    int new = 0;
+    int new1 = 0;
     int old = 0;
     while(s[old] != '\0') {
         // ignore leading white spaces
@@ -51,15 +51,15 @@ void cleanSpaces(char *s) {
             old++;
         }
         // if we've already stored with new index, add space
-        if(s[old] != '\0' && new > 0) {
-            s[new++] = ' ';
+        if(s[old] != '\0' && new1 > 0) {
+            s[new1++] = ' ';
         }
         // copy word back into string
         while(s[old] != '\0' && s[old] != ' ') {
-            s[new++] = s[old++];
+            s[new1++] = s[old++];
         }
     }
-    s[new++] = '\0';
+    s[new1++] = '\0';
 }
 
 void reverseWord(char *s, int startIdx, int endIdx) {
