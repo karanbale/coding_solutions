@@ -35,11 +35,11 @@ But the second continuation byte does not start with 10, so it is invalid.
 
 #include "../standardHeaders.h"
 
-int mask1 = 0x80, pattern1 = 0x00,
-    mask2 = 0xE0, pattern2 = 0xC0,
+int mask4 = 0xF8, pattern4 = 0xF0,
     mask3 = 0xF0, pattern3 = 0xE0,
-    mask4 = 0xF8, pattern4 = 0xF0,
-    mask5 = 0xC0, pattern5 = 0x80; // NOTE: remaining byte data must begin with 10xx xxxx ==> 0x80
+    mask2 = 0xE0, pattern2 = 0xC0,
+    mask5 = 0xC0, pattern5 = 0x80, // NOTE: remaining byte data must begin with 10xx xxxx ==> 0x80
+    mask1 = 0x80, pattern1 = 0x00;
 
 // All remaining numbers must have data which starts with 0x80
 static inline int validRemaining(int data){
