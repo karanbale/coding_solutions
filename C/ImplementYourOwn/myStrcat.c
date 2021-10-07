@@ -24,7 +24,7 @@ Let’s see an example code to understand this point.
 char *my_strcat(char *s1, const char *s2)
 {
     //Pointer should not null pointer
-    if((s1 == NULL) && (s2 == NULL)){
+    if((s1 == NULL) || (s2 == NULL)){
         return NULL;
     }
 

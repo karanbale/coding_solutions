@@ -36,7 +36,6 @@ void *my_memset(void *s, int c,  unsigned int len)
     {
         *p++ = (unsigned char)c;
     }
-    return s;
 }
 //function to print char of an char array
 void printArray(char arr[], int n)
