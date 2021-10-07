@@ -15,9 +15,9 @@ S will consist of lowercase letters and have length in range [1, 500].
  
 */
 
-#include "MaxHeap_Header.h"
-#include "common.h"
-#include "heap.h"
+#include "../../include/MaxHeap/MaxHeap_Header.h"
+#include "../common_utils/common.h"
+#include "../common_utils/heap.h"
 
 char* reorganizeString(char* S) {
     int l = strlen(S);
@@ -35,7 +35,7 @@ char* reorganizeString(char* S) {
 
     int p = 0; 
 
-    int *pq = h->heapArr;
+    // int *pq = (int *) h->heapArr;
 
     for (int n = 0; p < l; n++) {
         int letter = removeHeap(h);

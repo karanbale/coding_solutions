@@ -188,9 +188,9 @@ ans = min(30.6, sum([7, 70, 70])) = 30.6
 
 */
 
-#include "MaxHeap_Header.h"
-#include "common.h"
-#include "heap.h"
+#include "../../include/MaxHeap/MaxHeap_Header.h"
+#include "../common_utils/common.h"
+#include "../common_utils/heap.h"
 
 typedef struct worker {
     int quality;
@@ -249,7 +249,7 @@ int cmpW(const void * a, const void * b) {
     return 1;
 }
 
-double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int wageSize, int K) {
+double mincostToHireWorkers(int* quality, int qualitySize, int* wage, int K) {
     if (qualitySize == 1)
         return wage[0];
     // initialize member structure

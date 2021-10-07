@@ -16,8 +16,8 @@ n == height.length
 0 <= height[i] <= 105
 */
  
-#include "TwoPointer_Header.h"
-#include "common.h"
+#include "../../include/TwoPointer/TwoPointer_Header.h"
+#include "../common_utils/common.h"
 
  // Solution using two pointer approach
 int trap(int* height, int heightSize) {
@@ -58,7 +58,7 @@ void runAlgo(int *waterHeightArr, int size) {
 int main(void) {
     int waterHeightArr[] = {0,1,0,2,1,0,1,3,2,1,2,1};
     runAlgo(waterHeightArr, sizeof(waterHeightArr)/sizeof(waterHeightArr[0]));
-    int waterHeightArr1[1] = {};
+    int waterHeightArr1[1] = {0};
     runAlgo(waterHeightArr1, 1);
     return 0;
 }
