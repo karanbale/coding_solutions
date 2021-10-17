@@ -31,26 +31,26 @@ struct ListNode {
     struct ListNode *next;
 };
 
-struct ListNode* reverseBetween(struct ListNode* head, int m, int n){
+struct ListNode* reverseBetween(struct ListNode* head, int left, int right){
     if(head == NULL)    return NULL;
     struct ListNode *prev = NULL;
     struct ListNode *curr = head;
-    while(m>1) {
+    while(left>1) {
         prev = curr;
         curr = curr->next;
-        --m;
-        --n;
+        --left;
+        --right;
     }
 
     struct ListNode *con = prev;
     struct ListNode *tail = curr;
     struct ListNode *third = NULL;
-    while(n) {
+    while(right) {
         third = curr->next;
         curr->next = prev;
         prev = curr;
         curr = third;
-        --n;
+        --right;
     }
     
     if(con != NULL) con->next = prev;

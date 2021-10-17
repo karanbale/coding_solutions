@@ -2,99 +2,119 @@
 
 */
 
-#include "../standardHeaders.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <inttypes.h>
+#include <stdint.h>
 #include <pthread.h>
 #include <semaphore.h>
-#include <stdlib.h>
-#include <stdio.h>
+#include <time.h>
 
-#define BUFFER_SIZE         5   // Size of the buffer
-#define MAX_ITEM_SIZE       5   // Max items producer can produce
-#define MAX_PRODUCER_COUNT  5
-#define MAX_CONSUMER_COUNT  5
+#define BUFFER_SIZE 5
+#define PRODUCER_SIZE 2
+#define CONSUMER_SIZE 2
 
-// create two semaphores
-sem_t empty, full;
-
-// create a mutex for the shared buffer
+// mutex for shared resource
 pthread_mutex_t mutex;
-
-// create shared resource
+// semaphore for signalling
+sem_t empty, full;
+// shared resource
 static int buffer[BUFFER_SIZE];
-int producer_buffer_index = 0;
-int consumer_buffer_index = 0;
 
-void *producer(void *vargs) {
-    int item;
-    // run for loop to produce MAX_ITEM_SIZE resources
-    for (int i=0; i<MAX_ITEM_SIZE; i++) {
-        // create random item value
-        item = rand();
-        // wait for buffer to be empty ==> semaphore
+uint8_t producer_index = 0;
+uint8_t consumer_index = 0;
+
+void get_sem_value(void *msg) {
+    printf("%s\n", (char *)msg);
+    int sem_value;
+    sem_getvalue(&full, &sem_value);
+    printf("\tCurrent FULL sem_value: %d\n", sem_value);
+    sem_getvalue(&empty, &sem_value);
+    printf("\tCurrent EMPTY sem_value: %d\n", sem_value);
+}
+
+void *producer(void *varg) {
+    // make sure seed for rand() is different each time
+    srand(time(0));
+    for(int i=0; i<BUFFER_SIZE; i++) {
+        // wait for buffer to be empty
         sem_wait(&empty);
-        // acquire mutex on the buffer
+        // read and print current semaphore value
+        get_sem_value("Producer");
+        // acquire mutex
         pthread_mutex_lock(&mutex);
-        // produce resource and store in buffer
-        buffer[producer_buffer_index] = item;
-        printf("Producer %d: Insert Item %d at %d\n", *((int *)vargs),buffer[producer_buffer_index],producer_buffer_index);
-        // increment counter
-        producer_buffer_index = (producer_buffer_index+1) % BUFFER_SIZE;
+        // fill up the buffer
+        int item = rand();
+        buffer[producer_index] = item;
+        printf("\tProducer: %ld, produced item: %d at index: %d. \n", (uintptr_t)varg, item, producer_index);
+        // advance the PRODUCER_INDEX
+        producer_index = (producer_index+1) % BUFFER_SIZE;
         // release mutex
         pthread_mutex_unlock(&mutex);
-        // post the semaphore
+        // singal buffer is full i.e. there is item for consumer to consume
         sem_post(&full);
     }
 }
 
-void *consumer(void *vargs) {
-    // Run for loop to consume resources
-    for(int i=0; i<MAX_ITEM_SIZE; i++) {
-        // wait for resource to be produced => check if full
+void *consumer(void *varg) {
+    for(int i=0; i<BUFFER_SIZE; i++) {
+        // wait for buffer to be empty
         sem_wait(&full);
-        // acquire mutex on the buffer
+        // read and print current semaphore value
+        get_sem_value("Consumer");
+        // acquire mutex
         pthread_mutex_lock(&mutex);
-        // consume resource
-        int item = buffer[consumer_buffer_index];
-        printf("Consumer %d: Remove Item %d at %d\n", *((int *)vargs),buffer[consumer_buffer_index],consumer_buffer_index);
-        // increment the counter
-        consumer_buffer_index = (consumer_buffer_index+1) % BUFFER_SIZE;
+        // fill up the buffer
+        int item = buffer[consumer_index];
+        printf("\tConsumer: %ld, consumed item: %d at index: %d. \n", (uintptr_t)varg, item, consumer_index);
+        // advance the PRODUCER_INDEX
+        consumer_index = (consumer_index+1) % BUFFER_SIZE;
         // release mutex
         pthread_mutex_unlock(&mutex);
-        // post semaphore
+        // singal buffer is full i.e. there is item for consumer to consume
         sem_post(&empty);
     }
 }
 
-int main(void) {
-    // define threads for producer and consumer
-    pthread_t producer[MAX_PRODUCER_COUNT];
-    pthread_t consumer[MAX_CONSUMER_COUNT];
-    // define some thread IDs
-    int thread_id[MAX_PRODUCER_COUNT] = {1, 2, 3, 4, 5};
-    // initialize mutex
+int main()
+{
+    printf("Hello World\n");
+
+    pthread_t producer_t[PRODUCER_SIZE];
+    pthread_t consumer_t[CONSUMER_SIZE];
+
+    int prod_thread_id = 1, cons_thread_id = 1;
+
+    // init mutex
     pthread_mutex_init(&mutex, NULL);
-    // initialize semaphores
+
+    // init semaphore
     sem_init(&empty, 0, BUFFER_SIZE);
     sem_init(&full, 0, 0);
-    // create producer threads
-    for(int i=0; i<MAX_PRODUCER_COUNT; i++) {
-        pthread_create(&producer[i], NULL, (void *)producer, (void *)&thread_id[i]);
+
+    // create threads for producer
+    for(int i=0; i<PRODUCER_SIZE; i++) {
+        pthread_create(&producer_t[i], NULL, &producer, (void *)&prod_thread_id);
+        prod_thread_id++;
     }
-    // create consumer threads
-    for(int i=0; i<MAX_CONSUMER_COUNT; i++) {
-        pthread_create(&consumer[i], NULL, (void *)consumer, (void *)&thread_id[i]);
+    // create threads for consumer
+    for(int i=0; i<CONSUMER_SIZE; i++) {
+        pthread_create(&consumer_t[i], NULL, &consumer, (void *)&cons_thread_id);
+        cons_thread_id++;
     }
-    // wait for producer threads to finish
-    for(int i=0; i<MAX_PRODUCER_COUNT; i++) {
-        pthread_join(producer[i], NULL);
+
+    // wait to join producer
+    for(int i=0; i<PRODUCER_SIZE; i++) {
+        pthread_join(producer_t[i], NULL);
     }
-    // wait for consumer threads to finish
-    for(int i=0; i<MAX_CONSUMER_COUNT; i++) {
-        pthread_join(consumer[i], NULL);
+    // wait to join consumer
+    for(int i=0; i<CONSUMER_SIZE; i++) {
+        pthread_join(consumer_t[i], NULL);
     }
-    // destroy semaphores
+    // destroy semaphore
     sem_destroy(&empty);
     sem_destroy(&full);
     // destroy mutex
     pthread_mutex_destroy(&mutex);
+    return 0;
 }
