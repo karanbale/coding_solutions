@@ -109,21 +109,21 @@ void touch_isr(void) {
 void *producer(void *args) {
     // wait for interrupt
     if(1 == touch_isr_flag) {
-        sem_wait(&empty);
-        pthread_mutex_lock(&mutex);
-        coordinates val;
+        coordinates val = {.x = 0, .y = 0};
         touch_i2c_read((void *)REG, &val);
+        sem_wait(&empty);   // decrement the count
+        pthread_mutex_lock(&mutex);
         co_ordinate_buffer[touch_co_ordinate_index++] = val.x;
         co_ordinate_buffer[touch_co_ordinate_index] = val.y;
         touch_co_ordinate_index = (touch_co_ordinate_index+1) % BUFFER_SIZE;
         touch_isr_flag = 0;
         pthread_mutex_unlock(&mutex);
-        sem_post(&full);
+        sem_post(&full);    // increment the count
     }
 }
 
 void *consumer(void *args) {
-    sem_wait(&full);
+    sem_wait(&full);    // decrement the count
     pthread_mutex_lock(&mutex);
     uint16_t x_co_ordinate, y_co_ordinate;
     x_co_ordinate = co_ordinate_buffer[draw_co_ordinate_index++];
@@ -131,7 +131,7 @@ void *consumer(void *args) {
     draw_co_ordinate_index = (draw_co_ordinate_index+1) % BUFFER_SIZE;
     pthread_mutex_unlock(&mutex);
     draw(x_co_ordinate, y_co_ordinate);
-    sem_post(&empty);
+    sem_post(&empty);   // increment the count
 }
 
 int main(void) {

@@ -2,8 +2,10 @@
 
 #include "../standardHeaders.h"
 
-#define _start_heap 0x80000000;
-#define _end_heap 0x80001000;
+// Assume that following `_start_heap` and `_end_heap` variables
+// are present in the linker file, export them
+extern unsigned int _start_heap;
+extern unsigned int _end_heap;
 
 #define USED_MEMORY 0xAABBCCDD
 #define FREE_MEMORY 0xDEADC0DE
@@ -27,12 +29,13 @@ void *myMalloc(unsigned int size) {
         size = ((size >> 2)+1) << 2;
     }
     // iterate until memory end
-    blk = (unsigned int *)&_start_heap;
+    blk = (blk_s *)&_start_heap;
     while (blk < end_heap) {
         if((blk->signature == FREE_MEMORY) && (blk->size <= size)) {
             blk->signature = USED_MEMORY;
             blk->size = size;
             ret = (char *)blk + sizeof(blk_s);
+            end_heap = ret + size;
             return ret;
         }
         blk = (blk_s *) ((char *)blk) + sizeof(blk_s) + blk->size;

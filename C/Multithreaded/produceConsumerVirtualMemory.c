@@ -46,15 +46,15 @@ bool init(queue_t *queue, size_t size) {
         return false;
     }
     // get virtual space
-    if(MAP_FAILED == (queue->buffer = mmap(NULL, 2*size, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0))) {
+    if(MAP_FAILED == (queue->bufferPtr = mmap(NULL, 2*size, PROT_NONE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0))) {
         return false;
     }
     // map virtual space 1 to queue
-    if(MAP_FAILED == mmap(queue->buffer, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, queue->fd, 0)) {
+    if(MAP_FAILED == mmap(queue->bufferPtr, size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, queue->fd, 0)) {
         return false;
     }
     // map virtual space 2 to queue
-    if(MAP_FAILED == mmap((queue->buffer + size), size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, queue->fd, 0)) {
+    if(MAP_FAILED == mmap((queue->bufferPtr + size), size, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_FIXED, queue->fd, 0)) {
         return false;
     }
     
@@ -73,15 +73,15 @@ static inline int getAvailableBytes(queue_t *queue, size_t size) {
 }
 
 void enqueue(queue_t *queue, uint8_t *buffer, size_t size) {
-    // wait for semaphore
-    sem_wait(&_queue_empty);
     // error condition
     if(getAvailableBytes(queue, size) < queue->size) {
-        // release semaphore
+        return;
     }
+    // wait for semaphore
+    sem_wait(&_queue_empty);
     // lock mutex
     pthread_mutex_lock(&_mutex_buff);
-    memcpy(&queue->buffer[queue->head], buffer, size);
+    memcpy(&queue->bufferPtr[queue->head], buffer, size);
     printf("queue current data: %ld\n", buffer);
     queue->head += size;
     // unlock mutex
@@ -99,7 +99,7 @@ bool dequeue(queue_t *queue, uint8_t *buffer, size_t size) {
     }
     // lock mutex
     pthread_mutex_lock(&_mutex_buff);
-    memcpy(buffer, &queue->buffer[queue->tail], size);
+    memcpy(buffer, &queue->bufferPtr[queue->tail], size);
     printf("dequeue current data: %ld\n", buffer);
     queue->tail += size;
     if(queue->size >= queue->tail) {

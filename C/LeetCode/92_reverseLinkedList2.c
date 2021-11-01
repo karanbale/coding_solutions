@@ -42,20 +42,20 @@ struct ListNode* reverseBetween(struct ListNode* head, int left, int right){
         --right;
     }
 
-    struct ListNode *con = prev;
+    struct ListNode *prev1 = prev;
     struct ListNode *tail = curr;
-    struct ListNode *third = NULL;
+    struct ListNode *next1 = NULL;
     while(right) {
-        third = curr->next;
+        next1 = curr->next;
         curr->next = prev;
         prev = curr;
-        curr = third;
+        curr = next1;
         --right;
     }
-    
-    if(con != NULL) con->next = prev;
+
+    if(prev1 != NULL) prev1->next = prev;
     else    head = prev;
-    
+
     tail->next = curr;
     return head;
 }

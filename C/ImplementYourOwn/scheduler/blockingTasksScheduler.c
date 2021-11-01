@@ -78,16 +78,16 @@ static void tasklist_add(struct task_block **list,struct task_block *el)
 static int tasklist_del(struct task_block **list, struct task_block *delme)
 {
     struct task_block *t = *list;
-    struct task_block *p = NULL;
+    struct task_block *prev = NULL;
     while (t) {
         if (t == delme) {
-            if (p == NULL)
+            if (prev == NULL)
                 *list = t->next;
             else
-                p->next = t->next;
+                prev->next = t->next;
             return 0;
         }
-        p = t;
+        prev = t;
         t = t->next;
     }
     return -1;

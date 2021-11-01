@@ -52,8 +52,8 @@ bool isPalindrome(char * s){
     char *tempStr = s;
     int idx = 0;
     while(*tempStr) {
-        if(isalnum(*tempStr)) newStr[idx++] = *tempStr;
-        tempStr++;
+        if(isalnum(*tempStr)) newStr[idx++] = *tempStr++;
+        else tempStr++;
     }
     newStr[idx] = '\0';
     int leftIdx = 0, rightIdx = idx-1;
