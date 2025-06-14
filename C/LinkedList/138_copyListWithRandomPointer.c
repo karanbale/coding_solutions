@@ -69,8 +69,10 @@ void print(struct Node *head){
 }
 
 struct Node* copyRandomList(struct Node* head) {
-	if(head == NULL) return NULL;
-    
+    if(head == NULL) return NULL;
+
+	// iterate over original list, create copy of each node as new node
+	// add each new node, next to its original node, point new node to original's next
     struct Node* ptr = head, *newHead = NULL, *tempNewHead = NULL;
     while(ptr != NULL){
         struct Node *node = createNode(ptr->val);
@@ -79,15 +81,23 @@ struct Node* copyRandomList(struct Node* head) {
         ptr->next = node;
         ptr = node->next;
     }
-    
+
+	// iterate over original list again
+	// now we have original node and it's copy right next to it
+	// so the random pointer of the copy will always sit right next to the
+	// random pointer
     ptr = head;
     while(ptr != NULL){
         ptr->next->random = (ptr->random != NULL) ? ptr->random->next : NULL;
         ptr = ptr->next->next;
     }
-    
+
+	// now break the two linked lists into their own linked lists
+	// maintain original head for new copy to return it
     ptr = head;
+	// newHead is what we'll return
     newHead = head->next;
+	// iterate over tempNewHead
     tempNewHead = head->next;
     while(ptr!=NULL){
         ptr->next = ptr->next->next;
