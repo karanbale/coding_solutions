@@ -32,7 +32,7 @@ void *myMalloc(int size) {
     if (curr->size >= size) {
       // split the block
       if (curr->size > (sizeof(blockMetadata_t) + ALIGNMENT + size)) {
-        blockMetadata_t *nextblock = (blockMetadata_t*)((uint8_t *)(curr + 1) + sizeof(blockMetadata_t));
+        blockMetadata_t *nextblock = (blockMetadata_t *)((uint8_t *)curr + sizeof(blockMetadata_t) + size);
         nextblock->size = curr->size - size - sizeof(blockMetadata_t);
         nextblock->next = curr->next;
 
@@ -48,6 +48,7 @@ void *myMalloc(int size) {
         } else {
           free_list = curr->next;
         }
+        curr->size = size;
       }
       return (void *)((uint8_t *)curr + sizeof(blockMetadata_t));
     }
